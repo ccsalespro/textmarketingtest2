@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company_role_id: 1
+  company_permission_id: 1
+
+two:
+  company_role_id: 1
+  company_permission_id: 1

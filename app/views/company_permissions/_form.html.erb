@@ -1,0 +1,22 @@
+<%= form_with(model: company_permission, local: true) do |form| %>
+  <% if company_permission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(company_permission.errors.count, "error") %> prohibited this company_permission from being saved:</h2>
+
+      <ul>
+      <% company_permission.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :company_permission_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,27 @@
+<%= form_with(model: company_role, local: true) do |form| %>
+  <% if company_role.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(company_role.errors.count, "error") %> prohibited this company_role from being saved:</h2>
+
+      <ul>
+      <% company_role.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :company_role_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :company_id %>
+    <%= form.number_field :company_id, id: :company_role_company_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

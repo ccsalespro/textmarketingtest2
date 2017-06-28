@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Merchant Permissions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @merchant_permissions.each do |merchant_permission| %>
+      <tr>
+        <td><%= merchant_permission.name %></td>
+        <td><%= link_to 'Show', merchant_permission %></td>
+        <td><%= link_to 'Edit', edit_merchant_permission_path(merchant_permission) %></td>
+        <td><%= link_to 'Destroy', merchant_permission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Merchant Permission', new_merchant_permission_path %>

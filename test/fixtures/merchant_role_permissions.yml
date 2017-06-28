@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  merchant_role_id: 1
+  merchant_permission_id: 1
+
+two:
+  merchant_role_id: 1
+  merchant_permission_id: 1

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @merchant_role.name %>
+</p>
+
+<p>
+  <strong>Merchant:</strong>
+  <%= @merchant_role.merchant_id %>
+</p>
+
+<%= link_to 'Edit', edit_merchant_role_path(@merchant_role) %> |
+<%= link_to 'Back', merchant_roles_path %>

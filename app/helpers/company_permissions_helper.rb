@@ -1,0 +1,2 @@
+module CompanyPermissionsHelper
+end
