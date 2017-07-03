@@ -28,6 +28,7 @@ class CompaniesController < ApplicationController
 
     respond_to do |format|
       if @company.save
+        LoadRoles.new.load_company_roles(@company)
         format.html { redirect_to @company, notice: 'Company was successfully created.' }
         format.json { render :show, status: :created, location: @company }
       else

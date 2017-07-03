@@ -8,5 +8,10 @@ Rails.application.routes.draw do
   devise_for :company_users
   resources :merchants
   resources :companies
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get 'company_users/new_company_user'
+  post 'company_users/create_company_user'
+
+  get 'dashboard/overview'
+  root 'dashboard#overview'
 end

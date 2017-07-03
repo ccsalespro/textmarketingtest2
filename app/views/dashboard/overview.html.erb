@@ -1,0 +1,11 @@
+<% if admin_signed_in? %>
+	 <h1>Welcome Admin, <%= current_admin.name %></h1>
+	 <%= link_to "Log Out", destroy_admin_session_path, :method => :delete %>
+	 <%= link_to "Companies", companies_path %>
+<% elsif company_user_signed_in? %>
+	<h1>Welcome Company User, <%= current_company_user.name %></h1>
+	 <%= link_to "Log Out", destroy_company_user_session_path, :method => :delete %>
+<% elsif merchant_user_signed_in? %>
+	<h1>Welcome Merchant User, <%= current_merchant_user.name %></h1>
+	 <%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %>
+<% end -%>

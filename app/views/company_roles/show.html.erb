@@ -10,5 +10,13 @@
   <%= @company_role.company_id %>
 </p>
 
+<hr>
+
+<h3>Permissions</h3>
+
+<% @company_role.company_permissions.each do |permission| %>
+			<li><%= permission.name %></li>
+		<% end -%>
+
 <%= link_to 'Edit', edit_company_role_path(@company_role) %> |
 <%= link_to 'Back', company_roles_path %>

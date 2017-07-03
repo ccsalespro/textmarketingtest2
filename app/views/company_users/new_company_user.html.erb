@@ -1,0 +1,18 @@
+<h1>Invite Company User</h1>
+
+<%= form_tag(company_users_create_company_user_path(), method: :post) do %>
+
+	<%= label_tag :name %><br>
+	<%= text_field_tag :name %><br><br>
+
+	<%= label_tag :email %><br>
+	<%= text_field_tag :email %><br><br>
+
+	<%= label_tag :phone_number %><br>
+	<%= text_field_tag :phone_number %><br><br>
+
+	<%= collection_select(:company_user, :company_role_id, @company_roles.all, :id, :name) %><br><br>
+
+	<%= submit_tag "Invite" %>
+
+<% end -%>
