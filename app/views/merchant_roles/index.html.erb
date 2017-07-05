@@ -26,4 +26,6 @@
 
 <br>
 
-<%= link_to 'New Merchant Role', new_merchant_role_path %>
+<% if @role_permission_names.include?("Create Merchant Roles") %>
+  <%= link_to 'New Merchant Role', new_merchant_role_path(merchant: @merchant) %>
+<% end -%>

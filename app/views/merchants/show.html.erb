@@ -5,5 +5,25 @@
   <%= @merchant.subdomain %>
 </p>
 
-<%= link_to 'Edit', edit_merchant_path(@merchant) %> |
+<p><%= @merchant.company.subdomain %></p>
+<hr>
+
+<p>Roles:</p><hr>
+<% @merchant.merchant_roles.each do |role| %>
+	<p><%= link_to role.name, merchant_role_path(role) %></p>
+	<ul>
+		<% role.merchant_users.each do |user| %>
+			<li><%= user.name %>
+				<% if @role_permission_names.include?("Cancel Merchant Users") || current_admin.present? %>
+					<%= button_to "Cancel", merchant_users_destroy_merchant_user_path(merchant_user: user, merchant: @merchant), data: { confirm: "Are you sure?" }, method: :delete %>
+				<% end -%>
+			</li>
+		<% end -%>
+	</ul>
+<% end -%>
+
+
+<% if @role_permission_names.include?("Invite Merchant Users") %>
+ 	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path(merchant: @merchant) %><br>
+ <% end -%>
 <%= link_to 'Back', merchants_path %>

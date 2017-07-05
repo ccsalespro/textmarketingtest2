@@ -26,4 +26,6 @@
 
 <br>
 
-<%= link_to 'New Company Role', new_company_role_path %>
+<% if @role_permission_names.include?("Create Company Roles") %>
+  <%= link_to 'New Company Role', new_company_role_path(company: @company) %>
+<% end -%>

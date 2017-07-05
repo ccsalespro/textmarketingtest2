@@ -145,6 +145,7 @@ ActiveRecord::Schema.define(version: 20170629145226) do
 
   create_table "merchants", force: :cascade do |t|
     t.string "subdomain"
+    t.integer "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

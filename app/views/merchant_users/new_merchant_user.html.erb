@@ -1,0 +1,18 @@
+<h1>Invite Merchant User</h1>
+
+<%= form_tag(merchant_users_create_merchant_user_path(), method: :post) do %>
+
+	<%= label_tag :name %><br>
+	<%= text_field_tag :name %><br><br>
+
+	<%= label_tag :email %><br>
+	<%= text_field_tag :email %><br><br>
+
+	<%= label_tag :phone_number %><br>
+	<%= text_field_tag :phone_number %><br><br>
+
+	<%= collection_select(:merchant_user, :merchant_role_id, @merchant_roles.all, :id, :name) %><br><br>
+
+	<%= submit_tag "Invite" %>
+
+<% end -%>

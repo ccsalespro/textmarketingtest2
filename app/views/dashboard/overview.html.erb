@@ -2,10 +2,27 @@
 	 <h1>Welcome Admin, <%= current_admin.name %></h1>
 	 <%= link_to "Log Out", destroy_admin_session_path, :method => :delete %>
 	 <%= link_to "Companies", companies_path %>
+
 <% elsif company_user_signed_in? %>
+
 	<h1>Welcome Company User, <%= current_company_user.name %></h1>
-	 <%= link_to "Log Out", destroy_company_user_session_path, :method => :delete %>
+	 <%= link_to "Log Out", destroy_company_user_session_path, :method => :delete %><br>
+	 <% if @role_permission_names.include?("Invite Company Users") %>
+	 	<%= link_to "Invite Company User", company_users_new_company_user_path(company: @company) %><br>
+	 <% end -%>
+	 <% if @role_permission_names.include?("Create Merchants") %>
+	 	<%= link_to "Create Merchant", new_merchant_path %><br>
+	 <% end -%>
+	 <% if @role_permission_names.include?("View Merchants") %>
+	 	<%= link_to "View Company Merchants", merchants_path %><br>
+	 <% end -%>
+	 <% if @role_permission_names.include?("View Company Roles") %>
+	 	<%= link_to "View Company Roles", company_roles_path %><br>
+	 <% end -%>
+
 <% elsif merchant_user_signed_in? %>
+
 	<h1>Welcome Merchant User, <%= current_merchant_user.name %></h1>
 	 <%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %>
+
 <% end -%>

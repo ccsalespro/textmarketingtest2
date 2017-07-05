@@ -1,5 +1,7 @@
 class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :determine_user_role
+  before_action :load_permission_names
 
   # GET /companies
   # GET /companies.json

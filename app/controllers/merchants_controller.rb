@@ -4,17 +4,21 @@ class MerchantsController < ApplicationController
   # GET /merchants
   # GET /merchants.json
   def index
-    @merchants = Merchant.all
+    @company = Company.find_by_subdomain(request.subdomain)
+    @merchants = @company.merchants.all
   end
 
   # GET /merchants/1
   # GET /merchants/1.json
   def show
+    determine_user_role()
+    load_permission_names()
   end
 
   # GET /merchants/new
   def new
-    @merchant = Merchant.new
+    @company = Company.find_by_subdomain(request.subdomain)
+    @merchant = @company.merchants.build
   end
 
   # GET /merchants/1/edit
@@ -24,7 +28,9 @@ class MerchantsController < ApplicationController
   # POST /merchants
   # POST /merchants.json
   def create
-    @merchant = Merchant.new(merchant_params)
+    @company = Company.find_by_subdomain(request.subdomain)
+    @merchant = @company.merchants.build(merchant_params)
+    LoadRoles.new.load_merchant_roles(@merchant)
 
     respond_to do |format|
       if @merchant.save
@@ -69,6 +75,6 @@ class MerchantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def merchant_params
-      params.require(:merchant).permit(:subdomain)
+      params.require(:merchant).permit(:subdomain, :company_id)
     end
 end

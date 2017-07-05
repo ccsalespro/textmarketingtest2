@@ -1,20 +1,24 @@
 class CompanyRolesController < ApplicationController
   before_action :set_company_role, only: [:show, :edit, :update, :destroy]
+  before_action :set_company, only: [:index, :new, :create]
 
   # GET /company_roles
   # GET /company_roles.json
   def index
-    @company_roles = CompanyRole.all
+    determine_user_role()
+    load_permission_names()
+    @company_roles = @company.company_roles.all
   end
 
   # GET /company_roles/1
   # GET /company_roles/1.json
   def show
+    @company_permissions = CompanyPermission.all
   end
 
   # GET /company_roles/new
   def new
-    @company_role = CompanyRole.new
+    @company_role = @company.company_roles.build
   end
 
   # GET /company_roles/1/edit
@@ -24,7 +28,7 @@ class CompanyRolesController < ApplicationController
   # POST /company_roles
   # POST /company_roles.json
   def create
-    @company_role = CompanyRole.new(company_role_params)
+    @company_role = @company.company_roles.build(company_role_params)
 
     respond_to do |format|
       if @company_role.save
@@ -61,10 +65,25 @@ class CompanyRolesController < ApplicationController
     end
   end
 
+  def add_permission
+    CompanyRolePermission.create(company_role_id: params[:company_role_id], company_permission_id: params[:company_permission_id])
+    redirect_to company_role_path( CompanyRole.find_by_id(params[:company_role_id]) ), notice: "Permission Added To Role"
+  end
+
+  def remove_permission
+    @role_permission = CompanyRolePermission.find_by_company_role_id_and_company_permission_id(params[:company_role_id], params[:company_permission_id])
+    @role_permission.destroy
+    redirect_to company_role_path( CompanyRole.find_by_id(params[:company_role_id]) ), notice: "Permission Removed From Role"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_company_role
       @company_role = CompanyRole.find(params[:id])
+    end
+
+    def set_company
+      @company = Company.find_by_subdomain(request.subdomain)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

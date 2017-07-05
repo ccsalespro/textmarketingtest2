@@ -19,4 +19,22 @@ class LoadRoles
 
 	end
 
+	def load_merchant_roles(merchant)
+		@all_merchant_permissions = MerchantPermission.all
+
+		@base_role = merchant.merchant_roles.build
+		@base_role.name = "Merchant"
+		@base_role.save
+
+		@admin_role = merchant.merchant_roles.build
+		@admin_role.name = "Merchant Admin"
+		@admin_role.save
+
+		@all_merchant_permissions.each do |mp|
+			admin_permission = @admin_role.merchant_role_permissions.build
+			admin_permission.merchant_permission_id = mp.id
+			admin_permission.save
+		end
+	end
+
 end

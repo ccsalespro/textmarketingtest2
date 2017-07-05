@@ -5,17 +5,28 @@
   <%= @company.subdomain %>
 </p>
 
+<hr>
+<p>Merchants</p>
+<% @company.merchants.each do |merchant| %>
+	<%= merchant.subdomain %>
+<% end -%>
+<hr>
+
 <p>Roles:</p><hr>
 <% @company.company_roles.each do |role| %>
 	<p><%= link_to role.name, company_role_path(role) %></p>
 	<ul>
 		<% role.company_users.each do |user| %>
-			<li><%= user.name %></li>
+			<li><%= user.name %>
+				<% if @role_permission_names.include?("Cancel Company Users") || current_admin.present? %>
+					<%= button_to "Cancel", company_users_destroy_company_user_path(company_user: user, company: @company), data: { confirm: "Are you sure?" }, method: :delete %>
+				<% end -%>
+			</li>
 		<% end -%>
 	</ul>
 <% end -%>
 
-<% if current_admin.present? %>
+<% if @role_permission_names.include?("Invite Company Users") || current_admin.present? %>
 	<%= link_to "Invite Company User", company_users_new_company_user_path(company: @company) %><br>
 <% end -%>
 

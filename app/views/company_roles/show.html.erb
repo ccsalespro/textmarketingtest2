@@ -10,13 +10,27 @@
   <%= @company_role.company_id %>
 </p>
 
-<hr>
 
-<h3>Permissions</h3>
+<h3>Permissions This Role Has</h3>
 
-<% @company_role.company_permissions.each do |permission| %>
-			<li><%= permission.name %></li>
+  <% @company_permissions.each do |cp| %>
+    <% if CompanyRolePermission.find_by_company_role_id_and_company_permission_id(@company_role.id, cp.id).present? %>
+		<%= form_tag(company_roles_remove_permission_path(company_role_id: @company_role.id, company_permission_id: cp.id), method: :post) do %>
+			<p class="green">
+				<%= cp.name %>
+				<%= submit_tag "Remove Permission", data: { confirm: 'Are you sure?' } %>
+			</p>
 		<% end -%>
+	<% else %>
+		<%= form_tag(company_roles_add_permission_path(company_role_id: @company_role.id, company_permission_id: cp.id), method: :post) do %>
+			<p class="red">
+				<%= cp.name %>
+				<%= submit_tag "Add Permission", data: { confirm: 'Are you sure?' } %>
+			</p>
+		<% end -%>
+	<% end -%>
+<% end -%><br>
+
 
 <%= link_to 'Edit', edit_company_role_path(@company_role) %> |
 <%= link_to 'Back', company_roles_path %>
