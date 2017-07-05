@@ -18,6 +18,7 @@ class CompanyRolesController < ApplicationController
 
   # GET /company_roles/new
   def new
+    CheckPermission::CompanyRole.new.create
     @company_role = @company.company_roles.build
   end
 

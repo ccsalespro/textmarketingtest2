@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
     else
       @role = nil
     end
+    return @role
   end
 
 end
