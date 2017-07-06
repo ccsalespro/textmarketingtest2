@@ -1,18 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #before_action :require_admin, if: :devise_controller?
-  before_action :create_permissions
 
   private
 
   def require_admin
   	@admin = current_admin
   	redirect_to root_path unless @admin.present?
-  end
-
-  def create_permissions
-  	CreatePermissions.new.company unless CompanyPermission.count > 0
-  	CreatePermissions.new.merchant unless MerchantPermission.count > 0
   end
 
   def load_permission_names
