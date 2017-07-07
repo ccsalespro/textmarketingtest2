@@ -5,6 +5,7 @@ class CompanyRolesController < ApplicationController
   # GET /company_roles
   # GET /company_roles.json
   def index
+    redirect_to root_path unless ViewCompanyRole.new(current_company_user, current_admin).check
     determine_user_role()
     load_permission_names()
     @company_roles = @company.company_roles.all
@@ -13,22 +14,25 @@ class CompanyRolesController < ApplicationController
   # GET /company_roles/1
   # GET /company_roles/1.json
   def show
+    redirect_to root_path unless ViewCompanyRole.new(current_company_user, current_admin).check
     @company_permissions = CompanyPermission.all
   end
 
   # GET /company_roles/new
   def new
-     CreateCompanyRole.new(current_company_user).evaluate
-      @company_role = @company.company_roles.build
+    redirect_to root_path unless CreateCompanyRole.new(current_company_user, current_admin).check
+    @company_role = @company.company_roles.build
   end
 
   # GET /company_roles/1/edit
   def edit
+    redirect_to root_path unless EditCompanyRole.new(current_company_user, current_admin).check
   end
 
   # POST /company_roles
   # POST /company_roles.json
   def create
+    redirect_to root_path unless CreateCompanyRole.new(current_company_user, current_admin).check
     @company_role = @company.company_roles.build(company_role_params)
 
     respond_to do |format|
@@ -45,6 +49,7 @@ class CompanyRolesController < ApplicationController
   # PATCH/PUT /company_roles/1
   # PATCH/PUT /company_roles/1.json
   def update
+    redirect_to root_path unless EditCompanyRole.new(current_company_user, current_admin).check
     respond_to do |format|
       if @company_role.update(company_role_params)
         format.html { redirect_to @company_role, notice: 'Company role was successfully updated.' }
@@ -59,6 +64,7 @@ class CompanyRolesController < ApplicationController
   # DELETE /company_roles/1
   # DELETE /company_roles/1.json
   def destroy
+    redirect_to root_path unless DeleteCompanyRole.new(current_company_user, current_admin).check
     @company_role.destroy
     respond_to do |format|
       format.html { redirect_to company_roles_url, notice: 'Company role was successfully destroyed.' }

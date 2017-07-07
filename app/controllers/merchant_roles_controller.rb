@@ -5,6 +5,7 @@ class MerchantRolesController < ApplicationController
   # GET /merchant_roles
   # GET /merchant_roles.json
   def index
+    redirect_to root_path unless ViewMerchantRole.new(current_merchant_user, current_admin).check
     determine_user_role()
     load_permission_names()
     @merchant_roles = @merchant.merchant_roles.all
@@ -13,21 +14,25 @@ class MerchantRolesController < ApplicationController
   # GET /merchant_roles/1
   # GET /merchant_roles/1.json
   def show
+    redirect_to root_path unless ViewMerchantRole.new(current_merchant_user, current_admin).check
     @merchant_permissions = MerchantPermission.all
   end
 
   # GET /merchant_roles/new
   def new
+    redirect_to root_path unless CreateMerchantRole.new(current_merchant_user, current_admin).check
     @merchant_role = @merchant.merchant_roles.build
   end
 
   # GET /merchant_roles/1/edit
   def edit
+    redirect_to root_path unless EditMerchantRole.new(current_merchant_user, current_admin).check
   end
 
   # POST /merchant_roles
   # POST /merchant_roles.json
   def create
+    redirect_to root_path unless CreateMerchantRole.new(current_merchant_user, current_admin).check
     @merchant_role = @merchant.merchant_roles.build(merchant_role_params)
 
     respond_to do |format|
@@ -44,6 +49,7 @@ class MerchantRolesController < ApplicationController
   # PATCH/PUT /merchant_roles/1
   # PATCH/PUT /merchant_roles/1.json
   def update
+    redirect_to root_path unless EditMerchantRole.new(current_merchant_user, current_admin).check
     respond_to do |format|
       if @merchant_role.update(merchant_role_params)
         format.html { redirect_to @merchant_role, notice: 'Merchant role was successfully updated.' }
@@ -58,6 +64,7 @@ class MerchantRolesController < ApplicationController
   # DELETE /merchant_roles/1
   # DELETE /merchant_roles/1.json
   def destroy
+    redirect_to root_path unless DeleteMerchantRole.new(current_merchant_user, current_admin).check
     @merchant_role.destroy
     respond_to do |format|
       format.html { redirect_to merchant_roles_url, notice: 'Merchant role was successfully destroyed.' }
@@ -66,11 +73,13 @@ class MerchantRolesController < ApplicationController
   end
 
   def add_permission
+    redirect_to root_path unless EditMerchantRole.new(current_merchant_user, current_admin).check
     MerchantRolePermission.create(merchant_role_id: params[:merchant_role_id], merchant_permission_id: params[:merchant_permission_id])
     redirect_to merchant_role_path( MerchantRole.find_by_id(params[:merchant_role_id]) ), notice: "Permission Added To Role"
   end
 
   def remove_permission
+    redirect_to root_path unless EditMerchantRole.new(current_merchant_user, current_admin).check
     @role_permission = MerchantRolePermission.find_by_merchant_role_id_and_merchant_permission_id(params[:merchant_role_id], params[:merchant_permission_id])
     @role_permission.destroy
     redirect_to merchant_role_path( MerchantRole.find_by_id(params[:merchant_role_id]) ), notice: "Permission Removed From Role"

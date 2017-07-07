@@ -4,6 +4,7 @@ class MerchantsController < ApplicationController
   # GET /merchants
   # GET /merchants.json
   def index
+    redirect_to root_path unless ViewMerchant.new(current_company_user, current_admin).check
     @company = Company.find_by_subdomain(request.subdomain)
     @merchants = @company.merchants.all
   end
@@ -11,23 +12,27 @@ class MerchantsController < ApplicationController
   # GET /merchants/1
   # GET /merchants/1.json
   def show
+    redirect_to root_path unless ViewMerchant.new(current_company_user, current_admin, current_merchant_user).check
     determine_user_role()
     load_permission_names()
   end
 
   # GET /merchants/new
   def new
+    redirect_to root_path unless CreateMerchant.new(current_company_user, current_admin).check
     @company = Company.find_by_subdomain(request.subdomain)
     @merchant = @company.merchants.build
   end
 
   # GET /merchants/1/edit
   def edit
+    redirect_to root_path unless EditMerchant.new(current_company_user, current_admin).check
   end
 
   # POST /merchants
   # POST /merchants.json
   def create
+    redirect_to root_path unless CreateMerchant.new(current_company_user, current_admin).check
     @company = Company.find_by_subdomain(request.subdomain)
     @merchant = @company.merchants.build(merchant_params)
     LoadRoles.new.load_merchant_roles(@merchant)
@@ -46,6 +51,7 @@ class MerchantsController < ApplicationController
   # PATCH/PUT /merchants/1
   # PATCH/PUT /merchants/1.json
   def update
+    redirect_to root_path unless EditMerchant.new(current_company_user, current_admin).check
     respond_to do |format|
       if @merchant.update(merchant_params)
         format.html { redirect_to @merchant, notice: 'Merchant was successfully updated.' }
@@ -60,6 +66,7 @@ class MerchantsController < ApplicationController
   # DELETE /merchants/1
   # DELETE /merchants/1.json
   def destroy
+    redirect_to root_path unless DeleteMerchant.new(current_company_user, current_admin).check
     @merchant.destroy
     respond_to do |format|
       format.html { redirect_to merchants_url, notice: 'Merchant was successfully destroyed.' }

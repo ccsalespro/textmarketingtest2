@@ -2,6 +2,7 @@ class CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :edit, :update, :destroy]
   before_action :determine_user_role
   before_action :load_permission_names
+  before_action :require_admin, except: [:show]
 
   # GET /companies
   # GET /companies.json
@@ -12,6 +13,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.json
   def show
+    redirect_to root_path unless ViewCompany.new(current_company_user, current_admin).check
   end
 
   # GET /companies/new

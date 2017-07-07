@@ -22,16 +22,21 @@ CompanyPermission.create(id: 14, name: "View Merchant Users")
 CompanyPermission.create(id: 15, name: "Edit Merchant Users")
 CompanyPermission.create(id: 16, name: "Cancel Merchant Users")
 
+# Company Permissions
+CompanyPermission.create(id: 17, name: "View Company")
 
 
 # Merchant Users Permissions
-MerchantPermission.create(id: 17, name: "Invite Merchant Users")
-MerchantPermission.create(id: 18, name: "View Merchant Users")
-MerchantPermission.create(id: 19, name: "Edit Merchant Users")
-MerchantPermission.create(id: 20, name: "Cancel Merchant Users")
+MerchantPermission.create(id: 18, name: "Invite Merchant Users")
+MerchantPermission.create(id: 19, name: "View Merchant Users")
+MerchantPermission.create(id: 20, name: "Edit Merchant Users")
+MerchantPermission.create(id: 21, name: "Cancel Merchant Users")
 
 # Merchant Roles Permissions
-MerchantPermission.create(id: 21, name: "Create Merchant Roles")
-MerchantPermission.create(id: 22, name: "View Merchant Roles")
-MerchantPermission.create(id: 23, name: "Edit Merchant Roles")
-MerchantPermission.create(id: 24, name: "Delete Merchant Roles")
+MerchantPermission.create(id: 22, name: "Create Merchant Roles")
+MerchantPermission.create(id: 23, name: "View Merchant Roles")
+MerchantPermission.create(id: 24, name: "Edit Merchant Roles")
+MerchantPermission.create(id: 25, name: "Delete Merchant Roles")
+
+# Merchant Permissions
+MerchantPermission.create(id: 26, name: "View Merchants")

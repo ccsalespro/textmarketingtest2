@@ -23,6 +23,12 @@
 <% elsif merchant_user_signed_in? %>
 
 	<h1>Welcome Merchant User, <%= current_merchant_user.name %></h1>
-	 <%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %>
+	<%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %><br>
+	<% if @role_permission_names.include?("Invite Merchant Users") %>
+	 	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path(merchant: @merchant) %><br>
+	 <% end -%>
+	<% if @role_permission_names.include?("View Merchant Roles") %>
+	 	<%= link_to "View Merchant Roles", merchant_roles_path %><br>
+	 <% end -%>
 
 <% end -%>
