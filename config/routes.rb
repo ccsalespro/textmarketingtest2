@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   get 'company_users/new_company_user'
   post 'company_users/create_company_user'
+  resources :company_users, only: [:edit, :update]
   delete 'company_users/destroy_company_user'
 
   post 'company_roles/add_permission'
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
 
   get 'merchant_users/new_merchant_user'
   post 'merchant_users/create_merchant_user'
+  resources :merchant_users, only: [:edit, :update]
   delete 'merchant_users/destroy_merchant_user'
 
   post 'merchant_roles/add_permission'

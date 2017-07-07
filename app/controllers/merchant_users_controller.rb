@@ -1,6 +1,6 @@
 class MerchantUsersController < ApplicationController
 
-	#before_action :require_admin
+	before_action :set_merchant_user, only: [:edit, :update]
 
 	def new_merchant_user
 		redirect_to root_path unless InviteMerchantUser.new(current_merchant_user, current_admin, current_company_user).check
@@ -18,6 +18,24 @@ class MerchantUsersController < ApplicationController
 		end
 	end
 
+	def edit
+		redirect_to root_path unless EditMerchantUser.new(current_merchant_user, current_admin).check
+    merchant = Merchant.find_by(id: @merchant_user.merchant_role.merchant_id)
+    @merchant_roles = merchant.merchant_roles
+  end
+
+  def update
+  	redirect_to root_path unless EditMerchantUser.new(current_merchant_user, current_admin).check
+    respond_to do |format|
+      if @merchant_user.update(merchant_user_params)
+        format.html { redirect_to root_path, notice: 'Merchant User Updated' }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 	def destroy_merchant_user
 		redirect_to root_path unless CancelMerchantUser.new(current_merchant_user, current_admin).check
 		MerchantUser.find(params[:merchant_user]).destroy
@@ -26,5 +44,15 @@ class MerchantUsersController < ApplicationController
       format.json { head :no_content }
     end
 	end
+
+	private
+
+	def merchant_user_params
+      params.require(:merchant_user).permit(:name, :email, :merchant_role_id, :phone_number, :password, :password_confirmation)
+    end
+
+    def set_merchant_user
+      @merchant_user = MerchantUser.find(params[:id])
+    end
 
 end

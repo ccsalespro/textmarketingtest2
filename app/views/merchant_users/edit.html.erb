@@ -1,0 +1,18 @@
+<h1>Edit Merchant User</h1>
+
+<%= form_for @merchant_user do |f| %>
+
+	<%= f.label :name %><br>
+	<%= f.text_field :name %><br><br>
+
+	<%= f.label :email %><br>
+	<%= f.text_field :email %><br><br>
+
+	<%= f.label :phone_number %><br>
+	<%= f.text_field :phone_number %><br><br>
+
+	<%= collection_select(:merchant_user, :merchant_role_id, @merchant_roles.all, :id, :name) %><br><br>
+
+	<%= f.submit "Update" %>
+
+<% end -%>

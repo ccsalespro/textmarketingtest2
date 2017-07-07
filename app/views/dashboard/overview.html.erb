@@ -19,6 +19,9 @@
 	 <% if @role_permission_names.include?("View Company Roles") %>
 	 	<%= link_to "View Company Roles", company_roles_path %><br>
 	 <% end -%>
+	 <% if @role_permission_names.include?("View Company") %>
+	 	<%= link_to "View Company", company_path(@company) %><br>
+	 <% end -%>
 
 <% elsif merchant_user_signed_in? %>
 
@@ -29,6 +32,9 @@
 	 <% end -%>
 	<% if @role_permission_names.include?("View Merchant Roles") %>
 	 	<%= link_to "View Merchant Roles", merchant_roles_path %><br>
+	 <% end -%>
+	 <% if @role_permission_names.include?("View Merchant") %>
+	 	<%= link_to "View Merchant", merchant_path(@merchant) %><br>
 	 <% end -%>
 
 <% end -%>

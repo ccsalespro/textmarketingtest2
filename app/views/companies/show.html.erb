@@ -17,7 +17,7 @@
 	<p><%= link_to role.name, company_role_path(role) %></p>
 	<ul>
 		<% role.company_users.each do |user| %>
-			<li><%= user.name %>
+			<li><%= link_to user.name, edit_company_user_path(user) %>
 				<% if @role_permission_names.include?("Cancel Company Users") || current_admin.present? %>
 					<%= button_to "Cancel", company_users_destroy_company_user_path(company_user: user, company: @company), data: { confirm: "Are you sure?" }, method: :delete %>
 				<% end -%>

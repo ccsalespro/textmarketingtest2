@@ -13,7 +13,7 @@
 	<p><%= link_to role.name, merchant_role_path(role) %></p>
 	<ul>
 		<% role.merchant_users.each do |user| %>
-			<li><%= user.name %>
+			<li><%= link_to user.name, edit_merchant_user_path(user) %>
 				<% if @role_permission_names.include?("Cancel Merchant Users") || current_admin.present? %>
 					<%= button_to "Cancel", merchant_users_destroy_merchant_user_path(merchant_user: user, merchant: @merchant), data: { confirm: "Are you sure?" }, method: :delete %>
 				<% end -%>

@@ -1,5 +1,7 @@
 class CompanyUsersController < ApplicationController
 
+	before_action :set_company_user, only: [:edit, :update]
+
 	def new_company_user
 		redirect_to root_path unless InviteCompanyUser.new(current_company_user, current_admin).check
 		company = Company.find(params[:company])
@@ -16,6 +18,24 @@ class CompanyUsersController < ApplicationController
 		end
 	end
 
+	def edit
+		redirect_to root_path unless EditCompanyUser.new(current_company_user, current_admin).check
+		company = Company.find_by(id: @company_user.company_role.company_id)
+		@company_roles = company.company_roles
+	end
+
+	def update
+		redirect_to root_path unless EditCompanyUser.new(current_company_user, current_admin).check
+    respond_to do |format|
+      if @company_user.update(company_user_params)
+        format.html { redirect_to root_path, notice: 'Company User Updated' }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 	def destroy_company_user
 		redirect_to root_path unless CancelCompanyUser.new(current_company_user, current_admin).check
 		CompanyUser.find(params[:company_user]).destroy
@@ -24,5 +44,15 @@ class CompanyUsersController < ApplicationController
       format.json { head :no_content }
     end
 	end
+
+	private
+
+	def company_user_params
+      params.require(:company_user).permit(:name, :email, :company_role_id, :phone_number, :password, :password_confirmation)
+    end
+
+    def set_company_user
+      @company_user = CompanyUser.find(params[:id])
+    end
 
 end
