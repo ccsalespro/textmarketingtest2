@@ -11,6 +11,13 @@ Rails.application.routes.draw do
   resources :merchants
   resources :companies
 
+  resources :customers
+  resources :messages, only: [:new, :create, :show, :index] do
+    collection do
+      post 'reply'
+    end
+  end
+
   get 'dashboard/overview'
   root 'dashboard#overview'
 

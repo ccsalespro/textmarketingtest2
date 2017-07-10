@@ -36,5 +36,7 @@
 	 <% if @role_permission_names.include?("View Merchant") %>
 	 	<%= link_to "View Merchant", merchant_path(@merchant) %><br>
 	 <% end -%>
+	 	
+	 <%= link_to "New Customer", new_customer_path %><br>
 
 <% end -%>
