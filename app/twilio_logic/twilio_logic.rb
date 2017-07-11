@@ -25,8 +25,6 @@ class TwilioLogic
     
   end
  
-  private
- 
   def boot_twilio
     account_sid = Rails.application.secrets.twilio_sid
     auth_token = Rails.application.secrets.twilio_token
