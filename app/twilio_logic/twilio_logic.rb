@@ -14,15 +14,38 @@ class TwilioLogic
   end
 
 	def reply(params)
-    boot_twilio
-    message_body = params["Body"]
-    from_number = params["From"]
+    if cookies[:confirmation_sent] != true
+      cookies[:confirmation_sent] = false
+    end
+    boot_twilio()
+    @message_body = params["Body"]
+    @from_number = params["From"]
+
+    if cookies[:confirmation_sent] == false
+      send_confirmation()
+      cookies[:confirmation_sent] = true
+    else
+      send_success_response()
+      cookies[:confirmation_sent] = false
+    end
+  end
+
+  private
+
+  def send_confirmation
     sms = @client.messages.create(
-      from: Rails.application.secrets.twilio_number,
-      to: from_number,
-      body: "Hello there, thanks for texting me. Your number is #{from_number}."
-    )
-    
+        from: Rails.application.secrets.twilio_number,
+        to: @from_number,
+        body: "You Are About To Send Out The Following Message: \n #{@message_body} \n Respond 'yes' To Send It."
+      )
+  end
+
+  def send_success_response
+    sms = @client.messages.create(
+        from: Rails.application.secrets.twilio_number,
+        to: @from_number,
+        body: "You Sent Out The Following Message: \n #{@message_body}"
+      )
   end
  
   def boot_twilio
