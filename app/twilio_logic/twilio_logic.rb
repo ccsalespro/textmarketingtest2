@@ -14,19 +14,21 @@ class TwilioLogic
   end
 
 	def reply(params)
-    if cookies[:confirmation_sent] != true
-      cookies[:confirmation_sent] = false
-    end
-    boot_twilio()
+
     @message_body = params["Body"]
     @from_number = params["From"]
 
-    if cookies[:confirmation_sent] == false
+    if request.cookies[:confirmation_sent] != true
+      request.cookies[:confirmation_sent] = false
+    end
+    boot_twilio()
+
+    if request.cookies[:confirmation_sent] == false
       send_confirmation()
-      cookies[:confirmation_sent] = true
+      request.cookies[:confirmation_sent] = true
     else
       send_success_response()
-      cookies[:confirmation_sent] = false
+      request.cookies[:confirmation_sent] = false
     end
   end
 
