@@ -14,9 +14,9 @@ class TwilioLogic
   end
 
 	def reply
+    boot_twilio
     #message_body = params["Body"]
     from_number = params["From"]
-    boot_twilio
     sms = @client.messages.create(
       from: Rails.application.secrets.twilio_number,
       to: from_number,
