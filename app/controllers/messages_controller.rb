@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create]
+  skip_before_action :verify_authenticity_token
 
 	before_action :set_message, only: [:show]
   before_action :set_merchant
