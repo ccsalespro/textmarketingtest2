@@ -18,21 +18,21 @@ class TwilioLogic
     @message_body = params["Body"]
     @from_number = params["From"]
 
-    if session[:confirmation_sent] != true
-      session[:confirmation_sent] = false
+    if request.session[:confirmation_sent] != true
+      request.session[:confirmation_sent] = false
     end
     boot_twilio()
 
-    if session[:confirmation_sent] == false
+    if request.session[:confirmation_sent] == false
       send_confirmation()
-      session[:confirmation_sent] = true
+      request.session[:confirmation_sent] = true
     else
       if @message_body.downcase == "yes"
         send_success_response()
       else
         send_cancel_response()
       end
-      session[:confirmation_sent] = false
+      request.session[:confirmation_sent] = false
     end
   end
 
