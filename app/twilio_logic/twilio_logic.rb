@@ -13,7 +13,7 @@ class TwilioLogic
     end
   end
 
-	def reply(params)
+	def reply(params, request)
 
     @message_body = params["Body"]
     @from_number = params["From"]
