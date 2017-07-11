@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
   end
 
   def reply
-    TwilioLogic.new.reply()
+    TwilioLogic.new.reply(params)
   end
 
   def create
