@@ -18,17 +18,21 @@ class TwilioLogic
     @message_body = params["Body"]
     @from_number = params["From"]
 
-    if request.cookies[:confirmation_sent] != true
-      request.cookies[:confirmation_sent] = false
+    if session[:confirmation_sent] != true
+      session[:confirmation_sent] = false
     end
     boot_twilio()
 
-    if request.cookies[:confirmation_sent] == false
+    if session[:confirmation_sent] == false
       send_confirmation()
-      request.cookies[:confirmation_sent] = true
+      session[:confirmation_sent] = true
     else
-      send_success_response()
-      request.cookies[:confirmation_sent] = false
+      if @message_body.downcase == "yes"
+        send_success_response()
+      else
+        send_cancel_response()
+      end
+      session[:confirmation_sent] = false
     end
   end
 
@@ -47,6 +51,14 @@ class TwilioLogic
         from: Rails.application.secrets.twilio_number,
         to: @from_number,
         body: "You Sent Out The Following Message: \n #{@message_body}"
+      )
+  end
+
+  def send_cancel_response
+    sms = @client.messages.create(
+        from: Rails.application.secrets.twilio_number,
+        to: @from_number,
+        body: "You Canceled Sending Out The Following Message: \n #{@message_body}"
       )
   end
  
