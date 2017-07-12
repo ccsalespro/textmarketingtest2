@@ -21,6 +21,9 @@ class MerchantsController < ApplicationController
   def new
     redirect_to root_path unless CreateMerchant.new(current_company_user, current_admin).check
     @company = Company.find_by_subdomain(request.subdomain)
+    boot_twilio()
+    #@numbers = @client.available_phone_numbers.get("US").local.list
+    @numbers = ["+18147933052", "+18145024125", "+18142066292"]
     @merchant = @company.merchants.build
   end
 
@@ -82,6 +85,12 @@ class MerchantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def merchant_params
-      params.require(:merchant).permit(:subdomain, :company_id)
+      params.require(:merchant).permit(:subdomain, :company_id, :phone_number)
+    end
+
+    def boot_twilio
+      account_sid = ENV["TWILIO_SID"]
+      auth_token = ENV["TWILIO_TOKEN"]
+      @client = Twilio::REST::Client.new account_sid, auth_token
     end
 end

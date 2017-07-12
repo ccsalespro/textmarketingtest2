@@ -1,3 +1,10 @@
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/vue"></script>
+
 <%= form_with(model: merchant, local: true) do |form| %>
   <% if merchant.errors.any? %>
     <div id="error_explanation">
@@ -16,7 +23,60 @@
     <%= form.text_field :subdomain, id: :merchant_subdomain %>
   </div>
 
+  <div id="search">
+    <%= form.label "Chosen Phone Number" %>: {{chosen_number.number}}
+    <%= form.hidden_field :phone_number, required: true, "v-model": "chosen_number.number" %>
+
+    <div class="field">
+      <input type="text" name="phonum" v-model="search" v-on:keyup="filteredNumbers" placeholder="Search For Phone Number">
+    </div>
+
+    <div v-for="(number, index) in numbers" v-if="!filtered_numbers">
+      <p v-on:click="chooseNumber(index)" style="cursor: pointer;">{{number.number}}</p>
+    </div>
+    <div v-for="(number, index) in filtered_numbers" v-if="filtered_numbers">
+      <p v-on:click="chooseNumber(index)" style="cursor: pointer;">{{number.number}}</p>
+    </div>
+
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
+
+
+
 <% end %>
+
+
+<script type="text/javascript">
+
+  
+var vue = new Vue({
+  el: '#search',
+  data: {
+        search: '',
+        numbers: [
+        <% @numbers.each do |number| %>
+          { number: "<%= number %>" },
+        <% end -%>
+        ],
+        filtered_numbers: null,
+        chosen_number: ""
+},
+methods:
+{
+    filteredNumbers:function() {
+      var search = this.search
+      this.filtered_numbers = this.numbers.filter(function (number) {
+        var re = new RegExp(search, 'g')
+        return number.number.match(re)
+      })
+    },
+    chooseNumber: function(index) {
+      this.chosen_number = this.numbers[index];
+    }
+}
+})
+
+</script>

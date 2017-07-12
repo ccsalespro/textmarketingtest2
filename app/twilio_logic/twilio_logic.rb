@@ -36,7 +36,6 @@ class TwilioLogic
     end
   end
 
-  private
 
   def send_confirmation
     sms = @client.messages.create(
