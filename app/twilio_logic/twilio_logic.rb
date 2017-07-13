@@ -19,7 +19,7 @@ class TwilioLogic
     @message_body = params["Body"]
     @from_number = params["From"]
 
-    save_message_body(request)
+    save_message_body(request, @message_body)
 
     # Check MerchantUser Permissions
     @merchant_user = MerchantUser.find_by(phone_number: @from_number)
@@ -101,9 +101,9 @@ class TwilioLogic
     return request.session[:confirmation_sent]
   end
 
-  def save_message_body(request)
+  def save_message_body(request, message_body)
     if request.session[:message_body] == ""
-      request.session[:message_body] = @message_body
+      request.session[:message_body] = message_body
     end
     return request.session[:message_body]
   end
