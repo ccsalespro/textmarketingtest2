@@ -62,12 +62,14 @@ class TwilioLogic
       )
   end
 
-  def send_success_response
+  def send_success_response(request)
     sms = @client.messages.create(
         from: Rails.application.secrets.twilio_number,
         to: @from_number,
-        body: "You Sent Out The Following Message: \n #{request.session[:confirmation_sent]}"
+        body: "You Sent Out The Following Message: \n #{request.session[:message_body]}"
       )
+    request.session[:message_body] = ""
+
   end
 
   def send_cancel_response
