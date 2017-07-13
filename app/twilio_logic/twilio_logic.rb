@@ -26,7 +26,7 @@ class TwilioLogic
     if @merchant_user.present?
       @role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
       if @role.merchant_permissions.include?( MerchantPermission.find_by(id: 27) )
-        send_response()
+        send_response(request)
       else
         send_insufficient_permissions_response()
       end
@@ -36,7 +36,7 @@ class TwilioLogic
   end
 
 
-  def send_response
+  def send_response(request)
     set_session_variable(request)
     boot_twilio()
 
