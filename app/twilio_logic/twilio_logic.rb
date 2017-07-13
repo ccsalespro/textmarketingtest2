@@ -45,7 +45,7 @@ class TwilioLogic
       request.session[:confirmation_sent] = true
     else
       if @message_body.downcase == "yes"
-        send_success_response()
+        send_success_response(request)
       else
         send_cancel_response()
       end
