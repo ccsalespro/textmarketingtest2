@@ -23,7 +23,8 @@ class MerchantsController < ApplicationController
     @company = Company.find_by_subdomain(request.subdomain)
     boot_twilio()
     #@numbers = @client.available_phone_numbers.get("US").local.list
-    @numbers = ["+18147933052", "+18145024125", "+18142066292"]
+    @numbers = @client.available_phone_numbers.get('US').local.list()
+    #@numbers = ["+18147933052", "+18145024125", "+18142066292"]
     @merchant = @company.merchants.build
   end
 
@@ -39,6 +40,9 @@ class MerchantsController < ApplicationController
     @company = Company.find_by_subdomain(request.subdomain)
     @merchant = @company.merchants.build(merchant_params)
     LoadRoles.new.load_merchant_roles(@merchant)
+
+    boot_twilio()
+    @client.incoming_phone_numbers.create(:phone_number => @merchant.phone_number)
 
     respond_to do |format|
       if @merchant.save

@@ -40,3 +40,6 @@ MerchantPermission.create(id: 25, name: "Delete Merchant Roles")
 
 # Merchant Permissions
 MerchantPermission.create(id: 26, name: "View Merchant")
+
+# Messages Permissions
+MerchantPermission.create(id: 27, name: "Send Messages")

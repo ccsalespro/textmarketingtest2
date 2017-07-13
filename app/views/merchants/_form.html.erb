@@ -58,7 +58,7 @@ var vue = new Vue({
         search: '',
         numbers: [
         <% @numbers.each do |number| %>
-          { number: "<%= number %>" },
+          { number: "<%= number.phone_number %>" },
         <% end -%>
         ],
         filtered_numbers: null,

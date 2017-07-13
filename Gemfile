@@ -26,7 +26,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
-gem 'twilio-ruby', '~> 5.0.0.rc26'
+gem 'twilio-ruby', '~> 4.13.0'
 
 gem 'devise', '~> 4.3.0'
 gem 'devise_invitable', '~> 1.7.0'

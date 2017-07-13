@@ -15,12 +15,29 @@ class TwilioLogic
 
 	def reply(params, request)
 
+    # Get incoming message info
     @message_body = params["Body"]
     @from_number = params["From"]
 
-    if request.session[:confirmation_sent] != true
-      request.session[:confirmation_sent] = false
+    save_message_body()
+
+    # Check MerchantUser Permissions
+    @merchant_user = MerchantUser.find_by(phone_number: @from_number)
+    if @merchant_user.present?
+      @role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
+      if @role.merchant_permissions.include?( MerchantPermission.find_by(id: 27) )
+        send_response()
+      else
+        send_insufficient_permissions_response()
+      end
+    else
+      send_fail_response()
     end
+  end
+
+
+  def send_response
+    set_session_variable()
     boot_twilio()
 
     if request.session[:confirmation_sent] == false
@@ -49,7 +66,7 @@ class TwilioLogic
     sms = @client.messages.create(
         from: Rails.application.secrets.twilio_number,
         to: @from_number,
-        body: "You Sent Out The Following Message: \n #{@message_body}"
+        body: "You Sent Out The Following Message: \n #{request.session[:confirmation_sent]}"
       )
   end
 
@@ -57,7 +74,15 @@ class TwilioLogic
     sms = @client.messages.create(
         from: Rails.application.secrets.twilio_number,
         to: @from_number,
-        body: "You Canceled Sending Out The Following Message: \n #{@message_body}"
+        body: "Message Canceled"
+      )
+  end
+
+  def send_fail_response
+    sms = @client.messages.create(
+        from: Rails.application.secrets.twilio_number,
+        to: @from_number,
+        body: "Phone Number Not Recognized"
       )
   end
  
@@ -65,6 +90,28 @@ class TwilioLogic
     account_sid = ENV["TWILIO_SID"]
     auth_token = ENV["TWILIO_TOKEN"]
     @client = Twilio::REST::Client.new account_sid, auth_token
+  end
+
+  def set_session_variable
+    if request.session[:confirmation_sent] != true
+      request.session[:confirmation_sent] = false
+    end
+    return request.session[:confirmation_sent]
+  end
+
+  def save_message_body
+    if request.session[:message_body] == ""
+      request.session[:message_body] = @message_body
+    end
+    return request.session[:message_body]
+  end
+
+  def send_insufficient_permissions_response
+    sms = @client.messages.create(
+        from: Rails.application.secrets.twilio_number,
+        to: @from_number,
+        body: "Insufficient Permissions"
+      )
   end
 
 end
