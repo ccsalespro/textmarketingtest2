@@ -15,6 +15,8 @@ class TwilioLogic
 
 	def reply(params, request)
 
+    boot_twilio
+
     # Get incoming message info
     @message_body = params["Body"]
     @from_number = params["From"]
