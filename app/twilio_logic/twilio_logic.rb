@@ -26,17 +26,18 @@ class TwilioLogic
     if @merchant_user.present?
       @role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
       if @role.merchant_permissions.include?( MerchantPermission.find_by(id: 27) )
-        send_response(request)
+        send_response(request, @role, @message_body)
       else
         send_insufficient_permissions_response()
       end
     else
       send_fail_response()
     end
+
   end
 
 
-  def send_response(request)
+  def send_response(request, role, message_body)
     set_session_variable(request)
     boot_twilio()
 
@@ -45,6 +46,7 @@ class TwilioLogic
       request.session[:confirmation_sent] = true
     else
       if @message_body.downcase == "yes"
+        send_out_message(role, message_body)
         send_success_response(request)
       else
         send_cancel_response()
@@ -114,6 +116,17 @@ class TwilioLogic
         to: @from_number,
         body: "Insufficient Permissions"
       )
+  end
+
+  def send_out_message(role, message_body)
+    @merchant = Merchant.find_by(id: role.merchant_id)
+    @merchant.customers.each do |customer|
+      sms = @client.messages.create(
+        from: @merchant.phone_number,
+        to: customer.phone_number,
+        body: message_body
+      )
+    end
   end
 
 end
