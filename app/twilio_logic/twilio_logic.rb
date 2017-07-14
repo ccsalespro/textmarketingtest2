@@ -119,7 +119,7 @@ class TwilioLogic
       )
   end
 
-  def send_out_message(user_role, request)
+  def send_out_message(request, user_role)
     @merchant = Merchant.find_by(id: user_role.merchant_id)
     @merchant.customers.each do |customer|
       sms = @client.messages.create(
