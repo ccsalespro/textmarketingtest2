@@ -37,7 +37,7 @@ class TwilioLogic
   end
 
 
-  def send_response(request, role)
+  def send_response(request, user_role)
     set_session_variable(request)
     boot_twilio()
 
@@ -46,7 +46,7 @@ class TwilioLogic
       request.session[:confirmation_sent] = true
     else
       if @message_body.downcase == "yes"
-        send_out_message(request, role)
+        send_out_message(request, user_role)
         send_success_response(request)
         request.session[:message_body] = ""
       else
@@ -119,8 +119,8 @@ class TwilioLogic
       )
   end
 
-  def send_out_message(role, request)
-    @merchant = Merchant.find_by(id: role.merchant_id)
+  def send_out_message(user_role, request)
+    @merchant = Merchant.find_by(id: user_role.merchant_id)
     @merchant.customers.each do |customer|
       sms = @client.messages.create(
         from: @merchant.phone_number,
