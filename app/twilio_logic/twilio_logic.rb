@@ -26,7 +26,7 @@ class TwilioLogic
     if @merchant_user.present?
       @role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
       if @role.merchant_permissions.include?( MerchantPermission.find_by(id: 27) )
-        send_response(request, @role, @message_body)
+        send_response(request, @role)
       else
         send_insufficient_permissions_response()
       end
@@ -37,7 +37,7 @@ class TwilioLogic
   end
 
 
-  def send_response(request, role, message_body)
+  def send_response(request, role)
     set_session_variable(request)
     boot_twilio()
 
@@ -46,10 +46,12 @@ class TwilioLogic
       request.session[:confirmation_sent] = true
     else
       if @message_body.downcase == "yes"
-        send_out_message(role, message_body)
+        send_out_message(request, role)
         send_success_response(request)
+        request.session[:message_body] = ""
       else
         send_cancel_response()
+        request.session[:message_body] = ""
       end
       request.session[:confirmation_sent] = false
     end
@@ -70,7 +72,6 @@ class TwilioLogic
         to: @from_number,
         body: "You Sent Out The Following Message: \n #{request.session[:message_body]}"
       )
-    request.session[:message_body] = ""
 
   end
 
@@ -118,13 +119,13 @@ class TwilioLogic
       )
   end
 
-  def send_out_message(role, message_body)
+  def send_out_message(role, request)
     @merchant = Merchant.find_by(id: role.merchant_id)
     @merchant.customers.each do |customer|
       sms = @client.messages.create(
         from: @merchant.phone_number,
         to: customer.phone_number,
-        body: message_body
+        body: request.session[:message_body]
       )
     end
   end
