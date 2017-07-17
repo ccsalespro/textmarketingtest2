@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 20170717181025) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone_number"
-    t.string "timeout_end"
+    t.string "timeout_end", default: ""
   end
 
   create_table "messages", force: :cascade do |t|
