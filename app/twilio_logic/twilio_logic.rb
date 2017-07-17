@@ -66,7 +66,7 @@ class TwilioLogic
   end
 
   def check_if_message_sent_in_last_hour(merchant)
-    if merchant.timeout_end > Time.now
+    if merchant.timeout_end > Time.now.to_s
       boot_twilio()
       sms = @client.messages.create(
         from: merchant.phone_number,
