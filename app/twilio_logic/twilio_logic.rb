@@ -28,7 +28,10 @@ class TwilioLogic
     @role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
 
     @merchant = Merchant.find_by(id: @role.merchant_id)
-    check_if_message_sent_in_last_hour(@merchant)
+
+    if request.session[:confirmation_sent] == false
+      check_if_message_sent_in_last_hour(@merchant)
+    end
 
     if @merchant_user.present?
       #@role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
