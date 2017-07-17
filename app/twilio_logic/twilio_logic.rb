@@ -26,18 +26,22 @@ class TwilioLogic
 
     @merchant_user = MerchantUser.find_by(phone_number: @from_number)
     @role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
-
     @merchant = Merchant.find_by(id: @role.merchant_id)
-
-    if request.session[:confirmation_sent] == false
-      check_if_message_sent_in_last_hour(@merchant)
-    end
 
     if @merchant_user.present?
       #@role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
       if @role.merchant_permissions.include?( MerchantPermission.find_by(id: 27) )
-        send_response(request, @role)
-        set_timeout(@merchant)
+        if request.session[:confirmation_sent] == false
+          if check_if_message_sent_in_last_hour(@merchant)
+            send_too_many_messages_error(@role)
+          else
+            send_response(request, @role)
+            set_timeout(@merchant)
+          end
+        else
+          send_response(request, @role)
+          set_timeout(@merchant)
+        end
       else
         send_insufficient_permissions_response(@role)
       end
@@ -68,14 +72,21 @@ class TwilioLogic
     end
   end
 
+  def send_too_many_messages_error(user_role)
+    boot_twilio()
+    @merchant = Merchant.find_by(id: user_role.merchant_id)
+    sms = @client.messages.create(
+        from: @merchant.phone_number,
+        to: @from_number,
+        body: "You Already Sent Out A Message In The Past Hour"
+      )
+  end
+
   def check_if_message_sent_in_last_hour(merchant)
     if merchant.timeout_end > Time.now.to_s
-      boot_twilio()
-      sms = @client.messages.create(
-        from: merchant.phone_number,
-        to: @from_number,
-        body: "You Already Sent A Message In The Last Hour"
-      )
+      return true
+    else
+      return false
     end
   end
 
