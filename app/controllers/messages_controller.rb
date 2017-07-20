@@ -21,7 +21,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = @merchant.messages.build(message_params)
-    TwilioLogic.new.send_message(@merchant, @message)
+    TwilioLogic.new.send_outgoing_message(@merchant, @message)
 
     respond_to do |format|
       if @message.save

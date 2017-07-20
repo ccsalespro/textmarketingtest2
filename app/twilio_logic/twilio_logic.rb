@@ -2,22 +2,23 @@ require 'twilio-ruby'
 
 class TwilioLogic
 
-  def send_message(merchant, message)
-    check_if_message_sent_in_last_hour()
-    boot_twilio()
-    merchant.customers.all.each do |customer|
-      sms = @client.messages.create(
-        from: merchant.phone_number,
-        to: customer.phone_number,
-        body: message.body
-      )
+  def send_outgoing_message(merchant, message)
+    if check_if_message_sent_in_last_hour()
+      boot_twilio()
+      merchant.customers.all.each do |customer|
+        sms = @client.messages.create(
+          from: merchant.phone_number,
+          to: customer.phone_number,
+          body: message.body
+        )
+      end
+    else
+      redirect_to :root_path, notice: "You Already Sent Out A Message In The Past Hour"
     end
   end
 
 	def reply(params, request)
-
     boot_twilio()
-
     # Get incoming message info
     @message_body = params["Body"]
     @from_number = params["From"]
@@ -72,6 +73,14 @@ class TwilioLogic
     end
   end
 
+  def check_if_message_sent_in_last_hour(merchant)
+    if merchant.timeout_end > Time.now.to_s
+      return true
+    else
+      return false
+    end
+  end
+
   def send_too_many_messages_error(user_role)
     boot_twilio()
     @merchant = Merchant.find_by(id: user_role.merchant_id)
@@ -80,14 +89,6 @@ class TwilioLogic
         to: @from_number,
         body: "You Already Sent Out A Message In The Past Hour"
       )
-  end
-
-  def check_if_message_sent_in_last_hour(merchant)
-    if merchant.timeout_end > Time.now.to_s
-      return true
-    else
-      return false
-    end
   end
 
   def set_timeout(merchant)
