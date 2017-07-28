@@ -1,0 +1,7 @@
+<h1>Plan Fields</h1>
+
+<% @company_plan_fields.each do |cpf| %>
+	<p><%= cpf.company_plan_field_type.name %> -- $<%= cpf.amount %></p>
+<% end -%>
+
+<%= link_to "Add Plan Field", new_company_plan_company_plan_field_path(@company_plan) %>

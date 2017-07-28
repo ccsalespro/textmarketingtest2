@@ -1,0 +1,27 @@
+<%= form_for([@company_plan, company_plan_field]) do |form| %>
+  <% if company_plan_field.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(company_plan_field.errors.count, "error") %> prohibited this company_plan_field from being saved:</h2>
+
+      <ul>
+      <% company_plan_field.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.text_field :amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :company_plan_field_type_id %>
+    <%= collection_select(:company_plan_field, :company_plan_field_type_id, @filtered_company_plan_field_types, :id, :name, {:required => true}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

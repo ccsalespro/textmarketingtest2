@@ -1,6 +1,7 @@
 <% if admin_signed_in? %>
 	 <h1>Welcome Admin, <%= current_admin.name %></h1>
 	 <%= link_to "Log Out", destroy_admin_session_path, :method => :delete %>
+	 <%= link_to "Company Plans", company_plans_path %>
 	 <%= link_to "Companies", companies_path %>
 
 <% elsif company_user_signed_in? %>
@@ -22,6 +23,8 @@
 	 <% if @role_permission_names.include?("View Company") %>
 	 	<%= link_to "View Company", company_path(@company) %><br>
 	 <% end -%>
+
+	 <%= link_to "New Merchant Billing Plan", new_company_merchant_billing_plan_path(@company) %>
 
 <% elsif merchant_user_signed_in? %>
 

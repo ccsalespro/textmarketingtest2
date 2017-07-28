@@ -1,0 +1,27 @@
+<%= form_for([@company, merchant_billing_plan]) do |form| %>
+  <% if merchant_billing_plan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(merchant_billing_plan.errors.count, "error") %> prohibited this merchant_billing_plan from being saved:</h2>
+
+      <ul>
+      <% merchant_billing_plan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :service_type_id %>
+    <%= collection_select(:merchant_billing_plan, :service_type_id, @company.service_types, :id, :name, {:required => true}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

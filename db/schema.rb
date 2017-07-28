@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170717181025) do
+ActiveRecord::Schema.define(version: 20170728180104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,9 +37,46 @@ ActiveRecord::Schema.define(version: 20170717181025) do
     t.string "subdomain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "company_plan_id"
+  end
+
+  create_table "company_charges", force: :cascade do |t|
+    t.decimal "amount"
+    t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "company_field_amounts", force: :cascade do |t|
+    t.decimal "amount"
+    t.integer "company_id"
+    t.integer "company_plan_field_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "company_permissions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "company_plan_field_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "company_plan_fields", force: :cascade do |t|
+    t.integer "company_plan_id"
+    t.integer "company_plan_field_type_id"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "company_plans", force: :cascade do |t|
+    t.integer "company_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -107,7 +144,51 @@ ActiveRecord::Schema.define(version: 20170717181025) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "merchant_billing_plans", force: :cascade do |t|
+    t.integer "service_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+  end
+
+  create_table "merchant_charges", force: :cascade do |t|
+    t.decimal "amount"
+    t.integer "merchant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "merchant_field_amounts", force: :cascade do |t|
+    t.decimal "amount"
+    t.integer "merchant_id"
+    t.integer "merchant_plan_field_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "merchant_permissions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "merchant_plan_field_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "merchant_plan_fields", force: :cascade do |t|
+    t.decimal "amount"
+    t.integer "merchant_billing_plan_id"
+    t.integer "merchant_plan_field_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "merchant_plans", force: :cascade do |t|
+    t.integer "merchant_billing_plan_id"
+    t.integer "merchant_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -165,7 +246,7 @@ ActiveRecord::Schema.define(version: 20170717181025) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone_number"
-    t.string "timeout_end", default: "2017-07-17 19:36:29.685441"
+    t.string "timeout_end", default: "2017-07-27 16:34:12.057748"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -174,6 +255,13 @@ ActiveRecord::Schema.define(version: 20170717181025) do
     t.integer "merchant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "service_types", force: :cascade do |t|
+    t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
   end
 
 end

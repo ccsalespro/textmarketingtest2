@@ -7,8 +7,11 @@
 
 <hr>
 <p>Merchants</p>
-<% @company.merchants.each do |merchant| %>
-	<%= merchant.subdomain %>
+<% @company.service_types.each do |service_type| %>
+	<%= service_type.name %><br>
+	<% service_type.merchant_billing_plans.each do |mbp| %>
+		<%= mbp.name %>
+	<% end -%>
 <% end -%>
 <hr>
 

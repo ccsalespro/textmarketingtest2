@@ -16,6 +16,11 @@
     <%= form.text_field :subdomain, id: :company_subdomain %>
   </div>
 
+  <div class="field">
+    <%= form.label :company_plan_id %>
+    <%= collection_select(:company, :company_plan_id, CompanyPlan.all, :id, :name) %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

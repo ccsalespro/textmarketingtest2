@@ -1,0 +1,7 @@
+<h1>Company Plans</h1>
+
+<% @company_plans.each do |company_plan| %>
+	<p><%= company_plan.name %> -- <%= link_to "Show", company_plan %></p>
+<% end -%>
+
+<%= link_to "New Company Plan", new_company_plan_path %>

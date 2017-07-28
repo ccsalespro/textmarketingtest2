@@ -9,13 +9,19 @@ Rails.application.routes.draw do
   devise_for :company_users
 
   resources :merchants
-  resources :companies
+  resources :companies do
+    resources :merchant_billing_plans
+  end
 
   resources :customers
   resources :messages, only: [:new, :create, :show, :index] do
     collection do
       post 'reply'
     end
+  end
+
+  resources :company_plans do
+    resources :company_plan_fields
   end
 
   get 'dashboard/overview'
