@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #before_action :require_admin, if: :devise_controller?
+  before_action :load_merchant, if: :merchant_user_signed_in?
 
   private
 
@@ -36,5 +37,9 @@ class ApplicationController < ActionController::Base
     end
     return @role
   end
+
+   def load_merchant
+      @merchant = Merchant.find_by(id: current_merchant_user.merchant_role.merchant.id)
+    end
 
 end

@@ -8,9 +8,13 @@ Rails.application.routes.draw do
   devise_for :merchant_users
   devise_for :company_users
 
-  resources :merchants
   resources :companies do
-    resources :merchant_billing_plans
+    get 'merchant_billing_plans/choose'
+    resources :merchant_billing_plans do
+      resources :merchants do
+        resources :merchant_plans
+      end
+    end
   end
 
   resources :customers

@@ -1,11 +1,11 @@
 class MerchantUsersController < ApplicationController
 
 	before_action :set_merchant_user, only: [:edit, :update]
+	before_action :load_merchant
 
 	def new_merchant_user
 		redirect_to root_path unless InviteMerchantUser.new(current_merchant_user, current_admin, current_company_user).check
-		merchant = Merchant.find(params[:merchant])
-		@merchant_roles = merchant.merchant_roles
+		@merchant_roles = @merchant.merchant_roles
 	end
 
 	def create_merchant_user

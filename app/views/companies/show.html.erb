@@ -6,11 +6,11 @@
 </p>
 
 <hr>
-<p>Merchants</p>
+<p><b>Merchant Billing Plans:</b></p>
 <% @company.service_types.each do |service_type| %>
-	<%= service_type.name %><br>
+	<p><b><%= service_type.name %></b></p>
 	<% service_type.merchant_billing_plans.each do |mbp| %>
-		<%= mbp.name %>
+		<p><%= mbp.name %></p>
 	<% end -%>
 <% end -%>
 <hr>

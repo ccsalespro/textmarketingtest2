@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728180104) do
+ActiveRecord::Schema.define(version: 20170731172244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -247,6 +247,8 @@ ActiveRecord::Schema.define(version: 20170728180104) do
     t.datetime "updated_at", null: false
     t.string "phone_number"
     t.string "timeout_end", default: "2017-07-27 16:34:12.057748"
+    t.string "name"
+    t.integer "merchant_billing_plan_id"
   end
 
   create_table "messages", force: :cascade do |t|

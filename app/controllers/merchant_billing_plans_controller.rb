@@ -4,17 +4,34 @@ class MerchantBillingPlansController < ApplicationController
   before_action :load_company
 
 	def index
+    redirect_to root_path unless ViewMerchantBillingPlan.new(current_company_user, current_admin).check
 		@service_types = @company.service_types.all
 	end
 
 	def show
+    redirect_to root_path unless ViewMerchantBillingPlan.new(current_company_user, current_admin).check
 	end
 
+  def edit
+    redirect_to root_path unless EditMerchantBillingPlan.new(current_company_user, current_admin).check
+  end
+
 	def new
+    redirect_to root_path unless CreateMerchantBillingPlan.new(current_company_user, current_admin).check
 		@merchant_billing_plan = MerchantBillingPlan.new
 	end
 
+  def choose
+    @merchant_billing_plans = []
+    @company.service_types.each do |st|
+      st.merchant_billing_plans.each do |mbp|
+        @merchant_billing_plans << mbp
+      end 
+    end
+  end
+
 	def create
+    redirect_to root_path unless CreateMerchantBillingPlan.new(current_company_user, current_admin).check
 		@merchant_billing_plan = MerchantBillingPlan.new(merchant_billing_plan_params)
 		respond_to do |format|
       if @merchant_billing_plan.save
@@ -28,6 +45,7 @@ class MerchantBillingPlansController < ApplicationController
 	end
 
 	def update
+    redirect_to root_path unless EditMerchantBillingPlan.new(current_company_user, current_admin).check
     respond_to do |format|
       if @merchant_billing_plan.update(merchant_billing_plan_params)
         format.html { redirect_to @merchant_billing_plan, notice: 'merchant_billing_plan was successfully updated.' }
@@ -40,6 +58,7 @@ class MerchantBillingPlansController < ApplicationController
   end
 
   def destroy
+    redirect_to root_path unless DeleteMerchantBillingPlan.new(current_company_user, current_admin).check
     @merchant_billing_plan.destroy
     respond_to do |format|
       format.html { redirect_to merchant_billing_plans_path, notice: 'merchant_billing_plan was successfully destroyed.' }

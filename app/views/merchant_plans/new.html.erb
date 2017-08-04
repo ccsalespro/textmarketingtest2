@@ -1,0 +1,22 @@
+<%= form_for([@company, @merchant_billing_plan, @merchant, @merchant_plan]) do |form| %>
+  <% if @merchant_plan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@merchant_plan.errors.count, "error") %> prohibited this merchant_plan from being saved:</h2>
+
+      <ul>
+      <% @merchant_plan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :merchant_billing_plan_id %>
+    <%= collection_select(:merchant_plan, :merchant_billing_plan_id, @merchant_billing_plans, :id, :name, {:required => true}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

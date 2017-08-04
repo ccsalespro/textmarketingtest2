@@ -1,5 +1,84 @@
-<h1>New Merchant</h1>
+<h1>Step Two: Create Merchant</h1>
 
-<%= render 'form', merchant: @merchant %>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 
-<%= link_to 'Back', merchants_path %>
+  <script src="https://unpkg.com/vue"></script>
+
+  <script type="text/javascript">
+    
+
+    var vue = new Vue({
+      el: '#search',
+      data: {
+            search: '',
+            numbers: [
+            <% @numbers.each do |number| %>
+              { number: "<%= number.phone_number %>" },
+            <% end -%>
+            ],
+            filtered_numbers: null,
+            chosen_number: ""
+    },
+    methods:
+    {
+        filteredNumbers:function() {
+          var search = this.search
+          this.filtered_numbers = this.numbers.filter(function (number) {
+            var re = new RegExp(search, 'g')
+            return number.number.match(re)
+          })
+        },
+        chooseNumber: function(index) {
+          this.chosen_number = this.numbers[index];
+        }
+    }
+    })
+
+  </script>
+
+<%= form_for([@company, @merchant_billing_plan, @merchant]) do |form| %>
+  <% if @merchant.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@merchant.errors.count, "error") %> prohibited this merchant from being saved:</h2>
+
+      <ul>
+      <% @merchant.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div id="search">
+    <%= form.label "Chosen Phone Number" %>: {{chosen_number.number}}
+    <%= form.hidden_field :phone_number, required: true, "v-model": "chosen_number.number" %>
+    <%= form.hidden_field :merchant_billing_plan_id, value: @merchant_billing_plan.id %>
+
+    <div class="field">
+      <input type="text" name="phonum" v-model="search" v-on:keyup="filteredNumbers" placeholder="Search For Phone Number">
+    </div>
+
+    <div v-for="(number, index) in numbers" v-if="!filtered_numbers">
+      <p v-on:click="chooseNumber(index)" style="cursor: pointer;">{{number.number}}</p>
+    </div>
+    <div v-for="(number, index) in filtered_numbers" v-if="filtered_numbers">
+      <p v-on:click="chooseNumber(index)" style="cursor: pointer;">{{number.number}}</p>
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+
+
+<% end %>

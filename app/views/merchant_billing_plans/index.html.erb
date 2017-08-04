@@ -1,0 +1,11 @@
+<h1>Merchant Billing Plans</h1>
+
+<% @service_types.each do |st| %>
+	<p><b><%= st.name %></b></p>
+	<% st.merchant_billing_plans.each do |mbp| %>
+		<%= link_to mbp.name, company_merchant_billing_plan_path(@company, mbp) %><br>
+	<% end -%>
+<% end -%>
+
+<br><br><hr>
+<%= link_to "New Merchant Billing Plan", new_company_merchant_billing_plan_path(@company) %>

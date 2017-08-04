@@ -43,3 +43,17 @@ MerchantPermission.create(id: 26, name: "View Merchant")
 
 # Messages Permissions
 MerchantPermission.create(id: 27, name: "Send Messages")
+
+
+
+
+CompanyPermission.create(id: 28, name: 'Create Merchant Billing Plan')
+CompanyPermission.create(id: 29, name: 'View Merchant Billing Plan')
+CompanyPermission.create(id: 30, name: 'Edit Merchant Billing Plan')
+CompanyPermission.create(id: 31, name: 'Delete Merchant Billing Plan')
+
+
+MerchantPermission.create(id: 32, name: 'Create Customer')
+MerchantPermission.create(id: 33, name: 'View Customer')
+MerchantPermission.create(id: 34, name: 'Edit Customer')
+MerchantPermission.create(id: 35, name: 'Delete Customer')

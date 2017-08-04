@@ -5,10 +5,10 @@
 
   <script src="https://unpkg.com/vue"></script>
 
-<%= form_with(model: merchant, local: true) do |form| %>
-  <% if merchant.errors.any? %>
+<%= form_for([@company, @merchant_billing_plan, @merchant]) do |form| %>
+  <% if @merchant.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(merchant.errors.count, "error") %> prohibited this merchant from being saved:</h2>
+      <h2><%= pluralize(@merchant.errors.count, "error") %> prohibited this merchant from being saved:</h2>
 
       <ul>
       <% merchant.errors.full_messages.each do |message| %>
@@ -19,13 +19,14 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :subdomain %>
-    <%= form.text_field :subdomain, id: :merchant_subdomain %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
   </div>
 
   <div id="search">
     <%= form.label "Chosen Phone Number" %>: {{chosen_number.number}}
     <%= form.hidden_field :phone_number, required: true, "v-model": "chosen_number.number" %>
+    <%= form.hidden_field :merchant_billing_plan_id, value: @merchant_billing_plan.id %>
 
     <div class="field">
       <input type="text" name="phonum" v-model="search" v-on:keyup="filteredNumbers" placeholder="Search For Phone Number">
@@ -51,7 +52,7 @@
 
 <script type="text/javascript">
 
-  
+
 var vue = new Vue({
   el: '#search',
   data: {

@@ -1,23 +1,27 @@
 class CustomersController < ApplicationController
 
 	before_action :set_customer, only: [:show, :edit, :update, :destroy]
-  before_action :set_merchant
 
 	def index
+    redirect_to root_path unless ViewCustomer.new(current_merchant_user, current_admin).check
 		@customers = @merchant.customers.all
 	end
 
   def show
+     redirect_to root_path unless ViewCustomer.new(current_merchant_user, current_admin).check
   end
 
   def new
+     redirect_to root_path unless CreateCustomer.new(current_merchant_user, current_admin).check
     @customer = @merchant.customers.build
   end
 
   def edit
+     redirect_to root_path unless EditCustomer.new(current_merchant_user, current_admin).check
   end
 
   def create
+     redirect_to root_path unless CreateCustomer.new(current_merchant_user, current_admin).check
     @customer = @merchant.customers.build(customer_params)
 
     respond_to do |format|
@@ -34,6 +38,7 @@ class CustomersController < ApplicationController
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json
   def update
+     redirect_to root_path unless EditCustomer.new(current_merchant_user, current_admin).check
     respond_to do |format|
       if @customer.update(customer_params)
         format.html { redirect_to @customer, notice: 'Customer was successfully updated.' }
@@ -48,6 +53,7 @@ class CustomersController < ApplicationController
   # DELETE /companies/1
   # DELETE /companies/1.json
   def destroy
+     redirect_to root_path unless DeleteCustomer.new(current_merchant_user, current_admin).check
     @customer.destroy
     respond_to do |format|
       format.html { redirect_to root_path, notice: 'Customer was successfully destroyed.' }
@@ -56,10 +62,6 @@ class CustomersController < ApplicationController
   end
 
   private
-
-    def set_merchant
-      @merchant = Merchant.find_by_subdomain(request.subdomain)
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_customer

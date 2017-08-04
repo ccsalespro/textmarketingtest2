@@ -1,12 +1,13 @@
 class MerchantsController < ApplicationController
   before_action :set_merchant, only: [:show, :edit, :update, :destroy]
+  before_action :load_company
+  before_action :load_merchant_billing_plan
 
   # GET /merchants
   # GET /merchants.json
   def index
     redirect_to root_path unless ViewMerchant.new(current_company_user, current_admin).check
-    @company = Company.find_by_subdomain(request.subdomain)
-    @merchants = @company.merchants.all
+    @merchants = []
   end
 
   # GET /merchants/1
@@ -20,12 +21,10 @@ class MerchantsController < ApplicationController
   # GET /merchants/new
   def new
     redirect_to root_path unless CreateMerchant.new(current_company_user, current_admin).check
-    @company = Company.find_by_subdomain(request.subdomain)
+
     boot_twilio()
-    #@numbers = @client.available_phone_numbers.get("US").local.list
     @numbers = @client.available_phone_numbers.get('US').local.list()
-    #@numbers = ["+18147933052", "+18145024125", "+18142066292"]
-    @merchant = @company.merchants.build
+    @merchant = @merchant_billing_plan.merchants.build
   end
 
   # GET /merchants/1/edit
@@ -37,9 +36,13 @@ class MerchantsController < ApplicationController
   # POST /merchants.json
   def create
     redirect_to root_path unless CreateMerchant.new(current_company_user, current_admin).check
-    @company = Company.find_by_subdomain(request.subdomain)
-    @merchant = @company.merchants.build(merchant_params)
+    @merchant = @merchant_billing_plan.merchants.build(merchant_params)
     LoadRoles.new.load_merchant_roles(@merchant)
+
+    @merchant_plan = @merchant.merchant_plans.build
+    @merchant_plan.name = @merchant_billing_plan.name
+    @merchant_plan.merchant_billing_plan_id = @merchant_billing_plan.id
+    @merchant_plan.save
 
     boot_twilio()
     @client.incoming_phone_numbers.create(:phone_number => @merchant.phone_number)
@@ -89,12 +92,20 @@ class MerchantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def merchant_params
-      params.require(:merchant).permit(:subdomain, :company_id, :phone_number)
+      params.require(:merchant).permit(:name, :phone_number, :merchant_billing_plan_id)
     end
 
     def boot_twilio
       account_sid = ENV["TWILIO_SID"]
       auth_token = ENV["TWILIO_TOKEN"]
       @client = Twilio::REST::Client.new account_sid, auth_token
+    end
+
+    def load_company
+      @company = Company.find(params[:company_id])
+    end
+
+    def load_merchant_billing_plan
+      @merchant_billing_plan = MerchantBillingPlan.find(params[:merchant_billing_plan_id])
     end
 end

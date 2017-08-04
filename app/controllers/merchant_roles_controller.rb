@@ -1,6 +1,5 @@
 class MerchantRolesController < ApplicationController
   before_action :set_merchant_role, only: [:show, :edit, :update, :destroy]
-  before_action :set_merchant, only: [:index, :new, :create]
 
   # GET /merchant_roles
   # GET /merchant_roles.json
@@ -89,10 +88,6 @@ class MerchantRolesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_merchant_role
       @merchant_role = MerchantRole.find(params[:id])
-    end
-
-    def set_merchant
-      @merchant = Merchant.find_by_subdomain(request.subdomain)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -12,10 +12,10 @@
 	 	<%= link_to "Invite Company User", company_users_new_company_user_path(company: @company) %><br>
 	 <% end -%>
 	 <% if @role_permission_names.include?("Create Merchants") %>
-	 	<%= link_to "Create Merchant", new_merchant_path %><br>
+	 	<%= link_to "Create Merchant", company_merchant_billing_plans_choose_path(@company) %><br>
 	 <% end -%>
 	 <% if @role_permission_names.include?("View Merchants") %>
-	 	<%= link_to "View Company Merchants", merchants_path %><br>
+	 	<%= link_to "View Company Plans", company_merchant_billing_plans_path(@company) %><br>
 	 <% end -%>
 	 <% if @role_permission_names.include?("View Company Roles") %>
 	 	<%= link_to "View Company Roles", company_roles_path %><br>
@@ -24,22 +24,23 @@
 	 	<%= link_to "View Company", company_path(@company) %><br>
 	 <% end -%>
 
-	 <%= link_to "New Merchant Billing Plan", new_company_merchant_billing_plan_path(@company) %>
+	 <% if CreateMerchantBillingPlan.new(current_company_user, current_admin).check %>
+	 	<%= link_to "New Merchant Billing Plan", new_company_merchant_billing_plan_path(@company) %>
+	 <% end -%>
 
 <% elsif merchant_user_signed_in? %>
 
 	<h1>Welcome Merchant User, <%= current_merchant_user.name %></h1>
 	<%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %><br>
 	<% if @role_permission_names.include?("Invite Merchant Users") %>
-	 	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path(merchant: @merchant) %><br>
+	 	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path() %><br>
 	 <% end -%>
 	<% if @role_permission_names.include?("View Merchant Roles") %>
 	 	<%= link_to "View Merchant Roles", merchant_roles_path %><br>
 	 <% end -%>
-	 <% if @role_permission_names.include?("View Merchant") %>
-	 	<%= link_to "View Merchant", merchant_path(@merchant) %><br>
-	 <% end -%>
 	 	
-	 <%= link_to "New Customer", new_customer_path %><br>
+	 <% if CreateCustomer.new(current_merchant_user, current_admin).check %>
+	 	<%= link_to "New Customer", new_customer_path %><br>
+	 <% end -%>
 
 <% end -%>

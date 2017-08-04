@@ -1,0 +1,6 @@
+<h1><%= @merchant_billing_plan.name %></h1>
+
+<p><b>Merchants:</b></p>
+<% @merchant_billing_plan.merchants.each do |merchant| %>
+	<%= link_to merchant.name, company_merchant_billing_plan_merchant_path(@company, @merchant_billing_plan, merchant) %>
+<% end -%>
