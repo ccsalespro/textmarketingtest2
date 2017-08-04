@@ -1,6 +1,5 @@
 class CompanyRolesController < ApplicationController
   before_action :set_company_role, only: [:show, :edit, :update, :destroy]
-  before_action :set_company, only: [:index, :new, :create]
 
   # GET /company_roles
   # GET /company_roles.json
@@ -88,11 +87,7 @@ class CompanyRolesController < ApplicationController
     def set_company_role
       @company_role = CompanyRole.find(params[:id])
     end
-
-    def set_company
-      @company = Company.find_by_subdomain(request.subdomain)
-    end
-
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def company_role_params
       params.require(:company_role).permit(:name, :company_id)
