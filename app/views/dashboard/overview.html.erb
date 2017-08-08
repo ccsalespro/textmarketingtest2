@@ -32,15 +32,28 @@
 
 	<h1>Welcome Merchant User, <%= current_merchant_user.name %></h1>
 	<%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %><br>
+
 	<% if @role_permission_names.include?("Invite Merchant Users") %>
 	 	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path() %><br>
 	 <% end -%>
+
 	<% if @role_permission_names.include?("View Merchant Roles") %>
 	 	<%= link_to "View Merchant Roles", merchant_roles_path %><br>
 	 <% end -%>
 	 	
 	 <% if CreateCustomer.new(current_merchant_user, current_admin).check %>
-	 	<%= link_to "New Customer", new_customer_path %><br>
+	 	<%= link_to "New Customer", new_merchant_customer_path(@merchant) %><br>
 	 <% end -%>
 
+	 <% if ViewCustomer.new(current_merchant_user, current_admin).check %>
+	 	<%= link_to "View Customers", merchant_customers_path(@merchant) %><br>
+	 <% end -%>
+
+	 <% if SendMessage.new(current_merchant_user, current_admin).check %>
+	 	<%= link_to "Send A Message", new_message_path %><br>
+	 <% end -%>
+
+	 <% if ViewMessage.new(current_merchant_user, current_admin).check %>
+	 	<%= link_to "View Sent Messages", messages_path %>
+	 <% end -%>
 <% end -%>

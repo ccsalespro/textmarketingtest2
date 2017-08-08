@@ -1,4 +1,4 @@
-class MerchantBillingPlanPermissionLogic
+class MessagesPermissionLogic
 
 	def initialize(user, admin)
 	  @user = user

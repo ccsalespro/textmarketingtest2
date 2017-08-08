@@ -36,11 +36,11 @@ class TwilioLogic
           if check_if_message_sent_in_last_hour(@merchant)
             send_too_many_messages_error(@role)
           else
-            send_response(request, @role)
+            send_response(request, @role, @merchant)
             set_timeout(@merchant)
           end
         else
-          send_response(request, @role)
+          send_response(request, @role, @merchant)
           set_timeout(@merchant)
         end
       else
@@ -53,7 +53,7 @@ class TwilioLogic
   end
 
 
-  def send_response(request, user_role)
+  def send_response(request, user_role, merchant)
     set_session_variable(request)
     boot_twilio()
 
@@ -64,6 +64,7 @@ class TwilioLogic
       if @message_body.downcase == "yes"
         send_out_message(request, user_role)
         send_success_response(request, user_role)
+        save_message_to_database(merchant)
         request.session[:message_body] = ""
       else
         send_cancel_response(user_role)
@@ -171,6 +172,12 @@ class TwilioLogic
         body: request.session[:message_body]
       )
     end
+  end
+
+  def save_message_to_database(merchant)
+    @message = merchant.messages.build
+    @message.body = request.session[:message_body]
+    @message.save
   end
 
 end

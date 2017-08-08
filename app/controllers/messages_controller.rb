@@ -2,16 +2,18 @@ class MessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
 	before_action :set_message, only: [:show]
-  before_action :set_merchant
 
 	def index
+    redirect_to root_path unless ViewMessage.new(current_merchant_user, current_admin).check
 		@messages = @merchant.messages.all
 	end
 
   def show
+    redirect_to root_path unless ViewMessage.new(current_merchant_user, current_admin).check
   end
 
   def new
+    redirect_to root_path unless SendMessage.new(current_merchant_user, current_admin).check
     @message = @merchant.messages.build
   end
 
@@ -20,6 +22,7 @@ class MessagesController < ApplicationController
   end
 
   def create
+    redirect_to root_path unless SendMessage.new(current_merchant_user, current_admin).check
     @message = @merchant.messages.build(message_params)
     TwilioLogic.new.send_outgoing_message(@merchant, @message)
 
@@ -35,10 +38,6 @@ class MessagesController < ApplicationController
   end
 
   private
-
-    def set_merchant
-      @merchant = Merchant.find_by_subdomain(request.subdomain)
-    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_message

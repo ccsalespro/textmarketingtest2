@@ -1,6 +1,7 @@
 class CustomersController < ApplicationController
 
 	before_action :set_customer, only: [:show, :edit, :update, :destroy]
+  before_action :load_merchant
 
 	def index
     redirect_to root_path unless ViewCustomer.new(current_merchant_user, current_admin).check
@@ -66,6 +67,10 @@ class CustomersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_customer
       @customer = Customer.find(params[:id])
+    end
+
+    def load_merchant
+      @merchant = Merchant.find(params[:merchant_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

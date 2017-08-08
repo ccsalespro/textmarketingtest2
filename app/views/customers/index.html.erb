@@ -20,9 +20,9 @@
         <td><%= customer.email %></td>
         <td><%= customer.phone_number %></td>
         <td><%= customer.merchant_id %></td>
-        <td><%= link_to 'Show', customer %></td>
-        <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
-        <td><%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', merchant_customer_path(@merchant, customer) %></td>
+        <td><%= link_to 'Edit', edit_merchant_customer_path(@merchant, customer) %></td>
+        <td><%= link_to 'Destroy', merchant_customer_path(@merchant, customer), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New customer', new_customer_path %>
+<%= link_to 'New customer', new_merchant_customer_path(@merchant) %>

@@ -57,3 +57,6 @@ MerchantPermission.create(id: 32, name: 'Create Customer')
 MerchantPermission.create(id: 33, name: 'View Customer')
 MerchantPermission.create(id: 34, name: 'Edit Customer')
 MerchantPermission.create(id: 35, name: 'Delete Customer')
+
+# Messages Permissions
+MerchantPermission.create(id: 36, name: "View Message")
