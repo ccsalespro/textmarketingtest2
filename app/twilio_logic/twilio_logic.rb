@@ -170,8 +170,9 @@ class TwilioLogic
   end
 
   def save_message_to_database(merchant)
-    @message = merchant.messages.build
+    @message = Message.new
     @message.body = request.session[:message_body]
+    @message.merchant_id = merchant.id
     @message.save
   end
 
