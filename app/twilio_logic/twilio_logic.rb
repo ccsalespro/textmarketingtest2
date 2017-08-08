@@ -33,9 +33,9 @@ class TwilioLogic
       #@role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
       if @role.merchant_permissions.include?( MerchantPermission.find_by(id: 27) )
         if request.session[:confirmation_sent] == false
-            send_response(request, @role, @merchant)
+            send_response(request, @role)
         else
-          send_response(request, @role, @merchant)
+          send_response(request, @role)
           set_timeout(@merchant)
         end
       else
@@ -48,7 +48,7 @@ class TwilioLogic
   end
 
 
-  def send_response(request, user_role, merchant)
+  def send_response(request, user_role)
     set_session_variable(request)
     boot_twilio()
 
@@ -59,7 +59,6 @@ class TwilioLogic
       if @message_body.downcase == "yes"
         send_out_message(request, user_role)
         send_success_response(request, user_role)
-        save_message_to_database(merchant)
         request.session[:message_body] = ""
       else
         send_cancel_response(user_role)
@@ -167,6 +166,7 @@ class TwilioLogic
         body: request.session[:message_body]
       )
     end
+    save_message_to_database(@merchant)
   end
 
   def save_message_to_database(merchant)
