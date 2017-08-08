@@ -8,10 +8,10 @@ class MerchantBillingPlanPermissionLogic
 
 	def permission_set(user, admin)
 		if user.present?
-			user_role = MerchantRole.find_by(id: user.merchant_role_id)
-	  	return user_role.merchant_permissions
+			user_role = CompanyRole.find_by(id: user.company_role_id)
+	  	return user_role.company_permissions
 	  elsif admin.present?
-	  	return MerchantPermission.all
+	  	return CompanyPermission.all
 	  else
 	  	return Array([])
 		end
