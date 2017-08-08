@@ -3,7 +3,7 @@ require 'twilio-ruby'
 class TwilioLogic
 
   def send_outgoing_message(merchant, message)
-    if check_if_message_sent_in_last_hour()
+    if check_if_message_sent_in_last_hour(merchant)
       boot_twilio()
       merchant.customers.all.each do |customer|
         sms = @client.messages.create(
