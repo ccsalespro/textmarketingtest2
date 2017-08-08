@@ -33,12 +33,7 @@ class TwilioLogic
       #@role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
       if @role.merchant_permissions.include?( MerchantPermission.find_by(id: 27) )
         if request.session[:confirmation_sent] == false
-          if check_if_message_sent_in_last_hour(@merchant)
-            send_too_many_messages_error(@role)
-          else
             send_response(request, @role, @merchant)
-            set_timeout(@merchant)
-          end
         else
           send_response(request, @role, @merchant)
           set_timeout(@merchant)
