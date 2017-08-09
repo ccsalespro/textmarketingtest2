@@ -37,6 +37,11 @@ gem 'mandrill-api', '~> 1.0', '>= 1.0.53', require: "mandrill"
 
 gem 'stripe', '~> 3.0.1'
 
+gem 'bootstrap', '~> 4.0.0.alpha6'
+gem 'jquery-rails', '~> 4.3.1'
+gem 'jquery-ui-rails', '~> 6.0.1'
+gem "font-awesome-rails", '~> 4.7.0.2'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

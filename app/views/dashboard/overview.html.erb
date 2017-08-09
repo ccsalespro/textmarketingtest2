@@ -1,3 +1,4 @@
+<div class="hidden">
 <% if admin_signed_in? %>
 	 <h1>Welcome Admin, <%= current_admin.name %></h1>
 	 <%= link_to "Log Out", destroy_admin_session_path, :method => :delete %>
@@ -58,3 +59,322 @@
 	 <% end -%>
 
 <% end -%>
+</div>
+
+		<!-- WRAPPER -->
+		<div id="wrapper">
+			<!-- MAIN -->
+			<div class="main">
+				<!-- MAIN CONTENT -->
+				<div class="main-content">
+					<div class="content-heading clearfix">
+						<div class="heading-left">
+							<% if admin_signed_in? %>
+								<h1 style="font-size: 30px;" class="page-title">Welcome, <%= current_admin.name %></h1>
+							<% elsif company_user_signed_in? %>
+								<h1 style="font-size: 30px;" class="page-title">Welcome, <%= current_company_user.name %></h1>
+							<% elsif merchant_user_signed_in? %>
+								<h1 style="font-size: 30px;" class="page-title">Welcome, <%= current_merchant_user.name %></h1>
+							<% else %>
+								<h1 style="font-size: 30px;" class="page-title">Welcome</h1>
+							<% end -%>
+						</div>
+						<button class="btn btn-success float-right">Publish Message</button>
+					</div>
+					<div class="container-fluid">
+						<!-- TOP METRICS -->
+						<div class="row">
+							<div class="col-md-4">
+								<div class="widget widget-metric_1">
+									<span class="icon-wrapper custom-bg-orange"><i class="fa fa-users"></i></span>
+									<div class="right">
+										<span class="value"><%= @merchant_users.count %></span>
+										<span class="title">EMPLOYEES</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="widget widget-metric_1">
+									<span class="icon-wrapper custom-bg-lightseagreen"><i class="fa fa-users"></i></span>
+									<div class="right">
+										<span class="value"><%= @merchant.customers.count %></span>
+										<span class="title">CUSTOMERS</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="widget widget-metric_1">
+									<span class="icon-wrapper custom-bg-blue2"><i class="fa fa-commenting"></i></span>
+									<div class="right">
+										<span class="value"><%= @merchant.messages.count %></span>
+										<span class="title">SENT MESSAGES</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- END TOP METRICS -->
+						<div class="row sortable-grid">
+							<div class="col-lg-6 sortable-item">
+								<div class="panel">
+									<div class="panel-heading">
+										<h3 class="panel-title">Employees</h3>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-12">
+												<table class="table table-minimal table-chat-support datatable">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Email</th>
+															<th>Phone Number</th>
+														</tr>
+													</thead>
+													<tbody>
+													<% @merchant_users.each do |merchant_user| %>
+														<tr>
+															<td><%= merchant_user.name %></td>
+															<td><%= merchant_user.email %></td>
+															<td><%= merchant_user.phone_number %></td>
+														</tr>
+													<% end -%>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END MERCHANT USERS -->
+
+							<div class="col-lg-6 sortable-item">
+								<div class="panel">
+									<div class="panel-heading">
+										<h3 class="panel-title">Customers</h3>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-12">
+												<table class="table table-minimal table-chat-support datatable">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Email</th>
+															<th>Phone Number</th>
+															<th>Messages Received</th>
+														</tr>
+													</thead>
+													<tbody>
+													<% @merchant.customers.first(10).each do |customer| %>
+														<tr>
+															<td><%= customer.name %></td>
+															<td><%= customer.email %></td>
+															<td><%= customer.phone_number %></td>
+															<td>to be added</td>
+														</tr>
+													<% end -%>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END CUSTOMERS -->
+
+							<div class="col-lg-6 sortable-item">
+								<div class="panel">
+									<div class="panel-heading">
+										<h3 class="panel-title">Messages Sent</h3>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-12">
+												<table class="table table-minimal table-chat-support datatable">
+													<thead>
+														<tr>
+															<th>Subject</th>
+															<th>Body</th>
+														</tr>
+													</thead>
+													<tbody>
+													<% @merchant.messages.first(10).each do |message| %>
+														<tr>
+															<td><%= message.subject %></td>
+															<td><%= message.body %></td>
+														</tr>
+													<% end -%>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END MESSAGES SENT -->
+
+							<div class="col-lg-6 sortable-item">
+								<div class="panel">
+									<div class="panel-heading">
+										<h3 class="panel-title">Templates</h3>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-md-12">
+												<table class="table table-minimal table-chat-support datatable">
+													<thead>
+														<tr>
+															<th>Subject</th>
+															<th>Body</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+													<!-- Will be changed to templates -->
+													<% @merchant.messages.first(10).each do |message| %>
+														<tr>
+															<td><%= message.subject %></td>
+															<td><%= message.body %></td>
+															<td><button class="btn btn-success">Publish</button></td>
+														</tr>
+													<% end -%>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END CUSTOMERS -->
+						</div>
+
+				<!-- END MAIN CONTENT -->
+				<!-- RIGHT SIDEBAR -->
+				<div id="sidebar-right" class="right-sidebar">
+					<div class="sidebar-scroll">
+						<div class="sidebar-widget">
+							<h4 class="widget-heading"><i class="fa fa-calendar"></i> TODAY</h4>
+							<p class="date">Wednesday, 22 December</p>
+							<div class="row margin-top-30">
+								<div class="col-xs-4">
+									<a href="#">
+										<div class="icon-transparent-area custom-color-blue first">
+											<i class="fa fa-tasks"></i>
+											<span>Tasks</span>
+											<span class="badge">5</span>
+										</div>
+									</a>
+								</div>
+								<div class="col-xs-4">
+									<a href="#">
+										<div class="icon-transparent-area custom-color-green">
+											<i class="fa fa-envelope"></i>
+											<span>Mail</span>
+											<span class="badge">12</span>
+										</div>
+									</a>
+								</div>
+								<div class="col-xs-4">
+									<a href="#">
+										<div class="icon-transparent-area custom-color-orange last">
+											<i class="fa fa-user-plus"></i>
+											<span>Users</span>
+											<span class="badge">24</span>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="sidebar-widget">
+							<div class="widget-header">
+								<h4 class="widget-heading">YOUR APPS</h4>
+								<a href="#" class="show-all">Show all</a>
+							</div>
+							<div class="row">
+								<div class="col-xs-3">
+									<a href="#" class="icon-app" title="Dropbox" data-toggle="tooltip" data-placement="top">
+										<i class="fa fa-dropbox dropbox-color"></i>
+									</a>
+								</div>
+								<div class="col-xs-3">
+									<a href="#" class="icon-app" title="WordPress" data-toggle="tooltip" data-placement="top">
+										<i class="fa fa-wordpress wordpress-color"></i>
+									</a>
+								</div>
+								<div class="col-xs-3">
+									<a href="#" class="icon-app" title="Drupal" data-toggle="tooltip" data-placement="top">
+										<i class="fa fa-drupal drupal-color"></i>
+									</a>
+								</div>
+								<div class="col-xs-3">
+									<a href="#" class="icon-app" title="Github" data-toggle="tooltip" data-placement="top">
+										<i class="fa fa-github github-color"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="sidebar-widget">
+							<div class="widget-header">
+								<h4 class="widget-heading">MY PROJECTS</h4>
+								<a href="#" class="show-all">Show all</a>
+							</div>
+							<ul class="list-unstyled list-project-progress">
+								<li>
+									<a href="#" class="project-name">Project XY</a>
+									<div class="progress progress-xs progress-transparent custom-color-orange">
+										<div class="progress-bar" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="width:67%"></div>
+									</div>
+									<span class="percentage">67%</span>
+								</li>
+								<li>
+									<a href="#" class="project-name">Growth Campaign</a>
+									<div class="progress progress-xs progress-transparent custom-color-blue">
+										<div class="progress-bar" role="progressbar" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100" style="width:23%"></div>
+									</div>
+									<span class="percentage">23%</span>
+								</li>
+								<li>
+									<a href="#" class="project-name">Website Redesign</a>
+									<div class="progress progress-xs progress-transparent custom-color-green">
+										<div class="progress-bar" role="progressbar" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100" style="width:87%"></div>
+									</div>
+									<span class="percentage">87%</span>
+								</li>
+							</ul>
+						</div>
+						<div class="sidebar-widget">
+							<div class="widget-header">
+								<h4 class="widget-heading">MY FILES</h4>
+								<a href="#" class="show-all">Show all</a>
+							</div>
+							<ul class="list-unstyled list-justify list-file-simple">
+								<li><a href="#"><i class="fa fa-file-word-o"></i>Proposal_draft.docx</a>
+									<span>4 MB</span>
+								</li>
+								<li><a href="#"><i class="fa fa-file-pdf-o"></i>Manual_Guide.pdf</a>
+									<span>20 MB</span>
+								</li>
+								<li><a href="#"><i class="fa fa-file-zip-o"></i>all-project-files.zip</a>
+									<span>315 MB</span>
+								</li>
+								<li><a href="#"><i class="fa fa-file-excel-o"></i>budget_estimate.xls</a>
+									<span>1 MB</span>
+								</li>
+							</ul>
+						</div>
+						<p class="text-center"><a href="#" class="btn btn-default btn-xs">More Widgets</a></p>
+					</div>
+				</div>
+				<!-- END RIGHT SIDEBAR -->
+			</div>
+			<!-- END MAIN -->
+			<div class="clearfix"></div>
+			<footer>
+				<div class="container-fluid">
+					<p class="copyright">&copy; 2017 <a href="https://www.themeineed.com" target="_blank">Theme I Need</a>. All Rights Reserved.</p>
+				</div>
+			</footer>
+		</div>
+		<!-- END WRAPPER -->
+		<!-- Javascript -->
+	
