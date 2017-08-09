@@ -18,6 +18,10 @@ class MerchantUsersController < ApplicationController
 		end
 	end
 
+	def index
+		@merchant_roles = @merchant.merchant_roles.all
+	end
+
 	def edit
 		redirect_to root_path unless EditMerchantUser.new(current_merchant_user, current_admin).check
     merchant = Merchant.find_by(id: @merchant_user.merchant_role.merchant_id)

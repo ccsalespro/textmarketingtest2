@@ -12,7 +12,6 @@ class DashboardController < ApplicationController
 				@merchant_users << merchant_user
 			end
 		end
-		@merchant_users = @merchant_users.first(10)
 
 	end
 end
