@@ -14,4 +14,8 @@ class DashboardController < ApplicationController
 		end
 
 	end
+
+	def landing_page
+	end
+	
 end

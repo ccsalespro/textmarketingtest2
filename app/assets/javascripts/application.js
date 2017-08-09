@@ -14,5 +14,8 @@
 //= require turbolinks
 //= require jquery
 //= require jquery-ui
+//= require owl.carousel
+//= require magnific-popup
+//= require wow
 //= require bootstrap-sprockets
 //= require_tree .

@@ -12,8 +12,18 @@
  *
  *= require jquery-ui
  *= require font-awesome
- *= require_tree .
- *= require_self
+ *= require magnific-popup
+ *= require animate
  */
 
+@import "bootstrap-sprockets";
 @import "bootstrap";
+@import "klorofil-main";
+@import "reen-main";
+@import "reen-animate.min.css";
+@import "reen-green";
+@import "fontello";
+@import "owl.carousel";
+@import "owl.transitions";
+@import "owl.theme";
+@import "custom";

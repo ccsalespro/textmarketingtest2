@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   end
 
   get 'dashboard/overview'
+  get 'dashboard/landing_page'
   root 'dashboard#overview'
 
   get 'company_users/new_company_user'

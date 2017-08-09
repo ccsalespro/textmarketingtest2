@@ -37,10 +37,15 @@ gem 'mandrill-api', '~> 1.0', '>= 1.0.53', require: "mandrill"
 
 gem 'stripe', '~> 3.0.1'
 
-gem 'bootstrap', '~> 4.0.0.alpha6'
+gem 'bootstrap-sass', '~> 3.3.6'
 gem 'jquery-rails', '~> 4.3.1'
 gem 'jquery-ui-rails', '~> 6.0.1'
 gem "font-awesome-rails", '~> 4.7.0.2'
+
+gem 'owlcarousel-rails'
+gem 'magnific-popup-rails', '~> 1.1.0'
+gem 'animate-rails'
+gem 'wow-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

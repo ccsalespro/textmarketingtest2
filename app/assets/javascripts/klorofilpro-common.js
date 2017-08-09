@@ -119,30 +119,6 @@ $(document).ready(function() {
 	});
 
 
-	/*-----------------------------------/
-	/*	SIDEBAR NAVIGATION
-	/*----------------------------------*/
-
-	$('.sidebar a[data-toggle="collapse"]').on('click', function(e) {
-		e.preventDefault();
-	});
-
-	$('#sidebar-right .sidebar-scroll').slimScroll({
-		height: '95%',
-		wheelStep: 10,
-		touchScrollStep: 50,
-		color: 'rgba(160, 174, 186, .4)'
-	});
-
-	// only if layout is not minified
-	if(!$('body').hasClass('sidebar-minified')) {
-		$('#sidebar-nav .sidebar-scroll').slimScroll({
-			height: '95%',
-			wheelStep: 10,
-			touchScrollStep: 50,
-			color: 'rgba(160, 174, 186, .4)'
-		});
-	}
 
 
 	/*-----------------------------------/
