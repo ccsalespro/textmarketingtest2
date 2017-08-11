@@ -64,19 +64,19 @@
 		<!-- WRAPPER -->
 		<div id="wrapper">
 			<!-- MAIN -->
-			<div class="main">
+			<div class="main" style="padding-top: 0px;">
 				<!-- MAIN CONTENT -->
 				<div class="main-content">
 					<div class="content-heading clearfix">
 						<div class="heading-left">
 							<% if admin_signed_in? %>
-								<h1 style="font-size: 30px;" class="page-title">Welcome, <%= current_admin.name %></h1>
+								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_admin.name %></h1>
 							<% elsif company_user_signed_in? %>
-								<h1 style="font-size: 30px;" class="page-title">Welcome, <%= current_company_user.name %></h1>
+								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_company_user.name %></h1>
 							<% elsif merchant_user_signed_in? %>
-								<h1 style="font-size: 30px;" class="page-title">Welcome, <%= current_merchant_user.name %></h1>
+								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_merchant_user.name %></h1>
 							<% else %>
-								<h1 style="font-size: 30px;" class="page-title">Welcome</h1>
+								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome</h1>
 							<% end -%>
 						</div>
 						<%= link_to "Publish Message", new_merchant_message_path(@merchant), class: 'btn btn-success float-right' %>
