@@ -8,6 +8,10 @@ class MerchantBillingPlansController < ApplicationController
 		@service_types = @company.service_types.all
 	end
 
+  def show_all_merchants
+    redirect_to root_path unless ViewMerchantBillingPlan.new(current_company_user, current_admin).check
+  end
+
 	def show
     redirect_to root_path unless ViewMerchantBillingPlan.new(current_company_user, current_admin).check
 	end

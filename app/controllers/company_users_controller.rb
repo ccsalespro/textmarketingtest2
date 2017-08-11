@@ -2,6 +2,10 @@ class CompanyUsersController < ApplicationController
 
 	before_action :set_company_user, only: [:edit, :update]
 
+	def index
+		@company_roles = @company.company_roles.all
+	end
+
 	def new_company_user
 		redirect_to root_path unless InviteCompanyUser.new(current_company_user, current_admin).check
 		company = Company.find(params[:company])

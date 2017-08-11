@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :companies do
     get 'merchant_billing_plans/choose'
+    get 'merchant_billing_plans/show_all_merchants'
     resources :merchant_billing_plans do
       resources :merchants do
         resources :merchant_plans
@@ -32,11 +33,11 @@ Rails.application.routes.draw do
 
   get 'dashboard/overview'
   get 'dashboard/landing_page'
-  root 'dashboard#overview'
+  root 'dashboard#landing_page'
 
   get 'company_users/new_company_user'
   post 'company_users/create_company_user'
-  resources :company_users, only: [:edit, :update]
+  resources :company_users, only: [:index, :edit, :update]
   delete 'company_users/destroy_company_user'
 
   post 'company_roles/add_permission'

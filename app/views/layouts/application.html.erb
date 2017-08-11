@@ -32,7 +32,9 @@
 						
 						<!-- ============================================================= LOGO MOBILE ============================================================= -->
 						
-						<a class="navbar-brand" href="index.html"><%= image_tag "logo.svg", class: 'logo', style: '' %></a>
+						<%= link_to root_path, class: 'navbar-brand' do %>
+							<%= image_tag "logo.svg", class: 'logo', style: '' %>
+						<% end -%>
 						
 						<!-- ============================================================= LOGO MOBILE : END ============================================================= -->
 						
@@ -47,7 +49,9 @@
 							
 							<!-- ============================================================= LOGO ============================================================= -->
 							
-							<a class="navbar-brand" href="index.html"><%= image_tag "logo.svg", class: 'logo' %></a>
+							<%= link_to root_path, class: 'navbar-brand' do %>
+								<%= image_tag "logo.svg", class: 'logo', style: '' %>
+							<% end -%>
 							
 							<!-- ============================================================= LOGO : END ============================================================= -->
 							
@@ -289,15 +293,42 @@
 									</ul><!-- /.dropdown-menu -->
 								</li><!-- /.dropdown -->
 								
-								<li class="dropdown pull-right searchbox">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i></a>
-											  
-									<div class="dropdown-menu">
-										<form id="search" class="navbar-form search" role="search">
-											<input type="search" class="form-control" placeholder="Type to search">
-											<button type="submit" class="btn btn-default btn-submit icon-right-open"></button>
-										</form>
-									</div><!-- /.dropdown-menu -->
+								<li class="dropdown pull-right visible-md visible-lg">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i></a>
+									
+									<ul class="dropdown-menu">
+										<% if merchant_user_signed_in? %>
+											<li><%= link_to "Account", edit_merchant_user_registration_path %></li>
+											<li><%= link_to "Sign Out", destroy_merchant_user_session_path, :method => :delete %></li>
+										<% elsif company_user_signed_in? %>
+											<li><%= link_to "Account", edit_company_user_registration_path %></li>
+											<li><%= link_to "Sign Out", destroy_company_user_session_path, :method => :delete %></li>
+										<% elsif admin_signed_in? %>
+											<li><%= link_to "Companies", companies_path %></li>
+										<% else %>
+											<li><%= link_to "Company Login", company_user_session_path %></li>
+											<li><%= link_to "Merchant Login", merchant_user_session_path %></li>
+										<% end -%>
+									</ul><!-- /.dropdown-menu -->
+								</li><!-- /.searchbox -->
+
+								<li class="dropdown visible-xs visible-sm">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account</a>
+									
+									<ul class="dropdown-menu">
+										<% if merchant_user_signed_in? %>
+											<li><%= link_to "Account Settings", edit_merchant_user_registration_path %></li>
+											<li><%= link_to "Sign Out", destroy_merchant_user_session_path, :method => :delete %></li>
+										<% elsif company_user_signed_in? %>
+											<li><%= link_to "Account Settings", edit_company_user_registration_path %></li>
+											<li><%= link_to "Sign Out", destroy_company_user_session_path, :method => :delete %></li>
+										<% elsif admin_signed_in? %>
+											<li><%= link_to "Companies", companies_path %></li>
+										<% else %>
+											<li><%= link_to "Company Login", company_user_session_path %></li>
+											<li><%= link_to "Merchant Login", merchant_user_session_path %></li>
+										<% end -%>
+									</ul><!-- /.dropdown-menu -->
 								</li><!-- /.searchbox -->
 								
 							</ul><!-- /.nav -->
