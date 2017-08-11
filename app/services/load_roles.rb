@@ -23,7 +23,7 @@ class LoadRoles
 		@all_merchant_permissions = MerchantPermission.all
 
 		@base_role = merchant.merchant_roles.build
-		@base_role.name = "Merchant"
+		@base_role.name = "Employee"
 		@base_role.save
 
 		@admin_role = merchant.merchant_roles.build

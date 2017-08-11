@@ -71,15 +71,7 @@
 				<div class="main-content">
 					<div class="content-heading clearfix">
 						<div class="heading-left">
-							<% if admin_signed_in? %>
-								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_admin.name %></h1>
-							<% elsif company_user_signed_in? %>
-								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_company_user.name %></h1>
-							<% elsif merchant_user_signed_in? %>
 								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_merchant_user.name %></h1>
-							<% else %>
-								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome</h1>
-							<% end -%>
 						</div>
 						<%= link_to "Publish Message", new_merchant_message_path(@merchant), class: 'btn btn-success float-right' %>
 					</div>
@@ -173,7 +165,7 @@
 															<td><%= customer.name %></td>
 															<td><%= customer.email %></td>
 															<td><%= customer.phone_number %></td>
-															<td>to be added</td>
+															<td><%= customer.customer_messages.count %></td>
 														</tr>
 													<% end -%>
 													</tbody>
@@ -238,16 +230,16 @@
 													</thead>
 													<tbody>
 													<!-- Will be changed to templates -->
-													<% @merchant.messages.first(10).each do |message| %>
+													<% @merchant.templates.first(10).each do |template| %>
 														<tr>
-															<td><%= message.subject %></td>
-															<td><%= message.body %></td>
-															<td><button class="btn btn-success">Publish</button></td>
+															<td><%= template.subject %></td>
+															<td><%= template.body %></td>
+															<td><%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm' %></td>
 														</tr>
 													<% end -%>
 													</tbody>
 												</table>
-												<%= link_to "View All", '#', class: 'btn btn-primary' %>
+												<%= link_to "View All", merchant_templates_path(@merchant), class: 'btn btn-primary' %>
 											</div>
 										</div>
 									</div>

@@ -15,6 +15,11 @@ class MessagesController < ApplicationController
   def new
     redirect_to root_path unless SendMessage.new(current_merchant_user, current_admin).check
     @message = @merchant.messages.build
+    if params[:template].present?
+      @template = Template.find_by(id: params[:template].to_i)
+      @message.subject = @template.subject
+      @message.body = @template.body
+    end
   end
 
   def reply
@@ -28,6 +33,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
+        UpdateMessageCount.new.run(@merchant)
         format.html { redirect_to @message, notice: 'message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else

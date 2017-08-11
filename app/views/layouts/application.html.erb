@@ -305,6 +305,8 @@
 											<li><%= link_to "Sign Out", destroy_company_user_session_path, :method => :delete %></li>
 										<% elsif admin_signed_in? %>
 											<li><%= link_to "Companies", companies_path %></li>
+											<li><%= link_to "Company Plans", company_plans_path %></li>
+											<li><%= link_to "Sign Out", destroy_admin_session_path, :method => :delete %></li>
 										<% else %>
 											<li><%= link_to "Company Login", company_user_session_path %></li>
 											<li><%= link_to "Merchant Login", merchant_user_session_path %></li>
@@ -324,6 +326,8 @@
 											<li><%= link_to "Sign Out", destroy_company_user_session_path, :method => :delete %></li>
 										<% elsif admin_signed_in? %>
 											<li><%= link_to "Companies", companies_path %></li>
+											<li><%= link_to "Company Plans", company_plans_path %></li>
+											<li><%= link_to "Sign Out", destroy_admin_session_path, :method => :delete %></li>
 										<% else %>
 											<li><%= link_to "Company Login", company_user_session_path %></li>
 											<li><%= link_to "Merchant Login", merchant_user_session_path %></li>

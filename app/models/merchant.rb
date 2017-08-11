@@ -2,6 +2,7 @@ class Merchant < ApplicationRecord
 	has_many :merchant_roles
 	has_many :customers
 	has_many :messages
+	has_many :templates
 	has_many :merchant_field_amounts
 	has_many :merchant_charges
 
