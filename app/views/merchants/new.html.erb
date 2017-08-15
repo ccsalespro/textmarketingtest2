@@ -4,9 +4,6 @@
     <h1 class="text-center">Step Two: Create Merchant</h1>
 
 
-      <script src="https://unpkg.com/vue"></script>
-
-
     <%= form_for([@company, @merchant_billing_plan, @merchant]) do |form| %>
       <% if @merchant.errors.any? %>
         <div id="error_explanation">
@@ -52,6 +49,8 @@
 
 
       <script type="text/javascript">
+
+      $(document).on('turbolinks:load', function() {
         
 
         var vue = new Vue({
@@ -80,6 +79,8 @@
             }
         }
         })
+
+      });
 
       </script>
   </div>

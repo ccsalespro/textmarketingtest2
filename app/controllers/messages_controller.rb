@@ -34,7 +34,7 @@ class MessagesController < ApplicationController
     respond_to do |format|
       if @message.save
         UpdateMessageCount.new.run(@merchant)
-        format.html { redirect_to @message, notice: 'message was successfully created.' }
+        format.html { redirect_to root_path, notice: 'message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }

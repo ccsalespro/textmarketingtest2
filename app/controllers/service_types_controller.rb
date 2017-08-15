@@ -31,7 +31,7 @@ class ServiceTypesController < ApplicationController
 	def update
     respond_to do |format|
       if @service_type.update(service_type_params)
-        format.html { redirect_to @service_type, notice: 'service_type was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'service_type was successfully updated.' }
         format.json { render :show, status: :ok, location: @service_type }
       else
         format.html { render :edit }

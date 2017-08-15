@@ -49,7 +49,7 @@ class MerchantsController < ApplicationController
 
     respond_to do |format|
       if @merchant.save
-        format.html { redirect_to @merchant, notice: 'Merchant was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Merchant was successfully created.' }
         format.json { render :show, status: :created, location: @merchant }
       else
         format.html { render :new }
@@ -64,7 +64,7 @@ class MerchantsController < ApplicationController
     redirect_to root_path unless EditMerchant.new(current_company_user, current_admin).check
     respond_to do |format|
       if @merchant.update(merchant_params)
-        format.html { redirect_to @merchant, notice: 'Merchant was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Merchant was successfully updated.' }
         format.json { render :show, status: :ok, location: @merchant }
       else
         format.html { render :edit }

@@ -52,7 +52,7 @@ class MerchantBillingPlansController < ApplicationController
     redirect_to root_path unless EditMerchantBillingPlan.new(current_company_user, current_admin).check
     respond_to do |format|
       if @merchant_billing_plan.update(merchant_billing_plan_params)
-        format.html { redirect_to @merchant_billing_plan, notice: 'merchant_billing_plan was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'merchant_billing_plan was successfully updated.' }
         format.json { render :show, status: :ok, location: @merchant_billing_plan }
       else
         format.html { render :edit }
