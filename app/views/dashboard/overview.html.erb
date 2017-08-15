@@ -1,418 +1,528 @@
-<div class="hidden">
-<% if admin_signed_in? %>
-	 <h1>Welcome Admin, <%= current_admin.name %></h1>
-	 <%= link_to "Log Out", destroy_admin_session_path, :method => :delete %>
-	 <%= link_to "Company Plans", company_plans_path %>
-	 <%= link_to "Companies", companies_path %>
+<div class="overview-page">
+	<div class="hidden">
+	<% if admin_signed_in? %>
+		 <h1>Welcome Admin, <%= current_admin.name %></h1>
+		 <%= link_to "Log Out", destroy_admin_session_path, :method => :delete %>
+		 <%= link_to "Company Plans", company_plans_path %>
+		 <%= link_to "Companies", companies_path %>
 
-<% elsif company_user_signed_in? %>
+	<% elsif company_user_signed_in? %>
 
-	<h1>Welcome Company User, <%= current_company_user.name %></h1>
-	 <%= link_to "Log Out", destroy_company_user_session_path, :method => :delete %><br>
-	 <% if @role_permission_names.include?("Invite Company Users") %>
-	 	<%= link_to "Invite Company User", company_users_new_company_user_path(company: @company) %><br>
-	 <% end -%>
-	 <% if @role_permission_names.include?("Create Merchants") %>
-	 	<%= link_to "Create Merchant", company_merchant_billing_plans_choose_path(@company) %><br>
-	 <% end -%>
-	 <% if @role_permission_names.include?("View Merchants") %>
-	 	<%= link_to "View Company Plans", company_merchant_billing_plans_path(@company) %><br>
-	 <% end -%>
-	 <% if @role_permission_names.include?("View Company Roles") %>
-	 	<%= link_to "View Company Roles", company_roles_path %><br>
-	 <% end -%>
-	 <% if @role_permission_names.include?("View Company") %>
-	 	<%= link_to "View Company", company_path(@company) %><br>
-	 <% end -%>
+		<h1>Welcome Company User, <%= current_company_user.name %></h1>
+		 <%= link_to "Log Out", destroy_company_user_session_path, :method => :delete %><br>
+		 <% if @role_permission_names.include?("Invite Company Users") %>
+		 	<%= link_to "Invite Company User", company_users_new_company_user_path(company: @company) %><br>
+		 <% end -%>
+		 <% if @role_permission_names.include?("Create Merchants") %>
+		 	<%= link_to "Create Merchant", company_merchant_billing_plans_choose_path(@company) %><br>
+		 <% end -%>
+		 <% if @role_permission_names.include?("View Merchants") %>
+		 	<%= link_to "View Company Plans", company_merchant_billing_plans_path(@company) %><br>
+		 <% end -%>
+		 <% if @role_permission_names.include?("View Company Roles") %>
+		 	<%= link_to "View Company Roles", company_roles_path %><br>
+		 <% end -%>
+		 <% if @role_permission_names.include?("View Company") %>
+		 	<%= link_to "View Company", company_path(@company) %><br>
+		 <% end -%>
 
-	 <% if CreateMerchantBillingPlan.new(current_company_user, current_admin).check %>
-	 	<%= link_to "New Merchant Billing Plan", new_company_merchant_billing_plan_path(@company) %>
-	 <% end -%>
+		 <% if CreateMerchantBillingPlan.new(current_company_user, current_admin).check %>
+		 	<%= link_to "New Merchant Billing Plan", new_company_merchant_billing_plan_path(@company) %>
+		 <% end -%>
 
-<% elsif merchant_user_signed_in? %>
+	<% elsif merchant_user_signed_in? %>
 
-	<h1>Welcome Merchant User, <%= current_merchant_user.name %></h1>
-	<%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %><br>
+		<h1>Welcome Merchant User, <%= current_merchant_user.name %></h1>
+		<%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %><br>
 
-	<% if @role_permission_names.include?("Invite Merchant Users") %>
-	 	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path() %><br>
-	 <% end -%>
+		<% if @role_permission_names.include?("Invite Merchant Users") %>
+		 	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path() %><br>
+		 <% end -%>
 
-	<% if @role_permission_names.include?("View Merchant Roles") %>
-	 	<%= link_to "View Merchant Roles", merchant_roles_path %><br>
-	 <% end -%>
-	 	
-	 <% if CreateCustomer.new(current_merchant_user, current_admin).check %>
-	 	<%= link_to "New Customer", new_merchant_customer_path(@merchant) %><br>
-	 <% end -%>
+		<% if @role_permission_names.include?("View Merchant Roles") %>
+		 	<%= link_to "View Merchant Roles", merchant_roles_path %><br>
+		 <% end -%>
+		 	
+		 <% if CreateCustomer.new(current_merchant_user, current_admin).check %>
+		 	<%= link_to "New Customer", new_merchant_customer_path(@merchant) %><br>
+		 <% end -%>
 
-	 <% if ViewCustomer.new(current_merchant_user, current_admin).check %>
-	 	<%= link_to "View Customers", merchant_customers_path(@merchant) %><br>
-	 <% end -%>
+		 <% if ViewCustomer.new(current_merchant_user, current_admin).check %>
+		 	<%= link_to "View Customers", merchant_customers_path(@merchant) %><br>
+		 <% end -%>
 
-	 <% if SendMessage.new(current_merchant_user, current_admin).check %>
-	 	<%= link_to "Send A Message", new_merchant_message_path(@merchant) %><br>
-	 <% end -%>
+		 <% if SendMessage.new(current_merchant_user, current_admin).check %>
+		 	<%= link_to "Send A Message", new_merchant_message_path(@merchant) %><br>
+		 <% end -%>
 
-	 <% if ViewMessage.new(current_merchant_user, current_admin).check %>
-	 	<%= link_to "View Sent Messages", merchant_messages_path(@merchant) %>
-	 <% end -%>
+		 <% if ViewMessage.new(current_merchant_user, current_admin).check %>
+		 	<%= link_to "View Sent Messages", merchant_messages_path(@merchant) %>
+		 <% end -%>
 
-<% end -%>
-</div>
+	<% end -%>
+	</div>
 
-<% if merchant_user_signed_in? %>
+	<% if merchant_user_signed_in? %>
+
+			<!-- WRAPPER -->
+			<div id="wrapper">
+				<!-- MAIN -->
+				<div class="main" style="padding-top: 0px;">
+					<!-- MAIN CONTENT -->
+					<div class="main-content">
+						<div class="content-heading clearfix">
+							<div class="heading-left">
+									<h1 style="font-size: 30px; padding-top: 15px;" class="page-title black-text">Welcome, <%= current_merchant_user.name %></h1>
+							</div>
+							<%= link_to "Publish Message", new_merchant_message_path(@merchant), class: 'btn btn-primary float-right' %>
+						</div>
+						<div class="container-fluid">
+							<!-- TOP METRICS -->
+							<div class="row">
+								<div class="col-md-4">
+									<div class="widget widget-metric_1 blue-background">
+										<span class="icon-wrapper"><i class="fa fa-users" style="font-size: 30px;"></i></span>
+										<div class="right">
+											<span class="value white-text"><%= @merchant_users.count %></span>
+											<span class="title white-text">EMPLOYEES</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="widget widget-metric_1 green-background">
+										<span class="icon-wrapper"><i class="fa fa-users" style="font-size: 30px;"></i></span>
+										<div class="right">
+											<span class="value white-text"><%= @merchant.customers.count %></span>
+											<span class="title white-text">CUSTOMERS</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="widget widget-metric_1 red-background">
+										<span class="icon-wrapper"><i class="fa fa-commenting" style="font-size: 30px;"></i></span>
+										<div class="right">
+											<span class="value white-text"><%= @merchant.messages.count %></span>
+											<span class="title white-text">SENT MESSAGES</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- END TOP METRICS -->
+							<div class="row" id="grid">
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading blue-background">
+											<h3 class="panel-title white-text">Employees</h3>
+											<p class="pull-right" id="employees-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="employees">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Email</th>
+																<th>Phone Number</th>
+															</tr>
+														</thead>
+														<tbody>
+														<% @merchant_users.first(10).each do |merchant_user| %>
+															<tr>
+																<td><%= merchant_user.name %></td>
+																<td><%= merchant_user.email %></td>
+																<td><%= merchant_user.phone_number %></td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+													
+												</div>
+											</div>
+										</div>
+										<div class="panel-footer"><%= link_to "View All", merchant_users_path, class: 'btn btn-primary' %></div>
+									</div>
+								</div>
+								<!-- END MERCHANT USERS -->
+
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading green-background">
+											<h3 class="panel-title white-text">Customers</h3>
+											<p class="pull-right" id="customers-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="customers">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Email</th>
+																<th>Phone Number</th>
+																<th>Messages Received</th>
+															</tr>
+														</thead>
+														<tbody>
+														<% @merchant.customers.first(10).each do |customer| %>
+															<tr>
+																<td><%= customer.name %></td>
+																<td><%= customer.email %></td>
+																<td><%= customer.phone_number %></td>
+																<td><%= customer.customer_messages.count %></td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="panel-footer"><%= link_to "View All", merchant_customers_path(@merchant), class: 'btn btn-primary' %></div>
+									</div>
+								</div>
+								<!-- END CUSTOMERS -->
+
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading red-background">
+											<h3 class="panel-title white-text">Messages Sent</h3>
+											<p class="pull-right" id="messages-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="messages">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Subject</th>
+																<th>Body</th>
+															</tr>
+														</thead>
+														<tbody>
+														<% @merchant.messages.first(10).each do |message| %>
+															<tr>
+																<td><%= message.subject %></td>
+																<td><%= message.body %></td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="panel-footer"><%= link_to "View All", merchant_messages_path(@merchant), class: 'btn btn-primary' %></div>
+									</div>
+								</div>
+								<!-- END MESSAGES SENT -->
+
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading orange-background">
+											<h3 class="panel-title white-text">Templates</h3>
+											<p class="pull-right" id="templates-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="templates">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Subject</th>
+																<th>Body</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+														<!-- Will be changed to templates -->
+														<% @merchant.templates.first(10).each do |template| %>
+															<tr>
+																<td><%= template.subject %></td>
+																<td><%= template.body %></td>
+																<td><%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm' %></td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="panel-footer"><%= link_to "View All", merchant_templates_path(@merchant), class: 'btn btn-primary' %></div>
+									</div>
+								</div>
+								<!-- END TEMPLATES -->
+							</div>
+
+					<!-- END MAIN CONTENT -->
+				</div>
+				<!-- END MAIN -->
+				<div class="clearfix"></div>
+
+	<% elsif company_user_signed_in? %>
 
 		<!-- WRAPPER -->
-		<div id="wrapper">
-			<!-- MAIN -->
-			<div class="main" style="padding-top: 0px;">
-				<!-- MAIN CONTENT -->
-				<div class="main-content">
-					<div class="content-heading clearfix">
-						<div class="heading-left">
-								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title black-text">Welcome, <%= current_merchant_user.name %></h1>
+			<div id="wrapper">
+				<!-- MAIN -->
+				<div class="main" style="padding-top: 0px;">
+					<!-- MAIN CONTENT -->
+					<div class="main-content">
+						<div class="content-heading clearfix">
+							<div class="heading-left">
+									<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_company_user.name %></h1>
+							</div>
+							<%= link_to "Create New Merchant", company_merchant_billing_plans_choose_path(@company), class: 'btn btn-primary float-right' %>
 						</div>
-						<%= link_to "Publish Message", new_merchant_message_path(@merchant), class: 'btn btn-primary float-right' %>
-					</div>
-					<div class="container-fluid">
-						<!-- TOP METRICS -->
-						<div class="row">
-							<div class="col-md-4">
-								<div class="widget widget-metric_1 blue-background">
-									<span class="icon-wrapper"><i class="fa fa-users" style="font-size: 30px;"></i></span>
-									<div class="right">
-										<span class="value white-text"><%= @merchant_users.count %></span>
-										<span class="title white-text">EMPLOYEES</span>
+						<div class="container-fluid">
+							<!-- TOP METRICS -->
+							<div class="row">
+								<div class="col-md-4">
+									<div class="widget widget-metric_1 blue-background">
+										<span class="icon-wrapper"><i style="font-size: 30px;" class="fa fa-users"></i></span>
+										<div class="right">
+											<span class="value white-text"><%= @company_users.count %></span>
+											<span class="title white-text">EMPLOYEES</span>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="widget widget-metric_1 green-background">
-									<span class="icon-wrapper"><i class="fa fa-users" style="font-size: 30px;"></i></span>
-									<div class="right">
-										<span class="value white-text"><%= @merchant.customers.count %></span>
-										<span class="title white-text">CUSTOMERS</span>
+								<div class="col-md-4">
+									<div class="widget widget-metric_1 green-background">
+										<span class="icon-wrapper"><i style="font-size: 30px;" class="fa fa-users"></i></span>
+										<div class="right">
+											<span class="value white-text"><%= @merchants.count %></span>
+											<span class="title white-text">MERCHANTS</span>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="widget widget-metric_1 red-background">
-									<span class="icon-wrapper"><i class="fa fa-commenting" style="font-size: 30px;"></i></span>
-									<div class="right">
-										<span class="value white-text"><%= @merchant.messages.count %></span>
-										<span class="title white-text">SENT MESSAGES</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- END TOP METRICS -->
-						<div class="row" id="boxes">
-							<div class="col-lg-6 sortable-item">
-								<div class="panel">
-									<div class="panel-heading blue-background">
-										<h3 class="panel-title white-text">Employees</h3>
-									</div>
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-md-12">
-												<table class="table table-minimal table-chat-support datatable">
-													<thead>
-														<tr>
-															<th>Name</th>
-															<th>Email</th>
-															<th>Phone Number</th>
-														</tr>
-													</thead>
-													<tbody>
-													<% @merchant_users.first(10).each do |merchant_user| %>
-														<tr>
-															<td><%= merchant_user.name %></td>
-															<td><%= merchant_user.email %></td>
-															<td><%= merchant_user.phone_number %></td>
-														</tr>
-													<% end -%>
-													</tbody>
-												</table>
-												<%= link_to "View All", merchant_users_path, class: 'btn btn-primary' %>
-											</div>
+								<div class="col-md-4">
+									<div class="widget widget-metric_1 red-background">
+										<span class="icon-wrapper"><i style="font-size: 30px;" class="fa fa-commenting"></i></span>
+										<div class="right">
+											<span class="value white-text"><%= @merchant_billing_plans.count %></span>
+											<span class="title white-text">MERCHANT PLANS</span>
 										</div>
 									</div>
 								</div>
 							</div>
-							<!-- END MERCHANT USERS -->
-
-							<div class="col-lg-6 sortable-item">
-								<div class="panel">
-									<div class="panel-heading green-background">
-										<h3 class="panel-title white-text">Customers</h3>
-									</div>
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-md-12">
-												<table class="table table-minimal table-chat-support datatable">
-													<thead>
-														<tr>
-															<th>Name</th>
-															<th>Email</th>
-															<th>Phone Number</th>
-															<th>Messages Received</th>
-														</tr>
-													</thead>
-													<tbody>
-													<% @merchant.customers.first(10).each do |customer| %>
-														<tr>
-															<td><%= customer.name %></td>
-															<td><%= customer.email %></td>
-															<td><%= customer.phone_number %></td>
-															<td><%= customer.customer_messages.count %></td>
-														</tr>
-													<% end -%>
-													</tbody>
-												</table>
-												<%= link_to "View All", merchant_customers_path(@merchant), class: 'btn btn-primary' %>
+							<!-- END TOP METRICS -->
+							<div class="row">
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading blue-background">
+											<h3 class="panel-title white-text">Employees</h3>
+											<p class="pull-right" id="employees-company-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="employees-company">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Email</th>
+																<th>Phone Number</th>
+															</tr>
+														</thead>
+														<tbody>
+														<% @company_users.first(10).each do |company_user| %>
+															<tr>
+																<td><%= company_user.name %></td>
+																<td><%= company_user.email %></td>
+																<td><%= company_user.phone_number %></td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+												</div>
 											</div>
 										</div>
+										<div class="panel-footer"><%= link_to "View All", company_users_path, class: 'btn btn-primary' %></div>
 									</div>
 								</div>
-							</div>
-							<!-- END CUSTOMERS -->
+								<!-- END MERCHANT USERS -->
 
-							<div class="col-lg-6 sortable-item">
-								<div class="panel">
-									<div class="panel-heading red-background">
-										<h3 class="panel-title white-text">Messages Sent</h3>
-									</div>
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-md-12">
-												<table class="table table-minimal table-chat-support datatable">
-													<thead>
-														<tr>
-															<th>Subject</th>
-															<th>Body</th>
-														</tr>
-													</thead>
-													<tbody>
-													<% @merchant.messages.first(10).each do |message| %>
-														<tr>
-															<td><%= message.subject %></td>
-															<td><%= message.body %></td>
-														</tr>
-													<% end -%>
-													</tbody>
-												</table>
-												<%= link_to "View All", merchant_messages_path(@merchant), class: 'btn btn-primary' %>
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading green-background">
+											<h3 class="panel-title white-text">Merchants</h3>
+											<p class="pull-right" id="merchants-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="merchants">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Phone Number</th>
+															</tr>
+														</thead>
+														<tbody>
+														<% @merchants.first(10).each do |merchant| %>
+															<tr>
+																<td><%= merchant.name %></td>
+																<td><%= merchant.phone_number %></td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+												</div>
 											</div>
 										</div>
+										<div class="panel-footer"><%= link_to "View All",  company_merchant_billing_plans_show_all_merchants_path(@company), class: 'btn btn-primary' %></div>
 									</div>
 								</div>
 							</div>
-							<!-- END MESSAGES SENT -->
+								<!-- END CUSTOMERS -->
 
-							<div class="col-lg-6 sortable-item">
-								<div class="panel">
-									<div class="panel-heading orange-background">
-										<h3 class="panel-title white-text">Templates</h3>
-									</div>
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-md-12">
-												<table class="table table-minimal table-chat-support datatable">
-													<thead>
-														<tr>
-															<th>Subject</th>
-															<th>Body</th>
-															<th></th>
-														</tr>
-													</thead>
-													<tbody>
-													<!-- Will be changed to templates -->
-													<% @merchant.templates.first(10).each do |template| %>
-														<tr>
-															<td><%= template.subject %></td>
-															<td><%= template.body %></td>
-															<td><%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm' %></td>
-														</tr>
-													<% end -%>
-													</tbody>
-												</table>
-												<%= link_to "View All", merchant_templates_path(@merchant), class: 'btn btn-primary' %>
+							<div class="row">
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading red-background">
+											<h3 class="panel-title white-text">Merchant Plans</h3>
+											<p class="pull-right" id="merchant-plans-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="merchant-plans">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Name</th>
+															</tr>
+														</thead>
+														<tbody>
+														<% @merchant_billing_plans.first(10).each do |merchant_billing_plan| %>
+															<tr>
+																<td><%= merchant_billing_plan.name %></td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+												</div>
 											</div>
 										</div>
+										<div class="panel-footer"><%= link_to "View All", company_merchant_billing_plans_path(@company), class: 'btn btn-primary' %></div>
 									</div>
 								</div>
+								<!-- END MESSAGES SENT -->
+
+						
 							</div>
-							<!-- END TEMPLATES -->
-						</div>
 
-				<!-- END MAIN CONTENT -->
-			</div>
-			<!-- END MAIN -->
-			<div class="clearfix"></div>
-
-<% elsif company_user_signed_in? %>
-
-	<!-- WRAPPER -->
-		<div id="wrapper">
-			<!-- MAIN -->
-			<div class="main" style="padding-top: 0px;">
-				<!-- MAIN CONTENT -->
-				<div class="main-content">
-					<div class="content-heading clearfix">
-						<div class="heading-left">
-								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_company_user.name %></h1>
-						</div>
-						<%= link_to "Create New Merchant", company_merchant_billing_plans_choose_path(@company), class: 'btn btn-primary float-right' %>
-					</div>
-					<div class="container-fluid">
-						<!-- TOP METRICS -->
-						<div class="row">
-							<div class="col-md-4">
-								<div class="widget widget-metric_1 blue-background">
-									<span class="icon-wrapper"><i style="font-size: 30px;" class="fa fa-users"></i></span>
-									<div class="right">
-										<span class="value white-text"><%= @company_users.count %></span>
-										<span class="title white-text">EMPLOYEES</span>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="widget widget-metric_1 green-background">
-									<span class="icon-wrapper"><i style="font-size: 30px;" class="fa fa-users"></i></span>
-									<div class="right">
-										<span class="value white-text"><%= @merchants.count %></span>
-										<span class="title white-text">MERCHANTS</span>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="widget widget-metric_1 red-background">
-									<span class="icon-wrapper"><i style="font-size: 30px;" class="fa fa-commenting"></i></span>
-									<div class="right">
-										<span class="value white-text"><%= @merchant_billing_plans.count %></span>
-										<span class="title white-text">MERCHANT PLANS</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- END TOP METRICS -->
-						<div class="row">
-							<div class="col-lg-6 sortable-item">
-								<div class="panel">
-									<div class="panel-heading blue-background">
-										<h3 class="panel-title white-text">Employees</h3>
-									</div>
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-md-12">
-												<table class="table table-minimal table-chat-support datatable">
-													<thead>
-														<tr>
-															<th>Name</th>
-															<th>Email</th>
-															<th>Phone Number</th>
-														</tr>
-													</thead>
-													<tbody>
-													<% @company_users.first(10).each do |company_user| %>
-														<tr>
-															<td><%= company_user.name %></td>
-															<td><%= company_user.email %></td>
-															<td><%= company_user.phone_number %></td>
-														</tr>
-													<% end -%>
-													</tbody>
-												</table>
-												<%= link_to "View All", company_users_path, class: 'btn btn-primary' %>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- END MERCHANT USERS -->
-
-							<div class="col-lg-6 sortable-item">
-								<div class="panel">
-									<div class="panel-heading green-background">
-										<h3 class="panel-title white-text">Merchants</h3>
-									</div>
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-md-12">
-												<table class="table table-minimal table-chat-support datatable">
-													<thead>
-														<tr>
-															<th>Name</th>
-															<th>Phone Number</th>
-														</tr>
-													</thead>
-													<tbody>
-													<% @merchants.first(10).each do |merchant| %>
-														<tr>
-															<td><%= merchant.name %></td>
-															<td><%= merchant.phone_number %></td>
-														</tr>
-													<% end -%>
-													</tbody>
-												</table>
-												<%= link_to "View All",  company_merchant_billing_plans_show_all_merchants_path(@company), class: 'btn btn-primary' %>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-							<!-- END CUSTOMERS -->
-
-						<div class="row">
-							<div class="col-lg-6 sortable-item">
-								<div class="panel">
-									<div class="panel-heading red-background">
-										<h3 class="panel-title white-text">Merchant Plans</h3>
-									</div>
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-md-12">
-												<table class="table table-minimal table-chat-support datatable">
-													<thead>
-														<tr>
-															<th>Name</th>
-														</tr>
-													</thead>
-													<tbody>
-													<% @merchant_billing_plans.first(10).each do |merchant_billing_plan| %>
-														<tr>
-															<td><%= merchant_billing_plan.name %></td>
-														</tr>
-													<% end -%>
-													</tbody>
-												</table>
-												<%= link_to "View All", company_merchant_billing_plans_path(@company), class: 'btn btn-primary' %>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- END MESSAGES SENT -->
-
-					
-						</div>
-
-				<!-- END MAIN CONTENT -->
-			</div>
-			<!-- END MAIN -->
-			<div class="clearfix"></div>
-<% else %>
-
-<% end -%>
-
-			<footer>
-				<div class="container-fluid">
-					<p class="copyright">&copy; 2017 Text Marketing Reseller, LLC. All Rights Reserved.</p>
+					<!-- END MAIN CONTENT -->
 				</div>
-			</footer>
-		</div>
-		<!-- END WRAPPER -->
-		<!-- Javascript -->
-	
+				<!-- END MAIN -->
+				<div class="clearfix"></div>
+	<% else %>
+
+	<% end -%>
+
+				<footer>
+					<div class="container-fluid">
+						<p class="copyright">&copy; 2017 Text Marketing Reseller, LLC. All Rights Reserved.</p>
+					</div>
+				</footer>
+			</div>
+			<!-- END WRAPPER -->
+			<!-- Javascript -->
+</div>
+
+
+<script type="text/javascript">
+	$('#employees-toggle').click(function() {
+		if ($('#employees').hasClass('slide-up')) {
+			$('#employees').toggleClass('slide-down');
+		} else {
+			$('#employees').toggleClass('slide-up');
+		};
+
+		if ($('#employees-toggle').html() == '<i class="fa fa-arrow-down" aria-hidden="true"></i>') {
+			$('#employees-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
+		} else {
+			$('#employees-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
+		};
+	});
+
+	$('#customers-toggle').click(function() {
+		if ($('#customers').hasClass('slide-up')) {
+			$('#customers').toggleClass('slide-down');
+		} else {
+			$('#customers').toggleClass('slide-up');
+		};
+
+		if ($('#customers-toggle').html() == '<i class="fa fa-arrow-down" aria-hidden="true"></i>') {
+			$('#customers-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
+		} else {
+			$('#customers-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
+		};
+	});
+
+	$('#messages-toggle').click(function() {
+		if ($('#messages').hasClass('slide-up')) {
+			$('#messages').toggleClass('slide-down');
+		} else {
+			$('#messages').toggleClass('slide-up');
+		};
+
+		if ($('#messages-toggle').html() == '<i class="fa fa-arrow-down" aria-hidden="true"></i>') {
+			$('#messages-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
+		} else {
+			$('#messages-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
+		};
+	});
+
+	$('#templates-toggle').click(function() {
+		if ($('#templates').hasClass('slide-up')) {
+			$('#templates').toggleClass('slide-down');
+		} else {
+			$('#templates').toggleClass('slide-up');
+		};
+
+		if ($('#templates-toggle').html() == '<i class="fa fa-arrow-down" aria-hidden="true"></i>') {
+			$('#templates-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
+		} else {
+			$('#templates-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
+		};
+	});
+
+	$('#employees-company-toggle').click(function() {
+		if ($('#employees-company').hasClass('slide-up')) {
+			$('#employees-company').toggleClass('slide-down');
+		} else {
+			$('#employees-company').toggleClass('slide-up');
+		};
+
+		if ($('#employees-company-toggle').html() == '<i class="fa fa-arrow-down" aria-hidden="true"></i>') {
+			$('#employees-company-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
+		} else {
+			$('#employees-company-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
+		};
+	});
+
+	$('#merchants-toggle').click(function() {
+		if ($('#merchants').hasClass('slide-up')) {
+			$('#merchants').toggleClass('slide-down');
+		} else {
+			$('#merchants').toggleClass('slide-up');
+		};
+
+		if ($('#merchants-toggle').html() == '<i class="fa fa-arrow-down" aria-hidden="true"></i>') {
+			$('#merchants-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
+		} else {
+			$('#merchants-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
+		};
+	});
+
+	$('#merchant-plans-toggle').click(function() {
+		if ($('#merchant-plans').hasClass('slide-up')) {
+			$('#merchant-plans').toggleClass('slide-down');
+		} else {
+			$('#merchant-plans').toggleClass('slide-up');
+		};
+
+		if ($('#merchant-plans-toggle').html() == '<i class="fa fa-arrow-down" aria-hidden="true"></i>') {
+			$('#merchant-plans-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
+		} else {
+			$('#merchant-plans-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
+		};
+	});
+</script>

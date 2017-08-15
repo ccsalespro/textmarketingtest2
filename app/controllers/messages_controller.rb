@@ -1,8 +1,6 @@
 class MessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-	before_action :set_message, only: [:show]
-
 	def index
     redirect_to root_path unless ViewMessage.new(current_merchant_user, current_admin).check
 		@messages = @merchant.messages.all
@@ -10,6 +8,14 @@ class MessagesController < ApplicationController
 
   def show
     redirect_to root_path unless ViewMessage.new(current_merchant_user, current_admin).check
+    @message = Message.find(params[:id])
+  end
+
+  def save_as_template
+    @template = @merchant.templates.build
+    @template.body = params[:message_body]
+    @template.save
+    redirect_to root_path
   end
 
   def new
@@ -19,6 +25,7 @@ class MessagesController < ApplicationController
       @template = Template.find_by(id: params[:template].to_i)
       @message.subject = @template.subject
       @message.body = @template.body
+      @template = true
     end
   end
 
@@ -44,11 +51,6 @@ class MessagesController < ApplicationController
   end
 
   private
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_message
-      @message = Message.find(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params

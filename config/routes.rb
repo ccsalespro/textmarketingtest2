@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :messages, only: [:new, :create, :show, :index] do
       collection do
         post 'reply'
+        get 'save_as_template'
       end
     end
     resources :templates do

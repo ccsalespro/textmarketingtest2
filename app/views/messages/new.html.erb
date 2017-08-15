@@ -5,17 +5,21 @@
     <%= form_for([@merchant, @message]) do |form| %>
 
       <%= form.hidden_field :merchant_id, value: @merchant.id %>
-
       <div class="field">
-        <%= form.text_field :subject, class: 'text-box', placeholder: 'Subject' %>
-      </div>
-      <div class="field">
-        <%= form.text_area :body, class: 'text-box', placeholder: 'Body' %>
+        <%= form.text_area :body, class: 'text-box', placeholder: 'Body', maxlength: '160' %>
       </div>
 
-      <div class="actions">
-        <%= form.submit "Publish", class: 'btn btn-primary' %>
-      </div>
+      <% if @template == true %>
+        <div class="actions">
+          <%= form.submit "Publish", class: 'btn btn-primary' %>
+        </div>
+      <% else %>
+        <div class="actions">
+          <div class="col-xs-6" style="padding: 5px; padding-left: 0px;"> <%= form.submit "Publish", class: 'btn btn-primary', style: 'width: 100%;' %></div>
+          <div class="col-xs-6" style="padding: 5px; padding-right: 0px;"><%= link_to "Save As Template", save_as_template_merchant_messages_path(@merchant, message_body: form.object.body), class: 'btn btn-primary', style: 'width: 100%;' %></div>
+          <div class="clearfix"></div>
+        </div>
+      <% end -%>
     <% end %>
   </div>
 </div>
