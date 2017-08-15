@@ -23,7 +23,7 @@ class MerchantsController < ApplicationController
     redirect_to root_path unless CreateMerchant.new(current_company_user, current_admin).check
 
     boot_twilio()
-    @numbers = @client.available_phone_numbers.get('US').local.list()
+    @numbers = @client.available_phone_numbers.get('US').local.list(:area_code => '814')
     @merchant = @merchant_billing_plan.merchants.build
   end
 

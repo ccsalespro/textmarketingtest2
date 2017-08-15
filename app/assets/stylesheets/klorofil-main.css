@@ -1869,7 +1869,7 @@ fieldset[disabled] .btn {
 }
 
 .widget-metric_1 .icon-wrapper:after {
-  display: block;
+  display: none;
   position: absolute;
   top: 23px;
   left: 4px;

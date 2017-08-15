@@ -71,47 +71,47 @@
 				<div class="main-content">
 					<div class="content-heading clearfix">
 						<div class="heading-left">
-								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_merchant_user.name %></h1>
+								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title black-text">Welcome, <%= current_merchant_user.name %></h1>
 						</div>
-						<%= link_to "Publish Message", new_merchant_message_path(@merchant), class: 'btn btn-success float-right' %>
+						<%= link_to "Publish Message", new_merchant_message_path(@merchant), class: 'btn btn-primary float-right' %>
 					</div>
 					<div class="container-fluid">
 						<!-- TOP METRICS -->
 						<div class="row">
 							<div class="col-md-4">
-								<div class="widget widget-metric_1">
-									<span class="icon-wrapper custom-bg-orange"><i class="fa fa-users"></i></span>
+								<div class="widget widget-metric_1 blue-background">
+									<span class="icon-wrapper"><i class="fa fa-users" style="font-size: 30px;"></i></span>
 									<div class="right">
-										<span class="value"><%= @merchant_users.count %></span>
-										<span class="title">EMPLOYEES</span>
+										<span class="value white-text"><%= @merchant_users.count %></span>
+										<span class="title white-text">EMPLOYEES</span>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="widget widget-metric_1">
-									<span class="icon-wrapper custom-bg-lightseagreen"><i class="fa fa-users"></i></span>
+								<div class="widget widget-metric_1 green-background">
+									<span class="icon-wrapper"><i class="fa fa-users" style="font-size: 30px;"></i></span>
 									<div class="right">
-										<span class="value"><%= @merchant.customers.count %></span>
-										<span class="title">CUSTOMERS</span>
+										<span class="value white-text"><%= @merchant.customers.count %></span>
+										<span class="title white-text">CUSTOMERS</span>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div class="widget widget-metric_1">
-									<span class="icon-wrapper custom-bg-blue2"><i class="fa fa-commenting"></i></span>
+								<div class="widget widget-metric_1 red-background">
+									<span class="icon-wrapper"><i class="fa fa-commenting" style="font-size: 30px;"></i></span>
 									<div class="right">
-										<span class="value"><%= @merchant.messages.count %></span>
-										<span class="title">SENT MESSAGES</span>
+										<span class="value white-text"><%= @merchant.messages.count %></span>
+										<span class="title white-text">SENT MESSAGES</span>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- END TOP METRICS -->
-						<div class="row">
+						<div class="row" id="boxes">
 							<div class="col-lg-6 sortable-item">
 								<div class="panel">
-									<div class="panel-heading">
-										<h3 class="panel-title">Employees</h3>
+									<div class="panel-heading blue-background">
+										<h3 class="panel-title white-text">Employees</h3>
 									</div>
 									<div class="panel-body">
 										<div class="row">
@@ -144,8 +144,8 @@
 
 							<div class="col-lg-6 sortable-item">
 								<div class="panel">
-									<div class="panel-heading">
-										<h3 class="panel-title">Customers</h3>
+									<div class="panel-heading green-background">
+										<h3 class="panel-title white-text">Customers</h3>
 									</div>
 									<div class="panel-body">
 										<div class="row">
@@ -176,14 +176,12 @@
 									</div>
 								</div>
 							</div>
-						</div>
 							<!-- END CUSTOMERS -->
 
-						<div class="row">
 							<div class="col-lg-6 sortable-item">
 								<div class="panel">
-									<div class="panel-heading">
-										<h3 class="panel-title">Messages Sent</h3>
+									<div class="panel-heading red-background">
+										<h3 class="panel-title white-text">Messages Sent</h3>
 									</div>
 									<div class="panel-body">
 										<div class="row">
@@ -214,8 +212,8 @@
 
 							<div class="col-lg-6 sortable-item">
 								<div class="panel">
-									<div class="panel-heading">
-										<h3 class="panel-title">Templates</h3>
+									<div class="panel-heading orange-background">
+										<h3 class="panel-title white-text">Templates</h3>
 									</div>
 									<div class="panel-body">
 										<div class="row">
@@ -265,7 +263,7 @@
 						<div class="heading-left">
 								<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_company_user.name %></h1>
 						</div>
-						<%= link_to "Create New Merchant", company_merchant_billing_plans_choose_path(@company), class: 'btn btn-success float-right' %>
+						<%= link_to "Create New Merchant", company_merchant_billing_plans_choose_path(@company), class: 'btn btn-primary float-right' %>
 					</div>
 					<div class="container-fluid">
 						<!-- TOP METRICS -->

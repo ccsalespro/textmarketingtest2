@@ -19,3 +19,15 @@
 //= require wow
 //= require bootstrap-sprockets
 //= require_tree .
+
+
+$.getScript('//cdn.jsdelivr.net/isotope/1.5.25/jquery.isotope.min.js',function(){
+
+  /* activate jquery isotope */
+  $(document).ready( function(){
+    $('#boxes').isotope({
+      itemSelector : '.sortable-item'
+    });
+  });
+  
+});
