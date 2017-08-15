@@ -1,6 +1,6 @@
 class MerchantUserPermissionLogic
 
-	def initialize(user=nil, admin, company_user=nil)
+	def initialize(user, admin, company_user=nil)
 	  @user = user
 	  @admin = admin
 	  @company_user = company_user

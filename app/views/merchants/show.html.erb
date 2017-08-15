@@ -27,7 +27,7 @@
 	<p><%= mp.name %></p>
 <% end -%><hr>
 
-<% if InviteMerchantUser.new(current_admin, current_company_user).check %>
+<% if InviteMerchantUser.new(current_merchant_user, current_admin, current_company_user).check %>
  	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path(merchant: @merchant) %><br>
 <% end -%>
 
