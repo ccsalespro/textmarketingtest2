@@ -41,7 +41,7 @@ function debounce(func, wait, immediate) {
 /*	FIXED NAVIGATION (BOOTSTRAP AFFIX)
 /*===================================================================================*/
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 
 	
 	function affixWrap() {
@@ -83,7 +83,7 @@ $(document).ready(function() {
 /*	HEADER RESIZE
 /*===================================================================================*/
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	
 	// Settings
 	var	topHeaderHeight		= $('.navbar-header').outerHeight(true), // -------	Get Height of Element that is not fixed and not being changed — used for Delay before Element starts changing
@@ -194,7 +194,7 @@ $(document).ready(function() {
 /*	DROPDOWN ON HOVER (NAVIGATION)
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	
 	function dropdownHover() {
 		$('.dropdown, .dropdown-submenu').addClass('hover');
@@ -254,7 +254,7 @@ $(document).ready(function () {
 /*	SMOOTH MAIN CONTENT REVEAL
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	$('main').addClass('js-reveal');
 });
 
@@ -263,7 +263,7 @@ $(document).ready(function () {
 /*	AOS — ANIMATE ON SCROLL
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	
 	// Settings
 	var aosEnable			= true, // ------------------------------------------------	Turn on/off AOS
@@ -321,7 +321,7 @@ $(document).ready(function () {
 /*	OWL CAROUSEL
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	
 	var dragging = true;
 	var owlElementID = "#owl-main";
@@ -635,106 +635,14 @@ $(document).ready(function () {
 });
 
 
-/*===================================================================================*/
-/*	ISOTOPE PORTFOLIO
-/*===================================================================================*/
 
-$(document).ready(function () {
-	
-	var $container = $('.items');
-	
-	$container.imagesLoaded(function () {
-		$container.isotope({
-			itemSelector: '.item'
-		});
-	});
-	
-	var resizeTimer;
-	
-	function resizeFunction() {
-		$container.isotope();
-	}
-	
-	$(window).resize(function() {
-		clearTimeout(resizeTimer);
-		resizeTimer = setTimeout(resizeFunction, 100);
-	});
-	
-	$('a.panel-toggle.collapsed').click(function () {
-		clearTimeout(resizeTimer);
-		resizeTimer = setTimeout(resizeFunction, 100);
-	});
-	
-	$('.portfolio .filter li a').click(function () {
-		
-		$('.portfolio .filter li a').removeClass('active');
-		$(this).addClass('active');
-		
-		var selector = $(this).attr('data-filter');
-	
-		$container.isotope({
-			filter: selector
-		});
-		
-		return false;
-		
-	});
-	
-});
-
-
-/*===================================================================================*/
-/*	ISOTOPE BLOG
-/*===================================================================================*/
-
-$(document).ready(function () {
-	
-	var $container = $('.posts');
-	
-	$container.imagesLoaded(function () {
-		$container.isotope({
-			itemSelector: '.post'
-		});
-	});
-	
-	var resizeTimer;
-	
-	function resizeFunction() {
-		$container.isotope();
-	}
-	
-	$(window).resize(function() {
-		clearTimeout(resizeTimer);
-		resizeTimer = setTimeout(resizeFunction, 100);
-	});
-	
-	$('.format-filter li a, .format-wrapper a').click(function () {
-		
-		var selector = $(this).attr('data-filter');
-		
-		$container.isotope({
-			filter: selector
-		});
-		
-		$('.format-filter li a').removeClass('active');
-		$('.format-filter li a[data-filter="'+selector+'"]').addClass('active');
-		
-		$('html, body').animate({
-			scrollTop: $('.format-filter').offset().top -130
-		}, 600);
-		
-		return false;
-		
-	});
-	
-});
 
 
 /*===================================================================================*/
 /*	TABS
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	
 	$('.tabs.tabs-reasons').easytabs({
 		cycle: 1500
@@ -752,7 +660,7 @@ $(document).ready(function () {
 /*	ACCORDION (FOR ISOTOPE HEIGHT CALCULATION)
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	if ($('.panel-group .portfolio').length > 0) {
 		$('.panel-group .collapse.in').collapse({
 			toggle: true
@@ -846,7 +754,7 @@ $(document).ready(function () {
 /*	ANIMATED / SMOOTH SCROLL TO ANCHOR
 /*===================================================================================*/
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
 	
 	$("a.scroll-to").click(function() {
 		
@@ -880,7 +788,7 @@ $(document).ready(function() {
 /*	SCROLL SPY
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	$('body').scrollspy({ 
 		target: '.navbar-collapse',
 		offset: 50
@@ -892,7 +800,7 @@ $(document).ready(function () {
 /*	IMAGE HOVER
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	$('.icon-overlay a').prepend('<span class="icn-more"></span>');
 });
 
@@ -910,7 +818,7 @@ $('.modal').on('hidden.bs.modal', function () {
 /*	DATA REL
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	$('a[data-rel]').each(function () {
 		$(this).attr('rel', $(this).data('rel'));
 	});
@@ -921,7 +829,7 @@ $(document).ready(function () {
 /*	TOOLTIP
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	if ($("[rel=tooltip]").length) {
 		$("[rel=tooltip]").tooltip();
 	}
@@ -932,7 +840,7 @@ $(document).ready(function () {
 /*	CONVERTING iOS SAFARI VIEWPORT UNITS (BUGGY) INTO PIXELS
 /*===================================================================================*/
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function() {
 	window.viewportUnitsBuggyfill.init();
 });
 
