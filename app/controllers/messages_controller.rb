@@ -11,13 +11,6 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
   end
 
-  def save_as_template
-    @template = @merchant.templates.build
-    @template.body = params[:message_body]
-    @template.save
-    redirect_to root_path
-  end
-
   def new
     redirect_to root_path unless SendMessage.new(current_merchant_user, current_admin).check
     @message = @merchant.messages.build
@@ -35,17 +28,27 @@ class MessagesController < ApplicationController
 
   def create
     redirect_to root_path unless SendMessage.new(current_merchant_user, current_admin).check
-    @message = @merchant.messages.build(message_params)
-    TwilioLogic.new.send_outgoing_message(@merchant, @message)
 
-    respond_to do |format|
-      if @message.save
-        UpdateMessageCount.new.run(@merchant)
-        format.html { redirect_to root_path, notice: 'message was successfully created.' }
-        format.json { render :show, status: :created, location: @message }
+    if params[:save_as_template].present?
+      @template = @merchant.templates.build
+      @template.body = params[:message][:body]
+      @template.save
+      redirect_to root_path, notice: 'template was saved successfully'
+    else
+      @message = @merchant.messages.build(message_params)
+      if TwilioLogic.new.send_outgoing_message(@merchant, @message)
+        respond_to do |format|
+          if @message.save
+            UpdateMessageCount.new.run(@merchant)
+            format.html { redirect_to root_path, notice: 'message was successfully created.' }
+            format.json { render :show, status: :created, location: @message }
+          else
+            format.html { render :new }
+            format.json { render json: @message.errors, status: :unprocessable_entity }
+          end
+        end
       else
-        format.html { render :new }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+        redirect_to root_path, notice: 'You Already Sent Out A Message In The Past Hour'
       end
     end
   end

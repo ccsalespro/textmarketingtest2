@@ -12,8 +12,9 @@ class TwilioLogic
           body: message.body
         )
       end
+      return true
     else
-      redirect_to :root_path, notice: "You Already Sent Out A Message In The Past Hour"
+      return false
     end
   end
 
