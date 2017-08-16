@@ -62,6 +62,6 @@ class TemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def template_params
-      params.require(:template).permit(:subject, :body, :merchant_id)
+      params.require(:template).permit(:subject, :body, :merchant_id, :created_by, :last_updated_by)
     end
 end

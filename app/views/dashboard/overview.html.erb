@@ -79,8 +79,8 @@
 						<div class="container-fluid">
 							<!-- TOP METRICS -->
 							<div class="row">
-								<div class="col-md-4">
-									<div class="widget widget-metric_1 blue-background">
+								<div class="col-md-3">
+									<div class="widget widget-metric_1 purple-background">
 										<span class="icon-wrapper"><i class="fa fa-users" style="font-size: 30px;"></i></span>
 										<div class="right">
 											<span class="value white-text"><%= @merchant_users.count %></span>
@@ -88,7 +88,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<div class="widget widget-metric_1 green-background">
 										<span class="icon-wrapper"><i class="fa fa-users" style="font-size: 30px;"></i></span>
 										<div class="right">
@@ -97,7 +97,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<div class="widget widget-metric_1 red-background">
 										<span class="icon-wrapper"><i class="fa fa-commenting" style="font-size: 30px;"></i></span>
 										<div class="right">
@@ -106,12 +106,21 @@
 										</div>
 									</div>
 								</div>
+								<div class="col-md-3">
+									<div class="widget widget-metric_1 orange-background">
+										<span class="icon-wrapper"><i class="fa fa-list" style="font-size: 30px;"></i></span>
+										<div class="right">
+											<span class="value white-text"><%= @merchant.templates.count %></span>
+											<span class="title white-text">TEMPLATES</span>
+										</div>
+									</div>
+								</div>
 							</div>
 							<!-- END TOP METRICS -->
 							<div class="row" id="grid">
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
-										<div class="panel-heading blue-background">
+										<div class="panel-heading purple-background">
 											<h3 class="panel-title white-text">Employees</h3>
 											<p class="pull-right" id="employees-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
 										</div>
@@ -194,15 +203,15 @@
 													<table class="table table-minimal table-chat-support datatable">
 														<thead>
 															<tr>
-																<th>Subject</th>
-																<th>Body</th>
+																<th>Message</th>
+																<th><span class="pull-right">Sent</span></th>
 															</tr>
 														</thead>
 														<tbody>
 														<% @merchant.messages.first(10).each do |message| %>
 															<tr>
-																<td><%= message.subject %></td>
 																<td><%= message.body %></td>
+																<td><span class="pull-right"><%= message.created_at %></span></td>
 															</tr>
 														<% end -%>
 														</tbody>
@@ -227,18 +236,23 @@
 													<table class="table table-minimal table-chat-support datatable">
 														<thead>
 															<tr>
-																<th>Subject</th>
-																<th>Body</th>
+																<th>Message</th>
+																<th>Created By</th>
+																<th>Last Updated By</th>
 																<th></th>
 															</tr>
 														</thead>
 														<tbody>
-														<!-- Will be changed to templates -->
 														<% @merchant.templates.first(10).each do |template| %>
 															<tr>
-																<td><%= template.subject %></td>
 																<td><%= template.body %></td>
-																<td><%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm' %></td>
+																<td><%= MerchantUser.find_by_id(template.created_by).name %></td>
+																<td><%= MerchantUser.find_by_id(template.last_updated_by).name %></td>
+																<td>
+																	<%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm pull-right', style: 'margin: 0px; margin-left: 5px;' %>
+																	<%= link_to "Edit", edit_merchant_template_path(@merchant, template), class: 'btn btn-primary btn-sm pull-right', style: 'margin: 0px;' %>
+																
+																</td>
 															</tr>
 														<% end -%>
 														</tbody>
@@ -250,6 +264,42 @@
 									</div>
 								</div>
 								<!-- END TEMPLATES -->
+
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading gold-background">
+											<h3 class="panel-title white-text">Roles</h3>
+											<p class="pull-right" id="roles-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="roles">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+														<% @merchant.merchant_roles.first(10).each do |merchant_role| %>
+															<tr>
+																<td><%= merchant_role.name %></td>
+																<td>
+																	<%= link_to "Edit", merchant_role_path(merchant_role), class: 'btn btn-primary btn-sm pull-right', style: 'margin: 0px;' %>
+																
+																</td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="panel-footer"><%= link_to "View All", merchant_roles_path, class: 'btn btn-primary' %></div>
+									</div>
+								</div>
+								<!-- END MERCHANT ROLES -->
 							</div>
 
 					<!-- END MAIN CONTENT -->
@@ -405,6 +455,42 @@
 								</div>
 								<!-- END MESSAGES SENT -->
 
+								<div class="col-lg-6 sortable-item">
+									<div class="panel">
+										<div class="panel-heading orange-background">
+											<h3 class="panel-title white-text">Roles</h3>
+											<p class="pull-right" id="company-roles-toggle"><i class="fa fa-arrow-down" aria-hidden="true"></i></p>
+										</div>
+										<div class="panel-body" id="company-roles">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table table-minimal table-chat-support datatable">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+														<% @company.company_roles.first(10).each do |company_role| %>
+															<tr>
+																<td><%= company_role.name %></td>
+																<td>
+																	<%= link_to "Edit", edit_company_role_path(company_role), class: 'btn btn-primary btn-sm pull-right', style: 'margin: 0px;' %>
+																
+																</td>
+															</tr>
+														<% end -%>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="panel-footer"><%= link_to "View All", company_roles_path, class: 'btn btn-primary' %></div>
+									</div>
+								</div>
+								<!-- END COMPANY ROLES -->
+
 						
 							</div>
 
@@ -416,11 +502,12 @@
 
 	<% end -%>
 
-				<footer>
+		<footer>
 					<div class="container-fluid">
 						<p class="copyright">&copy; 2017 Text Marketing Reseller, LLC. All Rights Reserved.</p>
 					</div>
 				</footer>
+
 			</div>
 			<!-- END WRAPPER -->
 			<!-- Javascript -->
@@ -523,6 +610,20 @@
 			$('#merchant-plans-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
 		} else {
 			$('#merchant-plans-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
+		};
+	});
+
+	$('#roles-toggle').click(function() {
+		if ($('#roles').hasClass('slide-up')) {
+			$('#roles').toggleClass('slide-down');
+		} else {
+			$('#roles').toggleClass('slide-up');
+		};
+
+		if ($('#roles-toggle').html() == '<i class="fa fa-arrow-down" aria-hidden="true"></i>') {
+			$('#roles-toggle').html('<i class="fa fa-arrow-up" aria-hidden="true"></i>')
+		} else {
+			$('#roles-toggle').html('<i class="fa fa-arrow-down" aria-hidden="true"></i>')
 		};
 	});
 </script>

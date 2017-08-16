@@ -16,7 +16,7 @@
       <tr>
         <td><%= template.subject %></td>
         <td><%= template.body %></td>
-        <td><%= link_to 'Show', template %></td>
+        <td><%= link_to 'Show', merchant_template_path(@merchant, template) %></td>
       </tr>
     <% end %>
   </tbody>

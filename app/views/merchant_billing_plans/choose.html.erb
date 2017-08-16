@@ -3,3 +3,5 @@
 <% @merchant_billing_plans.each do |mbp| %>
 	<%= mbp.name %> -- <%= link_to "Choose", new_company_merchant_billing_plan_merchant_path(@company, mbp) %><br>
 <% end -%>
+
+<%= link_to "New Merchant Billing Plan", new_company_merchant_billing_plan_path(@company, came_from_choose_page: true) %>

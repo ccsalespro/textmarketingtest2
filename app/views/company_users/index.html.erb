@@ -1,8 +1,8 @@
 <% @company_roles.each do |company_role| %>
 
-	<p><%= company_role.name %></p>
+	<p><b><%= company_role.name %></b></p>
 	<% company_role.company_users.each do |company_user| %>
-		<li><%= company_user.name %></li>
+		<li><%= link_to company_user.name, company_user_path(company_user) %></li>
 	<% end -%>
 	<hr>
 

@@ -6,16 +6,19 @@
 
       <%= form.hidden_field :merchant_id, value: @merchant.id %>
       <div class="field">
-        <%= form.text_area :body, class: 'text-box', placeholder: 'Body', maxlength: '160', required: true %>
+        <%= form.text_area :body, class: 'text-box', placeholder: 'Tip 1 : MAKE IT GREAT - "This weekend ONLY come in and have a cup of COFFEE on us!”
+Tip 2 : HOW TO REDEEM - "SHOW the cashier your phone to REDEEM!"
+Tip 3 : CREATE URGENCY - "EXP 7/14”
+        ', maxlength: '160', required: true %>
       </div>
 
       <% if @template == true %>
         <div class="actions">
-          <%= form.submit "Publish", class: 'btn btn-primary' %>
+          <%= form.button :submit, class: 'btn btn-primary spin-onclick', style: 'width: 100%;' do %>Publish<% end -%>
         </div>
       <% else %>
         <div class="actions">
-          <div class="col-xs-6" style="padding: 5px; padding-left: 0px;"> <%= form.submit "Publish", class: 'btn btn-primary', style: 'width: 100%;' %></div>
+          <div class="col-xs-6" style="padding: 5px; padding-left: 0px;"> <%= form.button :submit, class: 'btn btn-primary spin-onclick', style: 'width: 100%;' do %>Publish<% end -%></div>
           <div class="col-xs-6" style="padding: 5px; padding-right: 0px;"><%= form.button :submit, name: "save_as_template", value: true, class: 'btn btn-primary', style: 'width: 100%;' do %>Save As Template<% end -%></div>
           <div class="clearfix"></div>
         </div>
@@ -24,4 +27,8 @@
   </div>
 </div>
 
-
+<script type="text/javascript">
+  $('form').submit(function() {
+    $('.spin-onclick').html("<i class='fa fa-spinner fa-spin' aria-hidden='true'></i>");
+  });
+</script>

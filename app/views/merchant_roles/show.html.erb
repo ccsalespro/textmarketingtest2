@@ -1,34 +1,47 @@
-<p id="notice"><%= notice %></p>
+<div style="padding-top: 20px;"></div>
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  <div class="well">
+		  <h1 class="text-center"><%= @merchant_role.name %> <span id="edit-toggle"><button class="btn btn-primary btn-sm" style="margin: 0px;">Edit</button></span></h1 class="text-center">
 
-<p>
-  <strong>Name:</strong>
-  <%= @merchant_role.name %>
-</p>
+		  <div class="slide-up" id="edit-form" style="padding-bottom: 0px;">
+		  	<%= form_with(model: @merchant_role, local: true) do |form| %>
+				  <div class="field">
+				    <%= form.text_field :name %>
+				  </div>
 
-<p>
-  <strong>Merchant:</strong>
-  <%= @merchant_role.merchant_id %>
-</p>
+				  <div class="actions">
+				    <%= form.submit "Save", class: 'btn btn-primary' %>
+				  </div>
+				<% end %>
 
-<h3>Permissions This Role Has</h3>
+		  </div>
 
-  <% @merchant_permissions.each do |mp| %>
-    <% if MerchantRolePermission.find_by_merchant_role_id_and_merchant_permission_id(@merchant_role.id, mp.id).present? %>
-		<%= form_tag(merchant_roles_remove_permission_path(merchant_role_id: @merchant_role.id, merchant_permission_id: mp.id), method: :post) do %>
-			<p class="green">
-				<%= mp.name %>
-				<%= submit_tag "Remove Permission", data: { confirm: 'Are you sure?' } %>
-			</p>
-		<% end -%>
-	<% else %>
-		<%= form_tag(merchant_roles_add_permission_path(merchant_role_id: @merchant_role.id, merchant_permission_id: mp.id), method: :post) do %>
-			<p class="red">
-				<%= mp.name %>
-				<%= submit_tag "Add Permission", data: { confirm: 'Are you sure?' } %>
-			</p>
-		<% end -%>
-	<% end -%>
-<% end -%><br>
+		<h3> Available Permissions:</h3>
 
-<%= link_to 'Edit', edit_merchant_role_path(@merchant_role) %> |
-<%= link_to 'Back', merchant_roles_path %>
+		  <% @merchant_permissions.each do |mp| %>
+		    <% if MerchantRolePermission.find_by_merchant_role_id_and_merchant_permission_id(@merchant_role.id, mp.id).present? %>
+				<%= form_tag(merchant_roles_remove_permission_path(merchant_role_id: @merchant_role.id, merchant_permission_id: mp.id), method: :post) do %>
+					<p class="">
+						<%= mp.name %>
+						<%= submit_tag "Remove Permission", data: { confirm: 'Are you sure?' }, class: 'btn btn-primary', style: 'margin-left: 0px;' %>
+					</p>
+				<% end -%>
+			<% else %>
+				<%= form_tag(merchant_roles_add_permission_path(merchant_role_id: @merchant_role.id, merchant_permission_id: mp.id), method: :post) do %>
+					<p class="">
+						<%= mp.name %>
+						<%= submit_tag "Add Permission", data: { confirm: 'Are you sure?' }, class: 'btn btn-primary', style: 'margin-left: 0px;' %>
+					</p>
+				<% end -%>
+			<% end -%>
+		<% end -%><hr style="margin-top: 10px; margin-bottom: 10px;">
+		<%= link_to 'Back', root_path, class: 'btn btn-primary', style: 'width: 100%;' %>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('#edit-toggle').click(function() {
+		$('#edit-form').toggleClass('slide-up');
+		$('#edit-form').toggleClass('slide-down-edit-form');
+	});
+</script>

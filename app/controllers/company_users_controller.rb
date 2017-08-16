@@ -1,6 +1,6 @@
 class CompanyUsersController < ApplicationController
 
-	before_action :set_company_user, only: [:edit, :update]
+	before_action :set_company_user, only: [:edit, :update, :show]
 
 	def index
 		@company_roles = @company.company_roles.all
@@ -20,6 +20,9 @@ class CompanyUsersController < ApplicationController
 			@company_user = CompanyUser.invite!(:email => params[:email], :name => params[:name], :company_role_id => params[:company_user][:company_role_id], :phone_number => params[:phone_number])
 			redirect_to dashboard_overview_path, notice: "Company User #{@company_user.name} Invited"
 		end
+	end
+
+	def show
 	end
 
 	def edit

@@ -23,6 +23,9 @@ class MerchantBillingPlansController < ApplicationController
 	def new
     redirect_to root_path unless CreateMerchantBillingPlan.new(current_company_user, current_admin).check
 		@merchant_billing_plan = MerchantBillingPlan.new
+    if params[:came_from_choose_page].present?
+      @came_from_choose_page = true
+    end
 	end
 
   def choose
@@ -39,7 +42,13 @@ class MerchantBillingPlansController < ApplicationController
 		@merchant_billing_plan = MerchantBillingPlan.new(merchant_billing_plan_params)
 		respond_to do |format|
       if @merchant_billing_plan.save
-        format.html { redirect_to root_path }
+        format.html {
+          if params[:came_from_choose_page].present?
+            redirect_to company_merchant_billing_plans_choose_path(@company)
+          else
+            redirect_to root_path
+          end
+        }
         format.json { render :show, status: :created, location: @merchant_billing_plan }
       else
         format.html { render :new }

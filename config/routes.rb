@@ -23,7 +23,6 @@ Rails.application.routes.draw do
     resources :messages, only: [:new, :create, :show, :index] do
       collection do
         post 'reply'
-        get 'save_as_template'
       end
     end
     resources :templates do
@@ -43,7 +42,7 @@ Rails.application.routes.draw do
 
   get 'company_users/new_company_user'
   post 'company_users/create_company_user'
-  resources :company_users, only: [:index, :edit, :update]
+  resources :company_users, only: [:index, :edit, :update, :show]
   delete 'company_users/destroy_company_user'
 
   post 'company_roles/add_permission'
@@ -52,7 +51,7 @@ Rails.application.routes.draw do
 
   get 'merchant_users/new_merchant_user'
   post 'merchant_users/create_merchant_user'
-  resources :merchant_users, only: [:index, :edit, :update]
+  resources :merchant_users, only: [:index, :edit, :update, :show]
   delete 'merchant_users/destroy_merchant_user'
 
   post 'merchant_roles/add_permission'

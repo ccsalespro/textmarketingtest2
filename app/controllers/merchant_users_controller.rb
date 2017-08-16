@@ -1,6 +1,6 @@
 class MerchantUsersController < ApplicationController
 
-	before_action :set_merchant_user, only: [:edit, :update]
+	before_action :set_merchant_user, only: [:edit, :update, :show]
 
 	def new_merchant_user
 		@merchant = Merchant.find_by_id(params[:merchant].to_i)
@@ -12,7 +12,7 @@ class MerchantUsersController < ApplicationController
 		redirect_to root_path unless InviteMerchantUser.new(current_merchant_user, current_admin, current_company_user).check
 		@merchant_admin = MerchantUser.invite!(:email => params[:email], :name => params[:name], :merchant_role_id => params[:merchant_user][:merchant_role_id], :phone_number => params[:phone_number]) unless MerchantUser.find_by_email(params[:email]).present?
 		if @merchant_admin.nil?
-			redirect_to dashboard_overview_path, notice: 'Email Is Already Connected With Another merchant Account'
+			redirect_to dashboard_overview_path, notice: 'Email Is Already Connected With Another Merchant Account'
 		else
 			redirect_to dashboard_overview_path, notice: 'Merchant User Invited'
 		end
@@ -20,6 +20,10 @@ class MerchantUsersController < ApplicationController
 
 	def index
 		@merchant_roles = @merchant.merchant_roles.all
+	end
+
+	def show
+
 	end
 
 	def edit

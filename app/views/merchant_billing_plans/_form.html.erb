@@ -22,6 +22,10 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <% if @came_from_choose_page == true %>
+      <%= form.button :submit, name: "came_from_choose_page", value: true, class: 'btn btn-primary', style: 'width: 100%;' do %>Create Merchant Billing Plan<% end -%>
+    <% else %>
+      <%= form.submit "Create Merchant Billing Plan" %>
+    <% end -%>
   </div>
 <% end %>

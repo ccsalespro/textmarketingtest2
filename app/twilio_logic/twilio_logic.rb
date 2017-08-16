@@ -3,19 +3,7 @@ require 'twilio-ruby'
 class TwilioLogic
 
   def send_outgoing_message(merchant, message)
-    if check_if_message_sent_in_last_hour(merchant)
-      boot_twilio()
-      merchant.customers.all.each do |customer|
-        sms = @client.messages.create(
-          from: merchant.phone_number,
-          to: customer.phone_number,
-          body: message.body
-        )
-      end
-      return true
-    else
-      return false
-    end
+    return true
   end
 
 	def reply(params, request)
@@ -164,10 +152,11 @@ class TwilioLogic
       sms = @client.messages.create(
         from: @merchant.phone_number,
         to: customer.phone_number,
-        body: request.session[:message_body]
+        body: request.session[:message_body] + "\nReply STOP to stop"
       )
     end
     save_message_to_database(@merchant)
+    UpdateMessageCount.new.run(@merchant)
   end
 
   def save_message_to_database(merchant)

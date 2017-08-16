@@ -9,7 +9,7 @@
           <script src="https://unpkg.com/vue"></script>
   </head>
 
-  <body>
+  <body class="">
 
   	<header>
 			<div class="navbar">
@@ -61,17 +61,9 @@
 							
 							<ul class="nav navbar-nav">
 								
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
-									
-									<ul class="dropdown-menu">
-										<li><a href="index.html">Product Style</a></li>
-										<li><a href="index2.html">Service Style</a></li>
-										<li><a href="index3.html">Agency Style</a></li>
-										<li><a href="index4.html">Portfolio Style</a></li>
-										<li><a href="index5.html">Showcase Style</a></li>
-									</ul><!-- /.dropdown-menu -->
-								</li><!-- /.dropdown -->
+								<% if admin_signed_in? || company_user_signed_in? || merchant_user_signed_in? %>
+									<li class=""><%= link_to "Dashboard", dashboard_overview_path %></li>
+								<% end -%>
 								
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio</a>

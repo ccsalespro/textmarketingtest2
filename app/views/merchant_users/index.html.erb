@@ -1,6 +1,36 @@
-<% @merchant_roles.each do |merchant_role| %>
-	<b><%= merchant_role.name %></b><br>
-	<% merchant_role.merchant_users.each do |merchant_user| %>
-		<li><%= link_to merchant_user.name, edit_merchant_user_path(merchant_user) %></li>
-	<% end -%>
-<% end -%>
+<div style="padding-top: 20px;"></div>
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  <div class="well">
+
+  <h1 class="text-center">Employees</h1>
+
+		 <table class="table table-minimal">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      	<% @merchant_roles.each do |merchant_role| %>
+      		<% merchant_role.merchant_users.each do |merchant_user| %>
+	      		<tr>
+	            <td><%= merchant_user.name %></td>
+	            <td><%= merchant_user.email %></td>
+							<td><%= merchant_user.phone_number %></td>
+	            <td><%= link_to "Edit", edit_merchant_user_path(merchant_user), class: 'btn btn-primary btn-sm' %></td>
+	          </tr>
+      		<% end -%>
+      	<% end -%>
+      </tbody>
+    </table>
+		<br>
+		<%= link_to "Add Employee", merchant_users_new_merchant_user_path(merchant: @merchant), class: 'btn btn-primary', style: 'width: 100%;' %>
+	</div>
+</div>
+
+
+
