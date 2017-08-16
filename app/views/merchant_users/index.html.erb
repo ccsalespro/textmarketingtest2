@@ -1,1 +1,6 @@
-hi
+<% @merchant_roles.each do |merchant_role| %>
+	<b><%= merchant_role.name %></b><br>
+	<% merchant_role.merchant_users.each do |merchant_user| %>
+		<li><%= link_to merchant_user.name, edit_merchant_user_path(merchant_user) %></li>
+	<% end -%>
+<% end -%>
