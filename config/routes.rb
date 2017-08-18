@@ -51,7 +51,7 @@ Rails.application.routes.draw do
 
   get 'merchant_users/new_merchant_user'
   post 'merchant_users/create_merchant_user'
-  resources :merchant_users, only: [:index, :edit, :update, :show]
+  resources :merchant_users, only: [:index, :edit, :update]
   delete 'merchant_users/destroy_merchant_user'
 
   post 'merchant_roles/add_permission'

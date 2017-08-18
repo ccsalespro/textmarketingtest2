@@ -13,20 +13,22 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'text-box' %>
   </div>
 
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, class: 'text-box' %>
   </div>
 
   <div class="field">
     <%= form.label :phone_number %>
-    <%= form.text_field :phone_number %>
+    <%= form.text_field :phone_number, class: 'text-box' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <div class="col-xs-6" style="padding: 5px; padding-left: 0px;"> <%= form.submit "Save", class: 'btn btn-primary' %></div>
+    <div class="col-xs-6" style="padding: 5px; padding-right: 0px;"><%= link_to 'Back', merchant_customers_path(@merchant), class: 'btn btn-primary', style: 'width: 100%;' %></div>
+    <div class="clearfix"></div>
   </div>
 <% end %>

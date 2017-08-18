@@ -1,7 +1,7 @@
 <div style="padding-top: 20px;"></div>
 <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   <div class="well">
-		<h1 class="text-center">Edit Merchant User</h1>
+		<h1 class="text-center">Edit Employee</h1>
 
 		<%= form_for @merchant_user do |f| %>
 
@@ -16,7 +16,11 @@
 
 			<%= collection_select(:merchant_user, :merchant_role_id, @merchant_roles.all, :id, :name) %><br>
 
-			<%= f.submit "Update", class: 'btn btn-primary', style: 'width: 100%;' %>
+			<div class="clearfix"></div>
+
+			<div class="col-xs-6" style="padding: 5px; padding-left: 0px;"><%= f.submit "Save", class: 'btn btn-primary', style: 'width: 100%;' %></div>
+      <div class="col-xs-6" style="padding: 5px; padding-right: 0px;"><%= link_to 'Back', merchant_users_path(@merchant), class: 'btn btn-primary', style: 'width: 100%;' %></div>
+      <div class="clearfix"></div>
 
 		<% end -%>
 	</div>

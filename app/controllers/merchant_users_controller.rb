@@ -1,6 +1,6 @@
 class MerchantUsersController < ApplicationController
 
-	before_action :set_merchant_user, only: [:edit, :update, :show]
+	before_action :set_merchant_user, only: [:edit, :update]
 
 	def new_merchant_user
 		@merchant = Merchant.find_by_id(params[:merchant].to_i)
@@ -20,10 +20,6 @@ class MerchantUsersController < ApplicationController
 
 	def index
 		@merchant_roles = @merchant.merchant_roles.all
-	end
-
-	def show
-
 	end
 
 	def edit
@@ -48,7 +44,7 @@ class MerchantUsersController < ApplicationController
 		redirect_to root_path unless CancelMerchantUser.new(current_merchant_user, current_admin).check
 		MerchantUser.find(params[:merchant_user]).destroy
     respond_to do |format|
-      format.html { redirect_to merchant_path(params[:merchant]), notice: 'Merchant User was successfully canceled.' }
+      format.html { redirect_to merchant_users_path, notice: 'Employee was successfully canceled.' }
       format.json { head :no_content }
     end
 	end

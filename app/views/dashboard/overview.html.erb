@@ -70,12 +70,7 @@
 				<div class="main" style="padding-top: 0px;">
 					<!-- MAIN CONTENT -->
 					<div class="main-content">
-						<div class="content-heading clearfix">
-							<div class="heading-left">
-									<h1 style="font-size: 30px; padding-top: 15px;" class="page-title black-text">Welcome, <%= current_merchant_user.name %></h1>
-							</div>
-							<%= link_to "Publish Message", new_merchant_message_path(@merchant), class: 'btn btn-primary float-right' %>
-						</div>
+					<div style="padding-top: 20px;"></div>
 						<div class="container-fluid">
 							<!-- TOP METRICS -->
 							<div class="row">
@@ -211,7 +206,7 @@
 														<% @merchant.messages.first(10).each do |message| %>
 															<tr>
 																<td><%= message.body %></td>
-																<td><span class="pull-right"><%= message.created_at %></span></td>
+																<td><span class="pull-right"><%= message.created_at.strftime("%m/%d/%Y") %> - <%= message.created_at.strftime("%I:%M %p") %></span></td>
 															</tr>
 														<% end -%>
 														</tbody>
@@ -249,8 +244,7 @@
 																<td><%= MerchantUser.find_by_id(template.created_by).name %></td>
 																<td><%= MerchantUser.find_by_id(template.last_updated_by).name %></td>
 																<td>
-																	<%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm pull-right', style: 'margin: 0px; margin-left: 5px;' %>
-																	<%= link_to "Edit", edit_merchant_template_path(@merchant, template), class: 'btn btn-primary btn-sm pull-right', style: 'margin: 0px;' %>
+																	<%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm pull-right', style: 'margin: 0px; margin-left: 5px;', data: {confirm: 'Are You Sure?'} %>
 																
 																</td>
 															</tr>
@@ -315,12 +309,7 @@
 				<div class="main" style="padding-top: 0px;">
 					<!-- MAIN CONTENT -->
 					<div class="main-content">
-						<div class="content-heading clearfix">
-							<div class="heading-left">
-									<h1 style="font-size: 30px; padding-top: 15px;" class="page-title">Welcome, <%= current_company_user.name %></h1>
-							</div>
-							<%= link_to "Create New Merchant", company_merchant_billing_plans_choose_path(@company), class: 'btn btn-primary float-right' %>
-						</div>
+						<div style="padding-top: 20px;"></div>
 						<div class="container-fluid">
 							<!-- TOP METRICS -->
 							<div class="row">

@@ -1,7 +1,7 @@
 <div style="padding-top: 20px;"></div>
 <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   <div class="well">
-    <h2 class="text-center">New Message</h2>
+    <h1 class="text-center">New Message</h1>
     <%= form_for([@merchant, @message]) do |form| %>
 
       <%= form.hidden_field :merchant_id, value: @merchant.id %>
@@ -14,7 +14,13 @@ Tip 3 : CREATE URGENCY - "EXP 7/14”
 
       <% if @template == true %>
         <div class="actions">
-          <%= form.button :submit, class: 'btn btn-primary spin-onclick', style: 'width: 100%;' do %>Publish<% end -%>
+
+          <div class="col-xs-6" style="padding: 5px; padding-left: 0px;"> <%= form.button :submit, class: 'btn btn-primary spin-onclick', style: 'width: 100%;' do %>Publish<% end -%></div>
+          <div class="col-xs-6" style="padding: 5px; padding-right: 0px;"><%= link_to "Back", merchant_templates_path(@merchant), class: 'btn btn-primary', style: 'width: 100%;' %></div>
+          <div class="clearfix"></div>
+
+
+          
         </div>
       <% else %>
         <div class="actions">

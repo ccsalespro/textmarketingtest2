@@ -1,7 +1,7 @@
 <div style="padding-top: 20px;"></div>
 <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   <div class="well">
-		  <h1 class="text-center"><%= @merchant_role.name %> <span id="edit-toggle"><button class="btn btn-primary btn-sm" style="margin: 0px;">Edit</button></span></h1 class="text-center">
+		  <h1 class="text-center"><%= @merchant_role.name %> <span id="edit-toggle"><button class="btn btn-primary btn-sm" style="margin: 0px;">Click To Edit</button></span></h1 class="text-center">
 
 		  <div class="slide-up" id="edit-form" style="padding-bottom: 0px;">
 		  	<%= form_with(model: @merchant_role, local: true) do |form| %>
@@ -22,20 +22,20 @@
 		    <% if MerchantRolePermission.find_by_merchant_role_id_and_merchant_permission_id(@merchant_role.id, mp.id).present? %>
 				<%= form_tag(merchant_roles_remove_permission_path(merchant_role_id: @merchant_role.id, merchant_permission_id: mp.id), method: :post) do %>
 					<p class="">
-						<%= mp.name %>
-						<%= submit_tag "Remove Permission", data: { confirm: 'Are you sure?' }, class: 'btn btn-primary', style: 'margin-left: 0px;' %>
+						<div class="col-sm-6" style="padding-top: 5px;"><%= mp.name %></div>
+						<div class="col-sm-6"><%= submit_tag "Remove Permission", data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm', style: 'margin-left: 0px; margin-bottom: 3px; background-color: green;' %></div>
 					</p>
 				<% end -%>
 			<% else %>
 				<%= form_tag(merchant_roles_add_permission_path(merchant_role_id: @merchant_role.id, merchant_permission_id: mp.id), method: :post) do %>
 					<p class="">
-						<%= mp.name %>
-						<%= submit_tag "Add Permission", data: { confirm: 'Are you sure?' }, class: 'btn btn-primary', style: 'margin-left: 0px;' %>
+						<div class="col-sm-6" style="padding-top: 5px;"><%= mp.name %></div>
+						<div class="col-sm-6"><%= submit_tag "Add Permission", data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm', style: 'margin-left: 0px; margin-bottom: 3px; background-color: red;' %></div>
 					</p>
 				<% end -%>
 			<% end -%>
 		<% end -%><hr style="margin-top: 10px; margin-bottom: 10px;">
-		<%= link_to 'Back', root_path, class: 'btn btn-primary', style: 'width: 100%;' %>
+		<%= link_to 'Back', merchant_roles_path, class: 'btn btn-primary', style: 'width: 100%;' %>
 	</div>
 </div>
 

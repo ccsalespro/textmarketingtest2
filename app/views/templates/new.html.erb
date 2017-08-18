@@ -1,20 +1,26 @@
-<h1>New Template</h1>
-<%= form_for([@merchant, @template]) do |form| %>
+<div style="padding-top: 20px;"></div>
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  <div class="well">
 
-  <%= form.hidden_field :merchant_id, value: @merchant.id %>
+    <h1 class="text-center">New Template</h1>
+    <%= form_for([@merchant, @template]) do |form| %>
 
-  <div class="field">
-    <%= form.label :subject %>
-    <%= form.text_field :subject %>
-  </div>
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.text_area :body %>
-  </div>
-  <%= form.hidden_field :created_by, value: current_merchant_user.id %>
-  <%= form.hidden_field :last_updated_by, value: current_merchant_user.id %>
+      <%= form.hidden_field :merchant_id, value: @merchant.id %>
 
-  <div class="actions">
-    <%= form.submit %>
+      <div class="field">
+        <%= form.label "Message" %>
+        <%= form.text_area :body, class: 'text-box', placeholder: 'Tip 1 : MAKE IT GREAT - "This weekend ONLY come in and have a cup of COFFEE on us!”
+Tip 2 : HOW TO REDEEM - "SHOW the cashier your phone to REDEEM!"
+Tip 3 : CREATE URGENCY - "EXP 7/14”' %>
+      </div>
+      <%= form.hidden_field :created_by, value: current_merchant_user.id %>
+      <%= form.hidden_field :last_updated_by, value: current_merchant_user.id %>
+
+      <div class="actions">
+        <div class="col-xs-6" style="padding: 5px; padding-left: 0px;"> <%= form.submit "Save", class: 'btn btn-primary' %></div>
+        <div class="col-xs-6" style="padding: 5px; padding-right: 0px;"><%= link_to 'Back', merchant_templates_path(@merchant), class: 'btn btn-primary', style: 'width: 100%;' %></div>
+        <div class="clearfix"></div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

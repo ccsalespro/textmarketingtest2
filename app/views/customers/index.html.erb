@@ -1,33 +1,33 @@
-<p id="notice"><%= notice %></p>
+<div style="padding-top: 20px;"></div>
+<div class="col-md-10 col-md-offset-1 col-sm-12">
+  <div class="well">
 
-<h1>Customers</h1>
+    <h1 class="text-center" style="margin-bottom: 0px;">Customers</h1>
+    <%= link_to 'New customer', new_merchant_customer_path(@merchant), class: 'btn btn-primary', style: 'width: 100%;' %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone Number</th>
-      <th>Merchant</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <table class="table table-minimal">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="hidden-xs">Email</th>
+          <th>Phone Number</th>
+          <th>Messages Received</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @customers.each do |customer| %>
-      <tr>
-        <td><%= customer.name %></td>
-        <td><%= customer.email %></td>
-        <td><%= customer.phone_number %></td>
-        <td><%= customer.merchant_id %></td>
-        <td><%= link_to 'Show', merchant_customer_path(@merchant, customer) %></td>
-        <td><%= link_to 'Edit', edit_merchant_customer_path(@merchant, customer) %></td>
-        <td><%= link_to 'Destroy', merchant_customer_path(@merchant, customer), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New customer', new_merchant_customer_path(@merchant) %>
+      <tbody>
+        <% @customers.each do |customer| %>
+          <tr>
+            <td><%= customer.name %></td>
+            <td class="hidden-xs"><%= customer.email %></td>
+            <td><%= customer.phone_number %></td>
+            <td><%= customer.customer_messages.count %></td>
+            <td><%= link_to 'Edit', edit_merchant_customer_path(@merchant, customer), class: 'btn btn-primary btn-sm', style: "display: block; margin: auto;" %></td>
+            <td><%= link_to 'Delete', merchant_customer_path(@merchant, customer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm', style: "display: block; margin: auto;" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

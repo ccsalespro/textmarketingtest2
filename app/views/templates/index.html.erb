@@ -1,27 +1,30 @@
-<p id="notice"><%= notice %></p>
+<div style="padding-top: 20px;"></div>
+<div class="col-md-10 col-md-offset-1 col-sm-12">
+  <div class="well">
 
-<h1>Templates</h1>
+    <h1 class="text-center" style="margin-bottom: 0px;">Templates</h1>
+    <%= link_to 'New Template', new_merchant_template_path(@merchant), class: 'btn btn-primary', style: 'width: 100%;' %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Subject</th>
-      <th>Body</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @templates.each do |template| %>
-      <tr>
-        <td><%= template.subject %></td>
-        <td><%= template.body %></td>
-        <td><%= link_to 'Show', merchant_template_path(@merchant, template) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Template', new_merchant_template_path(@merchant) %>
+    <table class="table table-minimal table-chat-support datatable">
+      <thead>
+        <tr>
+          <th>Message</th>
+          <th>Created By</th>
+          <th>Last Updated By</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @templates.each do |template| %>
+        <tr>
+          <td><%= template.body %></td>
+          <td><%= MerchantUser.find_by_id(template.created_by).name %></td>
+          <td><%= MerchantUser.find_by_id(template.last_updated_by).name %></td>
+          <td><%= link_to "Edit", edit_merchant_template_path(@merchant, template), class: 'btn btn-primary btn-sm', style: 'display: block; margin: auto;' %></td>
+          <td><%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm', style: 'display: block; margin: auto;' %></td>
+        </tr>
+      <% end -%>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <div style="padding-top: 20px;"></div>
 <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   <div class="well">
-		<h1 class="text-center">Invite Merchant User</h1>
+		<h1 class="text-center">Invite Employee</h1>
 
 		<%= form_tag(merchant_users_create_merchant_user_path(), method: :post) do %>
 
@@ -15,9 +15,13 @@
 			<%= text_field_tag :phone_number, "", class: 'text-box' %><br>
 
 			<%= label_tag "Role" %><br>
-			<%= collection_select(:merchant_user, :merchant_role_id, @merchant_roles.all, :id, :name, html_options: {class: 'text-box', style: 'margin: 0px;'}) %><br>
+			<%= collection_select(:merchant_user, :merchant_role_id, @merchant_roles.all, :id, :name, html_options: {class: 'text-box', style: 'margin: 0px;'}) %>
 
-			<%= submit_tag "Invite", class: 'btn btn-primary', style: 'width: 100%;' %>
+			<div class="clearfix"></div>
+
+			<div class="col-xs-6" style="padding: 5px; padding-left: 0px;"> <%= submit_tag "Invite", class: 'btn btn-primary', style: 'width: 100%;' %></div>
+      <div class="col-xs-6" style="padding: 5px; padding-right: 0px;"><%= link_to 'Back', merchant_users_path(@merchant), class: 'btn btn-primary', style: 'width: 100%;' %></div>
+      <div class="clearfix"></div>
 
 		<% end -%>
 	</div>

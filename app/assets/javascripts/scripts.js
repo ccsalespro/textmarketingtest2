@@ -107,8 +107,8 @@ $(document).on('turbolinks:load', function() {
 			navbarLogoH		: {
 				element		: '.navbar-brand img',
 				style		: 'height',
-				start		: 'currentValueFromCSS',
-				end			: 20,
+				start		: 60,
+				end			: 30,
 				distance	: 300,
 				delay		: topHeaderHeight
 			}
