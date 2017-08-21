@@ -94,7 +94,7 @@ class TwilioLogic
 
   def send_successful_unsubscribed_message(number, twilio_number)
     @merchant = Merchant.find_by(phone_number: twilio_number)
-    @customer = Customer.find_by(merchant_id: @merchant.id).find_by(phone_number: number)
+    @customer = Customer.find_by(merchant_id: @merchant.id, phone_number: number)
     @customer.destroy
   end
 
