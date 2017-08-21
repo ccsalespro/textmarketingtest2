@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   resources :merchants do
     resources :customers
     resources :messages, only: [:new, :create, :index]
-    post 'messages/reply'
 
     resources :templates do
       collection do
@@ -29,6 +28,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  post 'messages/reply'
 
   resources :company_plans do
     resources :company_plan_fields
