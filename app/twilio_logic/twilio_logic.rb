@@ -22,6 +22,7 @@ class TwilioLogic
     # Get incoming message info
     @message_body = params["Body"]
     @from_number = params["From"]
+    @twilio_number = params["To"]
 
     save_message_body(request, @message_body)
 
@@ -45,9 +46,9 @@ class TwilioLogic
       end
     else
       if @message_body.upcase == "START" || @message_body.upcase == "SUBSCRIBE" || @message_body.upcase == "UNSTOP"
-        send_successful_subscribed_message(@from_number)
+        send_successful_subscribed_message(@from_number, @twilio_number)
       elsif @message_body.upcase == "STOP" || @message_body.upcase == "UNSUBSCRIBE"
-        send_successful_unsubscribed_message(@from_number)
+        send_successful_unsubscribed_message(@from_number, @twilio_number)
       else
         send_fail_response()
       end
@@ -84,14 +85,16 @@ class TwilioLogic
     end
   end
 
-  def send_successful_subscribed_message(number)
-    @customer = merchant.customers.build
+  def send_successful_subscribed_message(number, twilio_number)
+    @merchant = Merchant.find_by(phone_number: twilio_number)
+    @customer = @merchant.customers.build
     @customer.phone_number = number
     @customer.save
   end
 
-  def send_successful_unsubscribed_message(number)
-    @customer = Customer.find_by(merchant_id: merchant.id).find_by(phone_number: number)
+  def send_successful_unsubscribed_message(number, twilio_number)
+    @merchant = Merchant.find_by(phone_number: twilio_number)
+    @customer = Customer.find_by(merchant_id: @merchant.id).find_by(phone_number: number)
     @customer.destroy
   end
 
