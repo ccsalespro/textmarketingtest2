@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   resources :merchants do
     resources :customers
-    resources :messages, only: [:new, :create, :show, :index] do
+    resources :messages, only: [:new, :create, :index] do
       collection do
         post 'reply'
       end
