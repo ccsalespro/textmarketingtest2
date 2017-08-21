@@ -87,15 +87,21 @@ class TwilioLogic
 
   def send_successful_subscribed_message(number, twilio_number)
     @merchant = Merchant.find_by(phone_number: twilio_number)
-    @customer = @merchant.customers.build
-    @customer.phone_number = number
-    @customer.save
+    if @merchant.customers.include?(Customer.find_by(merchant_id: @merchant.id, phone_number: number))
+    else
+      @customer = @merchant.customers.build
+      @customer.phone_number = number
+      @customer.save
+    end
   end
 
   def send_successful_unsubscribed_message(number, twilio_number)
     @merchant = Merchant.find_by(phone_number: twilio_number)
-    @customer = Customer.find_by(merchant_id: @merchant.id, phone_number: number)
-    @customer.destroy
+    if @merchant.customers.include?(Customer.find_by(merchant_id: @merchant.id, phone_number: number))
+      @customer = Customer.find_by(merchant_id: @merchant.id, phone_number: number)
+      @customer.destroy
+    else
+    end
   end
 
   def send_too_many_messages_error(user_role)
