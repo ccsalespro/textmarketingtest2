@@ -162,8 +162,9 @@
 														<thead>
 															<tr>
 																<th>Name</th>
-																<th>Email</th>
+																<th class="hidden-xs">Email</th>
 																<th>Phone Number</th>
+																<th class="hidden-xs">Receives Msgs</th>
 																<th>Messages Received</th>
 															</tr>
 														</thead>
@@ -171,8 +172,9 @@
 														<% @merchant.customers.first(10).each do |customer| %>
 															<tr>
 																<td><%= customer.name %></td>
-																<td><%= customer.email %></td>
+																<td class="hidden-xs"><%= customer.email %></td>
 																<td><%= customer.phone_number %></td>
+																<td class="hidden-xs"><% if customer.permission_to_text == true %>Yes<% else %>No<% end -%></td>
 																<td><%= customer.customer_messages.count %></td>
 															</tr>
 														<% end -%>

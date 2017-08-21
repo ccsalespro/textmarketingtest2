@@ -22,11 +22,12 @@ class CustomersController < ApplicationController
   end
 
   def create
-     redirect_to root_path unless CreateCustomer.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless CreateCustomer.new(current_merchant_user, current_admin).check
     @customer = @merchant.customers.build(customer_params)
 
     respond_to do |format|
       if @customer.save
+        TwilioLogic.new.send_permission_to_text_request(@customer)
         format.html { redirect_to root_path, notice: 'Customer was successfully created.' }
         format.json { render :show, status: :created, location: @customer }
       else

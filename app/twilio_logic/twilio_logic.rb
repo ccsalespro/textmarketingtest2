@@ -6,11 +6,13 @@ class TwilioLogic
     if check_if_message_sent_in_last_hour(merchant)
       boot_twilio()
       merchant.customers.all.each do |customer|
-        sms = @client.messages.create(
-          from: merchant.phone_number,
-          to: customer.phone_number,
-          body: message.body
-        )
+        if customer.permission_to_text == true
+          sms = @client.messages.create(
+            from: merchant.phone_number,
+            to: customer.phone_number,
+            body: message.body
+          )
+        end
       end
     else
       redirect_to :root_path, notice: "You Already Sent Out A Message In The Past Hour"
@@ -85,12 +87,25 @@ class TwilioLogic
     end
   end
 
+  def send_permission_to_text_request(customer)
+    boot_twilio()
+    sms = @client.messages.create(
+        from: customer.merchant.phone_number,
+        to: customer.phone_number,
+        body: "Text START to receive special deals delivered right to your phone by #{customer.merchant.name}!\nReply STOP at any time to stop, HELP to help. Msg & Data Rates apply."
+      )
+  end
+
   def send_successful_subscribed_message(number, twilio_number)
     @merchant = Merchant.find_by(phone_number: twilio_number)
     if @merchant.customers.include?(Customer.find_by(merchant_id: @merchant.id, phone_number: number))
+      @customer = Customer.find_by(merchant_id: @merchant.id, phone_number: number)
+      @customer.permission_to_text = true
+      @customer.save
     else
       @customer = @merchant.customers.build
       @customer.phone_number = number
+      @customer.permission_to_text = true
       @customer.save
     end
   end
@@ -188,11 +203,13 @@ class TwilioLogic
   def send_out_message(request, user_role)
     @merchant = Merchant.find_by(id: user_role.merchant_id)
     @merchant.customers.each do |customer|
-      sms = @client.messages.create(
-        from: @merchant.phone_number,
-        to: customer.phone_number,
-        body: request.session[:message_body] + "\nReply STOP to stop"
-      )
+      if @customer.permission_to_text == true
+        sms = @client.messages.create(
+          from: @merchant.phone_number,
+          to: customer.phone_number,
+          body: request.session[:message_body] + "\nReply STOP to stop"
+        )
+      end
     end
     save_message_to_database(@merchant)
     UpdateMessageCount.new.run(@merchant)
