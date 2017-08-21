@@ -97,6 +97,7 @@ class TwilioLogic
   end
 
   def send_successful_subscribed_message(number, twilio_number)
+    boot_twilio()
     @merchant = Merchant.find_by(phone_number: twilio_number)
     if @merchant.customers.include?(Customer.find_by(merchant_id: @merchant.id, phone_number: number))
       @customer = Customer.find_by(merchant_id: @merchant.id, phone_number: number)
@@ -108,6 +109,11 @@ class TwilioLogic
       @customer.permission_to_text = true
       @customer.save
     end
+    sms = @client.messages.create(
+        from: @merchant.phone_number,
+        to: @customer.phone_number,
+        body: "Thank you for subcribing to #{@merchant.name}!"
+      )
   end
 
   def send_successful_unsubscribed_message(number, twilio_number)
