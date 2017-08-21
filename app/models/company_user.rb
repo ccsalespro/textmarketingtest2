@@ -5,4 +5,5 @@ class CompanyUser < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :company_role
+  default_scope -> { order(created_at: :desc) }
 end

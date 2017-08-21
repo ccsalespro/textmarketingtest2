@@ -4,4 +4,5 @@ class Company < ApplicationRecord
 	has_many :company_charges
 	has_many :merchant_plans
 	belongs_to :company_plan
+	default_scope -> { order(created_at: :desc) }
 end

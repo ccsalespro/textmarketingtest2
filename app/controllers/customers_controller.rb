@@ -58,7 +58,7 @@ class CustomersController < ApplicationController
      redirect_to root_path unless DeleteCustomer.new(current_merchant_user, current_admin).check
     @customer.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Customer was successfully destroyed.' }
+      format.html { redirect_to merchant_customers_path(@merchant), notice: 'Customer was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -55,7 +55,7 @@ class TemplatesController < ApplicationController
     redirect_to root_path unless DeleteTemplate.new(current_merchant_user, current_admin).check
     @template.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: 'template was successfully destroyed.' }
+      format.html { redirect_to merchant_templates_path(@merchant), notice: 'template was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

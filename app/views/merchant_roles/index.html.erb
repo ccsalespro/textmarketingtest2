@@ -21,7 +21,7 @@
           <tr>
             <td><%= merchant_role.name %></td>
             <td><%= link_to "Edit", merchant_role_path(merchant_role), class: 'btn btn-primary btn-sm', style: 'display: block; margin: auto;' %></td>
-            <td><%= link_to 'Destroy', merchant_role, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm', style: 'display: block; margin: auto;' %></td>
+            <td><%= link_to 'Delete', merchant_role, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm', style: 'display: block; margin: auto;' %></td>
           </tr>
         <% end %>
       </tbody>

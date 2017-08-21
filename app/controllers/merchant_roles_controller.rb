@@ -66,7 +66,7 @@ class MerchantRolesController < ApplicationController
     redirect_to root_path unless DeleteMerchantRole.new(current_merchant_user, current_admin).check
     @merchant_role.destroy
     respond_to do |format|
-      format.html { redirect_to merchant_roles_url, notice: 'Merchant role was successfully destroyed.' }
+      format.html { redirect_to merchant_roles_path, notice: 'Merchant role was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -4,4 +4,5 @@ class MerchantUser < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 	belongs_to :merchant_role
+	default_scope -> { order(created_at: :desc) }
 end

@@ -45,7 +45,7 @@ class MerchantsController < ApplicationController
     @merchant_plan.save
 
     boot_twilio()
-    #@client.incoming_phone_numbers.create(:phone_number => @merchant.phone_number)
+    @client.incoming_phone_numbers.create(:phone_number => @merchant.phone_number)
 
     respond_to do |format|
       if @merchant.save

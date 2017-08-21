@@ -11,7 +11,7 @@
           <th>Message</th>
           <th>Created By</th>
           <th>Last Updated By</th>
-          <th></th>
+          <th colspan="3"></th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +21,7 @@
           <td><%= MerchantUser.find_by_id(template.created_by).name %></td>
           <td><%= MerchantUser.find_by_id(template.last_updated_by).name %></td>
           <td><%= link_to "Edit", edit_merchant_template_path(@merchant, template), class: 'btn btn-primary btn-sm', style: 'display: block; margin: auto;' %></td>
+          <td class="hidden-xs"><%= link_to 'Delete', merchant_template_path(@merchant, template), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm', style: 'display: block; margin: auto;' %></td>
           <td><%= link_to "Publish", new_merchant_message_path(@merchant, template: template), class: 'btn btn-primary btn-sm', style: 'display: block; margin: auto;' %></td>
         </tr>
       <% end -%>
