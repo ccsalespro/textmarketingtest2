@@ -20,11 +20,9 @@ Rails.application.routes.draw do
 
   resources :merchants do
     resources :customers
-    resources :messages, only: [:new, :create, :index] do
-      collection do
-        post 'reply'
-      end
-    end
+    resources :messages, only: [:new, :create, :index]
+    post 'messages/reply'
+
     resources :templates do
       collection do
         post 'publish'
