@@ -26,10 +26,12 @@ class TwilioLogic
     save_message_body(request, @message_body)
 
     @merchant_user = MerchantUser.find_by(phone_number: @from_number)
-    @role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
-    @merchant = Merchant.find_by(id: @role.merchant_id)
 
     if @merchant_user.present?
+
+      @role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
+      @merchant = Merchant.find_by(id: @role.merchant_id)
+
       #@role = MerchantRole.find_by(id: @merchant_user.merchant_role_id)
       if @role.merchant_permissions.include?( MerchantPermission.find_by(id: 27) )
         if request.session[:confirmation_sent] == false
@@ -43,9 +45,9 @@ class TwilioLogic
       end
     else
       if @message_body.upcase == "START" || @message_body.upcase == "SUBSCRIBE" || @message_body.upcase == "UNSTOP"
-        send_successful_subscribed_message(@merchant, @from_number)
+        send_successful_subscribed_message(@from_number)
       elsif @message_body.upcase == "STOP" || @message_body.upcase == "UNSUBSCRIBE"
-        send_successful_unsubscribed_message(@merchant, @from_number)
+        send_successful_unsubscribed_message(@from_number)
       else
         send_fail_response()
       end
@@ -82,27 +84,15 @@ class TwilioLogic
     end
   end
 
-  def send_successful_subscribed_message(merchant, number)
+  def send_successful_subscribed_message(number)
     @customer = merchant.customers.build
     @customer.phone_number = number
     @customer.save
-
-    sms = @client.messages.create(
-        from: merchant.phone_number,
-        to: number,
-        body: "#{merchant.name}: Thank you for subscribing to our text club! No more than [4?] texts a month. Reply STOP to stop or HELP for Help. Msg & Data Rates Apply"
-      )
   end
 
-  def send_successful_unsubscribed_message(merchant, number)
+  def send_successful_unsubscribed_message(number)
     @customer = Customer.find_by(merchant_id: merchant.id).find_by(phone_number: number)
     @customer.destroy
-
-    sms = @client.messages.create(
-        from: merchant.phone_number,
-        to: number,
-        body: "#{merchant.name}: Please consider resubscribing. Reply START to start or HELP for Help. Msg & Data Rates Apply"
-      )
   end
 
   def send_too_many_messages_error(user_role)
