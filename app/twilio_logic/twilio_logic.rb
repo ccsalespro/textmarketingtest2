@@ -114,7 +114,8 @@ class TwilioLogic
     @merchant = Merchant.find_by(phone_number: twilio_number)
     if @merchant.customers.include?(Customer.find_by(merchant_id: @merchant.id, phone_number: number))
       @customer = Customer.find_by(merchant_id: @merchant.id, phone_number: number)
-      @customer.destroy
+      @customer.permission_to_text == false
+      @customer.save
     else
     end
   end
