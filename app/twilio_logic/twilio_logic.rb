@@ -3,7 +3,18 @@ require 'twilio-ruby'
 class TwilioLogic
 
   def send_outgoing_message(merchant, message)
-    return true
+    if check_if_message_sent_in_last_hour(merchant)
+      boot_twilio()
+      merchant.customers.all.each do |customer|
+        sms = @client.messages.create(
+          from: merchant.phone_number,
+          to: customer.phone_number,
+          body: message.body
+        )
+      end
+    else
+      redirect_to :root_path, notice: "You Already Sent Out A Message In The Past Hour"
+    end
   end
 
 	def reply(params, request)
@@ -31,7 +42,13 @@ class TwilioLogic
         send_insufficient_permissions_response(@role)
       end
     else
-      send_fail_response()
+      if @message_body.upcase == "START" || @message_body.upcase == "SUBSCRIBE" || @message_body.upcase == "UNSTOP"
+        send_successful_subscribed_message(@merchant, @from_number)
+      elsif @message_body.upcase == "STOP" || @message_body.upcase == "UNSUBSCRIBE"
+        send_successful_unsubscribed_message(@merchant, @from_number)
+      else
+        send_fail_response()
+      end
     end
 
   end
@@ -63,6 +80,29 @@ class TwilioLogic
     else
       return false
     end
+  end
+
+  def send_successful_subscribed_message(merchant, number)
+    @customer = merchant.customers.build
+    @customer.phone_number = number
+    @customer.save
+
+    sms = @client.messages.create(
+        from: merchant.phone_number,
+        to: number,
+        body: "#{merchant.name}: Thank you for subscribing to our text club! No more than [4?] texts a month. Reply STOP to stop or HELP for Help. Msg & Data Rates Apply"
+      )
+  end
+
+  def send_successful_unsubscribed_message(merchant, number)
+    @customer = Customer.find_by(merchant_id: merchant.id).find_by(phone_number: number)
+    @customer.destroy
+
+    sms = @client.messages.create(
+        from: merchant.phone_number,
+        to: number,
+        body: "#{merchant.name}: Please consider resubscribing. Reply START to start or HELP for Help. Msg & Data Rates Apply"
+      )
   end
 
   def send_too_many_messages_error(user_role)
@@ -113,7 +153,7 @@ class TwilioLogic
     sms = @client.messages.create(
         from: Rails.application.secrets.twilio_number,
         to: @from_number,
-        body: "Phone Number Not Recognized"
+        body: "Please text START to subscribe to this number or STOP to unsubscribe."
       )
   end
  
