@@ -60,3 +60,8 @@ MerchantPermission.create(id: 35, name: 'Delete Customer')
 
 # Messages Permissions
 MerchantPermission.create(id: 36, name: "View Message")
+
+MerchantPermission.create(id: 37, name: "Create Template")
+MerchantPermission.create(id: 38, name: "View Template")
+MerchantPermission.create(id: 39, name: "Edit Template")
+MerchantPermission.create(id: 40, name: "Delete Template")

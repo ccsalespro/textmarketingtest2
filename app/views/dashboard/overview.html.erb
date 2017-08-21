@@ -113,6 +113,7 @@
 							</div>
 							<!-- END TOP METRICS -->
 							<div class="row" id="grid">
+							<% if ViewMerchantUser.new(current_merchant_user, current_admin).check %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading purple-background">
@@ -147,8 +148,10 @@
 										<div class="panel-footer"><%= link_to "View All", merchant_users_path, class: 'btn btn-primary' %></div>
 									</div>
 								</div>
+							<% end -%>
 								<!-- END MERCHANT USERS -->
 
+							<% if ViewCustomer.new(current_merchant_user, current_admin).check %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading green-background">
@@ -186,8 +189,10 @@
 										<div class="panel-footer"><%= link_to "View All", merchant_customers_path(@merchant), class: 'btn btn-primary' %></div>
 									</div>
 								</div>
+							<% end -%>
 								<!-- END CUSTOMERS -->
 
+							<% if ViewMessage.new(current_merchant_user, current_admin).check %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading red-background">
@@ -219,8 +224,10 @@
 										<div class="panel-footer"><%= link_to "View All", merchant_messages_path(@merchant), class: 'btn btn-primary' %></div>
 									</div>
 								</div>
+							<% end -%>
 								<!-- END MESSAGES SENT -->
 
+							<% if ViewTemplate.new(current_merchant_user, current_admin).check %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading orange-background">
@@ -259,8 +266,10 @@
 										<div class="panel-footer"><%= link_to "View All", merchant_templates_path(@merchant), class: 'btn btn-primary' %></div>
 									</div>
 								</div>
+							<% end -%>
 								<!-- END TEMPLATES -->
 
+							<% if ViewMerchantRole.new(current_merchant_user, current_admin).check %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading gold-background">
@@ -295,6 +304,7 @@
 										<div class="panel-footer"><%= link_to "View All", merchant_roles_path, class: 'btn btn-primary' %></div>
 									</div>
 								</div>
+							<% end -%>
 								<!-- END MERCHANT ROLES -->
 							</div>
 

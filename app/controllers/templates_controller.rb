@@ -4,23 +4,27 @@ class TemplatesController < ApplicationController
   # GET /companies
   # GET /companies.json
   def index
+    redirect_to root_path unless ViewTemplate.new(current_merchant_user, current_admin).check
     @templates = Template.all
   end
 
   # GET /companies/1
   # GET /companies/1.json
   def show
-    #redirect_to root_path unless ViewTemplate.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless ViewTemplate.new(current_merchant_user, current_admin).check
   end
 
   def new
+    redirect_to root_path unless CreateTemplate.new(current_merchant_user, current_admin).check
     @template = Template.new
   end
 
   def edit
+    redirect_to root_path unless EditTemplate.new(current_merchant_user, current_admin).check
   end
 
   def create
+    redirect_to root_path unless CreateTemplate.new(current_merchant_user, current_admin).check
     @template = Template.new(template_params)
 
     respond_to do |format|
@@ -35,6 +39,7 @@ class TemplatesController < ApplicationController
   end
 
   def update
+    redirect_to root_path unless EditTemplate.new(current_merchant_user, current_admin).check
     respond_to do |format|
       if @template.update(template_params)
         format.html { redirect_to root_path, notice: 'template was successfully updated.' }
@@ -47,6 +52,7 @@ class TemplatesController < ApplicationController
   end
 
   def destroy
+    redirect_to root_path unless DeleteTemplate.new(current_merchant_user, current_admin).check
     @template.destroy
     respond_to do |format|
       format.html { redirect_to root_path, notice: 'template was successfully destroyed.' }

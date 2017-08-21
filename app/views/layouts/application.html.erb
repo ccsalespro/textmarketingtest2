@@ -128,6 +128,26 @@
 				</div><!-- /.yamm -->
 			</div><!-- /.navbar -->
 		</header>
+
+  <% if flash[:notice] %>
+          <div class="">
+              <div class="alert alert-info alert-message flyover">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                  </a>
+                  <strong><%= flash[:notice] %></strong>
+              </div>
+          </div>
+          <% end %>
+
   		<%= yield %>
   </body>
+
+  <script>
+	$('.alert-message').toggleClass('in');
+  $(".alert-message").fadeTo(5000, 500).slideUp(1000, function () {
+      $(".alert-message").alert('close');
+  });
+</script>
+
 </html>

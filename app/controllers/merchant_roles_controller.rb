@@ -13,7 +13,7 @@ class MerchantRolesController < ApplicationController
   # GET /merchant_roles/1
   # GET /merchant_roles/1.json
   def show
-    redirect_to root_path unless ViewMerchantRole.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless EditMerchantRole.new(current_merchant_user, current_admin).check
     @merchant_permissions = MerchantPermission.all
   end
 
