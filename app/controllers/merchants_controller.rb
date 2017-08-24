@@ -46,6 +46,7 @@ class MerchantsController < ApplicationController
 
     boot_twilio()
     @client.incoming_phone_numbers.create(:phone_number => @merchant.phone_number)
+    @client.incoming_phone_numbers.get(@merchant.phone_number).update({'SmsUrl' => 'https://textmarketingresellers.herokuapp.com/messages/reply'})
 
     respond_to do |format|
       if @merchant.save
