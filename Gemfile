@@ -46,7 +46,7 @@ gem 'owlcarousel-rails'
 gem 'magnific-popup-rails', '~> 1.1.0'
 gem 'animate-rails'
 gem 'wow-rails'
-gem 'salvattore'
+gem 'ransack', '~> 1.8.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

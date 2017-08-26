@@ -1,3 +1,4 @@
+include ActionView::Helpers::NumberHelper
 class CustomersController < ApplicationController
 
 	before_action :set_customer, only: [:show, :edit, :update, :destroy]
@@ -24,7 +25,9 @@ class CustomersController < ApplicationController
   def create
     redirect_to root_path unless CreateCustomer.new(current_merchant_user, current_admin).check
     @customer = @merchant.customers.build(customer_params)
-
+    @number = number_to_phone(params[:customer][:phone_number], delimiter: "", area_code: true).gsub("+1", "")
+    @customer.phone_number = number_to_phone(@number, delimiter: "", country_code: 1).tr('-() ', '')
+    raise
     respond_to do |format|
       if @customer.save
         TwilioLogic.new.send_permission_to_text_request(@customer)

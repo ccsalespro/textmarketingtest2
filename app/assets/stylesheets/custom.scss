@@ -5,3 +5,16 @@ body {
 .alert-info { margin: 0px;}
 
 .alert { border-radius: 0px !important; }
+
+.stylish-input-group .input-group-addon{
+        background: white !important;
+    }
+    .stylish-input-group .text-box{
+    	border-right:0;
+    	box-shadow:0 0 0;
+    	border-color:#ccc;
+    }
+    .stylish-input-group button{
+        border:0;
+        background:transparent;
+    }
