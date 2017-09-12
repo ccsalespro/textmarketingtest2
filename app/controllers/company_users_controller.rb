@@ -7,13 +7,13 @@ class CompanyUsersController < ApplicationController
 	end
 
 	def new_company_user
-		redirect_to root_path unless InviteCompanyUser.new(current_company_user, current_admin).check
+		redirect_to root_path unless Permissions::CompanyUser.new(current_user).create?
 		company = Company.find(params[:company])
 		@company_roles = company.company_roles
 	end
 
 	def create_company_user
-		redirect_to root_path unless InviteCompanyUser.new(current_company_user, current_admin).check
+		redirect_to root_path unless Permissions::CompanyUser.new(current_user).create?
 		if CompanyUser.find_by_email(params[:email]).present?
 			redirect_to dashboard_overview_path, notice: 'Email Is Already Connected With Another Company Account'
 		else
@@ -26,13 +26,13 @@ class CompanyUsersController < ApplicationController
 	end
 
 	def edit
-		redirect_to root_path unless EditCompanyUser.new(current_company_user, current_admin).check
+		redirect_to root_path unless Permissions::CompanyUser.new(current_user).edit?
 		company = Company.find_by(id: @company_user.company_role.company_id)
 		@company_roles = company.company_roles
 	end
 
 	def update
-		redirect_to root_path unless EditCompanyUser.new(current_company_user, current_admin).check
+		redirect_to root_path unless Permissions::CompanyUser.new(current_user).edit?
     respond_to do |format|
       if @company_user.update(company_user_params)
         format.html { redirect_to root_path, notice: 'Company User Updated' }
@@ -44,7 +44,7 @@ class CompanyUsersController < ApplicationController
   end
 
 	def destroy_company_user
-		redirect_to root_path unless CancelCompanyUser.new(current_company_user, current_admin).check
+		redirect_to root_path unless Permissions::CompanyUser.new(current_user).delete?
 		CompanyUser.find(params[:company_user]).destroy
     respond_to do |format|
       format.html { redirect_to company_path(params[:company]), notice: 'Company User was successfully canceled.' }

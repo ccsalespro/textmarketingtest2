@@ -13,7 +13,7 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.json
   def show
-    redirect_to root_path unless ViewCompany.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::Company.new(current_user).show?
   end
 
   # GET /companies/new

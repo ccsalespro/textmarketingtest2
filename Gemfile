@@ -26,28 +26,6 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
-gem 'twilio-ruby', '~> 4.13.0'
-
-gem 'devise', '~> 4.3.0'
-gem 'devise_invitable', '~> 1.7.0'
-
-gem 'webpacker', '~> 2.0.0', github: 'rails/webpacker'
-
-gem 'mandrill-api', '~> 1.0', '>= 1.0.53', require: "mandrill"
-
-gem 'stripe', '~> 3.0.1'
-
-gem 'bootstrap-sass', '~> 3.3.6'
-gem 'jquery-rails', '~> 4.3.1'
-gem 'jquery-ui-rails', '~> 6.0.1'
-gem "font-awesome-rails", '~> 4.7.0.2'
-
-gem 'owlcarousel-rails'
-gem 'magnific-popup-rails', '~> 1.1.0'
-gem 'animate-rails'
-gem 'wow-rails'
-gem 'ransack', '~> 1.8.3'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -67,3 +45,21 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Added Gems
+
+gem 'animate-rails', '~> 1.0.10'
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'devise', '~> 4.3.0'
+gem 'devise_invitable', '~> 1.7.0'
+gem 'font-awesome-rails', '~> 4.7.0.2'
+gem 'jquery-rails', '~> 4.3.1'
+gem 'jquery-ui-rails', '~> 6.0.1'
+gem 'magnific-popup-rails', '~> 1.1.0'
+gem 'mandrill-api', '~> 1.0', '>= 1.0.53', require: "mandrill"
+gem 'owlcarousel-rails', '~> 1.1.3.3'
+gem 'ransack', '~> 1.8.3'
+gem 'stripe', '~> 3.0.1'
+gem 'twilio-ruby', '~> 4.13.0'
+gem 'webpacker', '~> 2.0.0', github: 'rails/webpacker'
+gem 'wow-rails', '~> 0.0.1'

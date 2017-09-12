@@ -2,17 +2,17 @@ class MessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
 	def index
-    redirect_to root_path unless ViewMessage.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless Permissions::Message.new(current_user).show?
 		@messages = @merchant.messages.all
 	end
 
   def show
-    redirect_to root_path unless ViewMessage.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless Permissions::Message.new(current_user).show?
     @message = Message.find(params[:id])
   end
 
   def new
-    redirect_to root_path unless SendMessage.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless Permissions::Message.new(current_user).create?
     @message = @merchant.messages.build
     if params[:template].present?
       @template = Template.find_by(id: params[:template].to_i)
@@ -27,7 +27,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    redirect_to root_path unless SendMessage.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless Permissions::Message.new(current_user).create?
 
     if params[:save_as_template].present?
       @template = @merchant.templates.build

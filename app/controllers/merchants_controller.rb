@@ -6,21 +6,21 @@ class MerchantsController < ApplicationController
   # GET /merchants
   # GET /merchants.json
   def index
-    redirect_to root_path unless ViewMerchant.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::Merchant.new(current_user).show?
     @merchants = []
   end
 
   # GET /merchants/1
   # GET /merchants/1.json
   def show
-    redirect_to root_path unless ViewMerchant.new(current_company_user, current_admin, current_merchant_user).check
+    redirect_to root_path unless Permissions::Merchant.new(current_user).show?
     determine_user_role()
     load_permission_names()
   end
 
   # GET /merchants/new
   def new
-    redirect_to root_path unless CreateMerchant.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::Merchant.new(current_user).create?
 
     boot_twilio()
     @numbers = @client.available_phone_numbers.get('US').local.list(:area_code => '814')
@@ -29,13 +29,13 @@ class MerchantsController < ApplicationController
 
   # GET /merchants/1/edit
   def edit
-    redirect_to root_path unless EditMerchant.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::Merchant.new(current_user).edit?
   end
 
   # POST /merchants
   # POST /merchants.json
   def create
-    redirect_to root_path unless CreateMerchant.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::Merchant.new(current_user).create?
     @merchant = @merchant_billing_plan.merchants.build(merchant_params)
     LoadRoles.new.load_merchant_roles(@merchant)
 
@@ -62,7 +62,7 @@ class MerchantsController < ApplicationController
   # PATCH/PUT /merchants/1
   # PATCH/PUT /merchants/1.json
   def update
-    redirect_to root_path unless EditMerchant.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::Merchant.new(current_user).edit?
     respond_to do |format|
       if @merchant.update(merchant_params)
         format.html { redirect_to root_path, notice: 'Merchant was successfully updated.' }
@@ -77,7 +77,7 @@ class MerchantsController < ApplicationController
   # DELETE /merchants/1
   # DELETE /merchants/1.json
   def destroy
-    redirect_to root_path unless DeleteMerchant.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::Merchant.new(current_user).delete?
     @merchant.destroy
     respond_to do |format|
       format.html { redirect_to merchants_url, notice: 'Merchant was successfully destroyed.' }

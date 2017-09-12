@@ -4,24 +4,24 @@ class MerchantBillingPlansController < ApplicationController
   before_action :load_company
 
 	def index
-    redirect_to root_path unless ViewMerchantBillingPlan.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::MerchantBillingPlan.new(current_user).show?
 		@service_types = @company.service_types.all
 	end
 
   def show_all_merchants
-    redirect_to root_path unless ViewMerchantBillingPlan.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::MerchantBillingPlan.new(current_user).show?
   end
 
 	def show
-    redirect_to root_path unless ViewMerchantBillingPlan.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::MerchantBillingPlan.new(current_user).show?
 	end
 
   def edit
-    redirect_to root_path unless EditMerchantBillingPlan.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::MerchantBillingPlan.new(current_user).edit?
   end
 
 	def new
-    redirect_to root_path unless CreateMerchantBillingPlan.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::MerchantBillingPlan.new(current_user).create?
 		@merchant_billing_plan = MerchantBillingPlan.new
     if params[:came_from_choose_page].present?
       @came_from_choose_page = true
@@ -38,7 +38,7 @@ class MerchantBillingPlansController < ApplicationController
   end
 
 	def create
-    redirect_to root_path unless CreateMerchantBillingPlan.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::MerchantBillingPlan.new(current_user).create?
 		@merchant_billing_plan = MerchantBillingPlan.new(merchant_billing_plan_params)
 		respond_to do |format|
       if @merchant_billing_plan.save
@@ -58,7 +58,7 @@ class MerchantBillingPlansController < ApplicationController
 	end
 
 	def update
-    redirect_to root_path unless EditMerchantBillingPlan.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::MerchantBillingPlan.new(current_user).edit?
     respond_to do |format|
       if @merchant_billing_plan.update(merchant_billing_plan_params)
         format.html { redirect_to root_path, notice: 'merchant_billing_plan was successfully updated.' }
@@ -71,7 +71,7 @@ class MerchantBillingPlansController < ApplicationController
   end
 
   def destroy
-    redirect_to root_path unless DeleteMerchantBillingPlan.new(current_company_user, current_admin).check
+    redirect_to root_path unless Permissions::MerchantBillingPlan.new(current_user).delete?
     @merchant_billing_plan.destroy
     respond_to do |format|
       format.html { redirect_to merchant_billing_plans_path, notice: 'merchant_billing_plan was successfully destroyed.' }

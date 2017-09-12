@@ -6,4 +6,9 @@ class CompanyUser < ApplicationRecord
 
   belongs_to :company_role
   default_scope -> { order(created_at: :desc) }
+
+  def role
+  	company_role
+  end
+
 end

@@ -4,6 +4,12 @@ class ApplicationController < ActionController::Base
   before_action :load_merchant, if: :merchant_user_signed_in?
   before_action :load_company, if: :company_user_signed_in?
 
+  helper_method :current_user
+
+  def current_user
+    current_admin || current_company_user || current_merchant_user
+  end 
+
   private
 
   def require_admin
@@ -27,24 +33,15 @@ class ApplicationController < ActionController::Base
   end 
 
   def determine_user_role
-    if admin_signed_in?
-      @role = "Admin"
-    elsif company_user_signed_in?
-      @role = CompanyRole.find_by_id(current_company_user.company_role_id)
-    elsif merchant_user_signed_in?
-      @role = MerchantRole.find_by_id(current_merchant_user.merchant_role_id)
-    else
-      @role = nil
-    end
-    return @role
+    @role = current_user.role unless current_user == nil
   end
 
    def load_merchant
-      @merchant = Merchant.find_by(id: current_merchant_user.merchant_role.merchant.id)
+      @merchant = current_user().merchant_role.merchant
     end
 
     def load_company
-      @company = Company.find_by(id: current_company_user.company_role.company.id)
+      @company = current_user().company_role.company
     end
 
 end

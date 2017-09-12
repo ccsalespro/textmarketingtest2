@@ -1,67 +1,4 @@
 <div class="overview-page">
-	<div class="hidden">
-	<% if admin_signed_in? %>
-		 <h1>Welcome Admin, <%= current_admin.name %></h1>
-		 <%= link_to "Log Out", destroy_admin_session_path, :method => :delete %>
-		 <%= link_to "Company Plans", company_plans_path %>
-		 <%= link_to "Companies", companies_path %>
-
-	<% elsif company_user_signed_in? %>
-
-		<h1>Welcome Company User, <%= current_company_user.name %></h1>
-		 <%= link_to "Log Out", destroy_company_user_session_path, :method => :delete %><br>
-		 <% if @role_permission_names.include?("Invite Company Users") %>
-		 	<%= link_to "Invite Company User", company_users_new_company_user_path(company: @company) %><br>
-		 <% end -%>
-		 <% if @role_permission_names.include?("Create Merchants") %>
-		 	<%= link_to "Create Merchant", company_merchant_billing_plans_choose_path(@company) %><br>
-		 <% end -%>
-		 <% if @role_permission_names.include?("View Merchants") %>
-		 	<%= link_to "View Company Plans", company_merchant_billing_plans_path(@company) %><br>
-		 <% end -%>
-		 <% if @role_permission_names.include?("View Company Roles") %>
-		 	<%= link_to "View Company Roles", company_roles_path %><br>
-		 <% end -%>
-		 <% if @role_permission_names.include?("View Company") %>
-		 	<%= link_to "View Company", company_path(@company) %><br>
-		 <% end -%>
-
-		 <% if CreateMerchantBillingPlan.new(current_company_user, current_admin).check %>
-		 	<%= link_to "New Merchant Billing Plan", new_company_merchant_billing_plan_path(@company) %>
-		 <% end -%>
-
-	<% elsif merchant_user_signed_in? %>
-
-		<h1>Welcome Merchant User, <%= current_merchant_user.name %></h1>
-		<%= link_to "Log Out", destroy_merchant_user_session_path, :method => :delete %><br>
-
-		<% if @role_permission_names.include?("Invite Merchant Users") %>
-		 	<%= link_to "Invite Merchant User", merchant_users_new_merchant_user_path() %><br>
-		 <% end -%>
-
-		<% if @role_permission_names.include?("View Merchant Roles") %>
-		 	<%= link_to "View Merchant Roles", merchant_roles_path %><br>
-		 <% end -%>
-		 	
-		 <% if CreateCustomer.new(current_merchant_user, current_admin).check %>
-		 	<%= link_to "New Customer", new_merchant_customer_path(@merchant) %><br>
-		 <% end -%>
-
-		 <% if ViewCustomer.new(current_merchant_user, current_admin).check %>
-		 	<%= link_to "View Customers", merchant_customers_path(@merchant) %><br>
-		 <% end -%>
-
-		 <% if SendMessage.new(current_merchant_user, current_admin).check %>
-		 	<%= link_to "Send A Message", new_merchant_message_path(@merchant) %><br>
-		 <% end -%>
-
-		 <% if ViewMessage.new(current_merchant_user, current_admin).check %>
-		 	<%= link_to "View Sent Messages", merchant_messages_path(@merchant) %>
-		 <% end -%>
-
-	<% end -%>
-	</div>
-
 	<% if merchant_user_signed_in? %>
 
 			<!-- WRAPPER -->
@@ -113,7 +50,7 @@
 							</div>
 							<!-- END TOP METRICS -->
 							<div class="row" id="grid">
-							<% if ViewMerchantUser.new(current_merchant_user, current_admin).check %>
+							<% if Permissions::MerchantUser.new(current_user).show? %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading purple-background">
@@ -151,7 +88,7 @@
 							<% end -%>
 								<!-- END MERCHANT USERS -->
 
-							<% if ViewCustomer.new(current_merchant_user, current_admin).check %>
+							<% if Permissions::Customer.new(current_user).show? %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading green-background">
@@ -192,7 +129,7 @@
 							<% end -%>
 								<!-- END CUSTOMERS -->
 
-							<% if ViewMessage.new(current_merchant_user, current_admin).check %>
+							<% if Permissions::Message.new(current_user).show? %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading red-background">
@@ -227,7 +164,7 @@
 							<% end -%>
 								<!-- END MESSAGES SENT -->
 
-							<% if ViewTemplate.new(current_merchant_user, current_admin).check %>
+							<% if Permissions::Template.new(current_user).show? %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading orange-background">
@@ -269,7 +206,7 @@
 							<% end -%>
 								<!-- END TEMPLATES -->
 
-							<% if ViewMerchantRole.new(current_merchant_user, current_admin).check %>
+							<% if Permissions::MerchantRole.new(current_user).show? %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading gold-background">

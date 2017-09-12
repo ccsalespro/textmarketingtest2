@@ -5,25 +5,25 @@ class CustomersController < ApplicationController
   before_action :load_merchant
 
 	def index
-    redirect_to root_path unless ViewCustomer.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless Permissions::Customer.new(current_user).show?
 		@customers = @merchant.customers.all
 	end
 
   def show
-     redirect_to root_path unless ViewCustomer.new(current_merchant_user, current_admin).check
+     redirect_to root_path unless Permissions::Customer.new(current_user).show?
   end
 
   def new
-     redirect_to root_path unless CreateCustomer.new(current_merchant_user, current_admin).check
+     redirect_to root_path unless Permissions::Customer.new(current_user).create?
     @customer = @merchant.customers.build
   end
 
   def edit
-     redirect_to root_path unless EditCustomer.new(current_merchant_user, current_admin).check
+     redirect_to root_path unless Permissions::Customer.new(current_user).edit?
   end
 
   def create
-    redirect_to root_path unless CreateCustomer.new(current_merchant_user, current_admin).check
+    redirect_to root_path unless Permissions::Customer.new(current_user).create?
     @customer = @merchant.customers.build(customer_params)
     @number = number_to_phone(params[:customer][:phone_number], delimiter: "", area_code: true).gsub("+1", "")
     @customer.phone_number = number_to_phone(@number, delimiter: "", country_code: 1).tr('-() ', '')
@@ -43,7 +43,7 @@ class CustomersController < ApplicationController
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json
   def update
-     redirect_to root_path unless EditCustomer.new(current_merchant_user, current_admin).check
+     redirect_to root_path unless Permissions::Customer.new(current_user).edit?
     respond_to do |format|
       if @customer.update(customer_params)
         format.html { redirect_to root_path, notice: 'Customer was successfully updated.' }
@@ -58,7 +58,7 @@ class CustomersController < ApplicationController
   # DELETE /companies/1
   # DELETE /companies/1.json
   def destroy
-     redirect_to root_path unless DeleteCustomer.new(current_merchant_user, current_admin).check
+     redirect_to root_path unless Permissions::Customer.new(current_user).delete?
     @customer.destroy
     respond_to do |format|
       format.html { redirect_to merchant_customers_path(@merchant), notice: 'Customer was successfully destroyed.' }
