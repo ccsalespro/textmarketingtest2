@@ -1,4 +1,5 @@
 <div class="overview-page">
+
 	<% if merchant_user_signed_in? %>
 
 			<!-- WRAPPER -->
@@ -50,7 +51,7 @@
 							</div>
 							<!-- END TOP METRICS -->
 							<div class="row" id="grid">
-							<% if Permissions::MerchantUser.new(current_user).show? %>
+							<% if Permissions::MerchantUserP.new(current_user).show? %>
 								<div class="col-lg-6 sortable-item">
 									<div class="panel">
 										<div class="panel-heading purple-background">

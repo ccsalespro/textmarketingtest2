@@ -20,19 +20,24 @@ module Permissions
 		end
 
 		def create?
-			false
+			case user
+			when Admin
+				true
+			else
+				false
+			end
 		end
 
 		def show?
-			false
+			create?
 		end
 
 		def edit?
-			false
+			create?
 		end
 
 		def delete?
-			false
+			create?
 		end
 
 	end

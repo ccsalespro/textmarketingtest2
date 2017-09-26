@@ -1,5 +1,5 @@
 module Permissions
-	class MerchantUser < Permissions::Base
+	class MerchantUserP < Permissions::Base
 
 		def create?
 			case @user
@@ -10,7 +10,7 @@ module Permissions
 	    when Admin
 	    	@permission_set.include?( CompanyPermission.find_by(id: 13) )
 	    else
-				[]
+				false
 	    end
 		end
 

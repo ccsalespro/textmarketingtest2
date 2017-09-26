@@ -14,7 +14,7 @@ module Permissions
 	    when Admin
 	    	@permission_set.include?( CompanyPermission.find_by(id: 10) )
 	    else
-				[]
+				false
 	    end
 		end
 

@@ -1,6 +1,19 @@
 class LoadRoles
 
-	def load_company_roles(company)
+	def run(company_or_merchant)
+		case company_or_merchant
+		when Company
+			company(company_or_merchant)
+		when Merchant
+			merchant(company_or_merchant)
+		else
+			raise StandardError, "You didn't give me a Company or a Merchant"
+		end
+	end
+
+	private
+
+	def company(company)
 		@all_company_permissions = CompanyPermission.all
 
 		@base_role = company.company_roles.build
@@ -19,7 +32,7 @@ class LoadRoles
 
 	end
 
-	def load_merchant_roles(merchant)
+	def merchant(merchant)
 		@all_merchant_permissions = MerchantPermission.all
 
 		@base_role = merchant.merchant_roles.build

@@ -4,7 +4,7 @@
 
 
     <h1 class="text-center" style="margin-bottom: 0px;">Roles</h1>
-    <% if CreateMerchantRole.new(current_merchant_user, current_admin).check %>
+    <% if Permissions::MerchantRole.new(current_user).create? %>
       <%= link_to 'New Role', new_merchant_role_path(merchant: @merchant), class: 'btn btn-primary', style: 'width: 100%;' %>
     <% end -%>
 
